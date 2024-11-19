@@ -3,7 +3,7 @@ import Modal from "../../../utils/Modal";
 import { LiaTimesSolid } from "react-icons/lia";
 import { Blog } from "../../../Context/Context";
 import { toast } from "react-toastify";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import useSingleFetch from "../../hooks/useSingleFetch";
 import Loading from "../../Loading/Loading";
@@ -22,26 +22,52 @@ const Comments = ({ postId }) => {
   const getUserData = allUsers.find((user) => user.id === currentUser?.uid);
   
   const { data, loading } = useSingleFetch("posts", postId, "comments");
- 
   const writeComment = async () => {
     try {
       if (comment === "") {
         toast.error("The input must be filled.");
+        return;
       }
-
+  
       const commentRef = collection(db, "posts", postId, "comments");
+  
+      // Get the post owner ID, title, and timestamp
+      const postDocRef = doc(db, "posts", postId);
+      const postDocSnap = await getDoc(postDocRef);
+      const postOwnerId = postDocSnap.data()?.userId; // Get the post owner ID
+      const postTitle = postDocSnap.data()?.title; // Get the post title
+  
+      const timestamp = new Date();
+  
+      // Add the comment to Firestore
       await addDoc(commentRef, {
         commentText: comment,
         created: Date.now(),
         userId: currentUser?.uid,
       });
+  
+      // Check if the post owner is the current user
+      if (postOwnerId !== currentUser?.uid) {
+        // Only send a notification if the post owner is not the current user
+        const notificationId = `${postId}-comment-${timestamp.getTime()}`;
+  
+        // Create a notification for the post owner
+        await setDoc(doc(db, "notifications", notificationId), {
+          postId,
+          type: "comment",  // Type is 'comment'
+          userId: currentUser?.uid,
+          postOwnerId,
+          timestamp,
+          message: `Your "${postTitle}" post has new comment! `,
+        });
+      }
+  
       toast.success("Comment has been added");
-      setComment("");
+      setComment(""); // Clear the comment input field
     } catch (error) {
       toast.error(error.message);
     }
   };
- 
   useEffect(() => {
     if (data) {
       setCommentLength(data.length);

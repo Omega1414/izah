@@ -24,24 +24,29 @@ const FollowBtn = ({ userId }) => {
     try {
       if (currentUser) {
         const followRef = doc(db, "users", currentUser?.uid, "follows", userId);
-        const followerRef = doc(
-          db,
-          "users",
-          userId,
-          "followers",
-          currentUser?.uid
-        );
+        const followerRef = doc(db, "users", userId, "followers", currentUser?.uid);
+        
         if (isFollowed) {
+          // Unfollow user
           await deleteDoc(followRef);
           await deleteDoc(followerRef);
           toast.success("User is unFollowed");
         } else {
-          await setDoc(followRef, {
-            userId: userId,
+          // Follow user
+          await setDoc(followRef, { userId: userId });
+          await setDoc(followerRef, { userId: currentUser?.uid });
+  
+          // Create a notification for the user who has been followed
+          const notificationRef = doc(db, "notifications", userId + "_" + currentUser?.uid); // Unique ID for the notification
+          await setDoc(notificationRef, {
+            type: "new_follower",
+            message: "You have new follower!",
+            timestamp: new Date(),
+            postOwnerId: userId, // The user who is being followed
+            followerId: currentUser?.uid, // The user who is following
+            read: false,
           });
-          await setDoc(followerRef, {
-            userId: userId,
-          });
+  
           toast.success("User is Followed");
         }
       }
