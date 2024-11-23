@@ -9,7 +9,10 @@ import { Blog } from "../../../Context/Context";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill-new";
 
-const Preview = ({ setPublish, description, title }) => {
+const Preview = () => {
+  const [description, setDescription] = useState("")
+  const [title, setTitle] = useState("")
+  const {publish, setPublish} = Blog()
   const imageRef = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
   const [tags, setTags] = useState([]);
@@ -138,7 +141,7 @@ const Preview = ({ setPublish, description, title }) => {
           <div className="flex-[1] flex flex-col gap-4 mb-5 md:mb-0">
             <h3 className="text-2xl">
               Publishing to:
-              <span className="font-bold capitalize">Milad Tech</span>
+              <span className="font-bold capitalize">İzah</span>
             </h3>
             <p>
               Add or change topics up to 5 so readers know what your story is

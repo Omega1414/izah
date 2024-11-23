@@ -9,8 +9,8 @@ const Comment = () => {
     <button
       onClick={() => setShowComment(true)}
       className="flex items-center gap-1 text-sm">
-      <FaRegComment className="text-lg" />
-      <span>{formatNum(commentLength)}</span>
+      <FaRegComment className="text-lg dark:text-blue-200" />
+      <span className="dark:text-blue-200">{formatNum(commentLength)}</span>
     </button>
   );
 };

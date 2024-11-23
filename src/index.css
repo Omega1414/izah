@@ -8,6 +8,7 @@
 
 body{
   @apply font-texts
+  dark:bg-gray-500
 }
 
 .size{

@@ -63,9 +63,10 @@ const FollowBtn = ({ userId }) => {
         onClick={handleFollow}
         className={`${
           pathname === "/" ? "border border-black" : ""
-        } px-3 py-[0.2rem] rounded-full
-        ${isFollowed ? "text-gray-500 border-none" : ""}`}>
-        {isFollowed ? "Following" : "Follow"}
+        } px-3 py-1 text-sm rounded-full text-white font-semibold
+        ${isFollowed ? "bg-gray-600" : "bg-blue-500"}`}>
+        {/* Apply blue background for follow, red for unfollow */}
+        {isFollowed ? "Unfollow" : "Follow"}
       </button>
     </>
   );

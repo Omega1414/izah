@@ -17,13 +17,13 @@ const EditPost = () => {
       <input
         type="text"
         placeholder="Title..."
-        className="text-4xl outline-none w-full"
+        className="text-4xl outline-none w-full dark:bg-gray-500 border-2 border-gray-200 p-2"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       <ReactQuill
         placeholder="Description..."
-        className="!text-[4rem] my-3"
+        className="!text-[4rem] my-3 border-2 p-2"
         theme="bubble"
         value={description}
         onChange={setDescription}

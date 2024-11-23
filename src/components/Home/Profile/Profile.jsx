@@ -10,10 +10,12 @@ import { Blog } from '../../../Context/Context';
 import { useParams } from 'react-router-dom';
 import useSingleFetch from '../../hooks/useSingleFetch';
 import FollowingModal from './FollowingModal';
+import FollowBtn from '../UserToFollow/FollowBtn';
+
 
 const Profile = () => {
   const { allUsers, currentUser } = Blog();
-  const { userId } = useParams();
+  const { userId } = useParams(); // Get the userId from the URL
 
   const activities = [
     {
@@ -43,11 +45,18 @@ const Profile = () => {
   return (
     <section className="size flex gap-[4rem] relative">
       <div className="mt-[9rem] flex-[2]">
-        <div className="flex items-end gap-4">
+        <div className="flex gap-4 items-center">
           <h2 className="text-3xl sm:text-5xl font-bold capitalize">
             {getUserData?.username}
           </h2>
-          <p className="text-gray-500 text-xs sm:text-sm">
+            {/* Follow/Unfollow button */}
+            {currentUser?.uid !== userId && (  // Prevent current user from following/unfollowing themselves
+            <FollowBtn userId={userId} />
+          )}
+       
+        </div>
+        <div className='flex gap-4 mt-3'>
+        <p className="text-gray-500 text-xs sm:text-sm">
             Followers({followers.length})
           </p>
           <p
@@ -56,7 +65,7 @@ const Profile = () => {
           >
             Following({follows.length})
           </p>
-        </div>
+          </div>
         <div className="flex items-center gap-5 mt-[1rem] border-b border-gray-300 mb-[3rem]">
           {activities.map((item, i) => (
             <div key={i} className={`py-[0.5rem] ${item.title === currentActive.title ? "border-b border-gray-500" : ""}`}>

@@ -8,7 +8,7 @@ export const nav = [
     path: "/",
   },
   {
-    title: "Write",
+    title: "Paylaş",
     path: "/",
   },
 ];

@@ -6,12 +6,14 @@ import { Blog } from "./Context/Context";
 import { ToastContainer } from "react-toastify";
 import HomeHeader from "./components/Home/Header/HomeHeader";
 import Profile from "./components/Home/Profile/Profile";
-import Write from "./components/Home/Write/Write";
+import moment from "moment";
+import "moment/locale/az";
 import SinglePost from "./components/Common/Posts/SinglePost";
 import EditPost from "./components/Common/Posts/EditPost";
 import FilterPost from "./components/Demo/FilterPost";
 
 function App() {
+  moment.locale("az");
     const {currentUser} = Blog()
   return (
    <>
@@ -21,7 +23,7 @@ function App() {
       {currentUser && <Route path="/" element={<Home/>}/>}
      {!currentUser && <Route path="/demo" element={<Demo/>} />}
      <Route path="/profile/:userId" element={<Profile/>} />
-     <Route path="/write" element={<Write/>} />
+    
      <Route path="/post/:postId" element={<SinglePost />} />
      <Route path="/editPost/:postId" element={<EditPost />} />
      <Route path="/filter/:tag" element={<FilterPost />} />

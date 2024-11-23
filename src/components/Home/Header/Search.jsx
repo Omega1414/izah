@@ -26,16 +26,16 @@ const Search = ({ modal, setModal }) => {
               : "invisible sm:visible sm:opacity-100 opacity-0"
           }
           transition-all duration-100`}>
-          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10">
-            <span className="text-2xl text-gray-400">
+          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-gray-400">
+            <span className="text-2xl text-gray-400 dark:text-white">
               <CiSearch />
             </span>
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-transparent outline-none py-[0.7rem] text-sm w-full"
+              className="bg-transparent outline-none py-[0.7rem] text-sm w-full dark:placeholder-white "
               type="text"
-              placeholder="Search Medium"
+              placeholder="Axtar"
             />
             {search !== "" && (
               <div className="absolute right-0 left-0 top-full bg-white shadow rounded-md">

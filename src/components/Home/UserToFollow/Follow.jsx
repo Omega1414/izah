@@ -30,8 +30,8 @@ const Follow = () => {
                   alt="userImg"
                 />
                 <div className="flex flex-col gap-1">
-                  <h2 className="font-bold capitalize">{username}</h2>
-                  <span className="leading-4 text-gray-500 text-sm line-clamp-2">
+                  <h2 className="font-bold capitalize dark:text-blue-300">{username}</h2>
+                  <span className="leading-4 text-gray-500 text-sm line-clamp-2 dark:text-blue-100">
                     {bio || "This user has no bio"}
                   </span>
                 </div>
@@ -45,8 +45,8 @@ const Follow = () => {
           onClick={() =>
             setCount((prev) => users.length < allUsers?.length && prev + 3)
           }
-          className="mb-3 text-green-900 text-sm hover:underline">
-          Load for more users
+          className="mb-3 text-green-900 text-sm hover:underline dark:text-blue-200">
+          Daha çox göstər
         </button>
       )}
     </>

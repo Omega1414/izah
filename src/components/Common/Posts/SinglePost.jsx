@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, increment, updateDoc } from "firebase/firestore";
+import { doc, getDoc, increment, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
 import Loading from "../../Loading/Loading";
@@ -15,27 +15,36 @@ import SharePost from "./Actions/SharePost";
 import SavedPost from "../Posts/Actions/SavedPost";
 import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
+import { GrView } from "react-icons/gr";
 
 const SinglePost = () => {
   const { postId } = useParams();
   const [post, setPost] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pageViews, setPageViews] = useState(0); // State to store page views count
   const { currentUser } = Blog();
-
-  // increment page views
   const isInitialRender = useRef(true);
+
+  // Increment page views if the user hasn't viewed it before
   useEffect(() => {
-    if (isInitialRender?.current) {
+    if (isInitialRender?.current && currentUser?.uid) {
       const incrementPageView = async () => {
         try {
-          const ref = doc(db, "posts", postId);
-          await updateDoc(
-            ref,
-            {
-              pageViews: increment(1),
-            },
-            { merge: true }
-          );
+          const postRef = doc(db, "posts", postId);
+          const postSnapshot = await getDoc(postRef);
+
+          if (postSnapshot.exists()) {
+            const postData = postSnapshot.data();
+
+            // Check if the user has already viewed the post
+            if (!postData.viewedBy?.includes(currentUser.uid)) {
+              // Increment page views and add user to the viewedBy array
+              await updateDoc(postRef, {
+                pageViews: increment(1),
+                viewedBy: arrayUnion(currentUser.uid), // Add current user ID to viewedBy array
+              });
+            }
+          }
         } catch (error) {
           toast.error(error.message);
         }
@@ -43,8 +52,9 @@ const SinglePost = () => {
       incrementPageView();
     }
     isInitialRender.current = false;
-  }, []);
+  }, [postId, currentUser]);
 
+  // Fetch post and page views data
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
@@ -61,6 +71,7 @@ const SinglePost = () => {
             if (getUser.exists()) {
               const { created, ...rest } = getUser.data();
               setPost({ ...postData, ...rest, id: postId });
+              setPageViews(postData.pageViews || 0); // Set page views from the post data
             }
           }
         }
@@ -72,7 +83,7 @@ const SinglePost = () => {
     };
 
     fetchPost();
-  }, [postId, post?.userId]);
+  }, [postId]);
 
   const { title, desc, postImg, username, created, userImg, userId } = post;
 
@@ -85,8 +96,8 @@ const SinglePost = () => {
       ) : (
         <>
           <section className="w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]">
-            <h2 className="text-4xl font-extrabold capitalize">{title}</h2>
-            <div className="flex items-center gap-2 py-[2rem]">
+            <h2 className="text-2xl lg:text-2xl font-bold capitalize font-sans text-center dark:text-white">{title}</h2>
+            <div className="flex items-center gap-2 py-[2rem] ">
               <img
                 onClick={() => navigate(`/profile/${userId}`)}
                 className="w-[3rem] h-[3rem] object-cover rounded-full cursor-pointer"
@@ -95,13 +106,15 @@ const SinglePost = () => {
               />
               <div>
                 <div className="capitalize">
-                  <span>{username} .</span>
-                  {currentUser && currentUser?.uid !== userId && (
-                    <FollowBtn userId={userId} />
-                  )}
+                  <span className="dark:text-blue-300 font-bold">{username}</span>
+                  <span className="ml-2">
+                    {currentUser && currentUser?.uid !== userId && (
+                      <FollowBtn userId={userId} />
+                    )}
+                  </span>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {readTime({ __html: desc })} min read .
+                <p className="text-sm text-gray-500 dark:text-blue-300">
+                 
                   <span className="ml-1">{moment(created).fromNow()}</span>
                 </p>
               </div>
@@ -110,8 +123,11 @@ const SinglePost = () => {
               <div className="flex items-center gap-5">
                 <Like postId={postId} />
                 <Comment />
+                <span className="text-gray-500 dark:text-blue-300 flex items-center">
+                <GrView className="mr-1"/> {pageViews}
+                </span>
               </div>
-              <div className="flex items-center pt-2 gap-5">
+              <div className="flex items-center pt-2 gap-5 dark:text-blue-200">
                 {post && <SavedPost post={post} />}
                 <SharePost />
                 {currentUser && currentUser?.uid === post?.userId && (
@@ -122,13 +138,13 @@ const SinglePost = () => {
             <div className="mt-[3rem]">
               {postImg && (
                 <img
-                  className="w-full h-[400px] object-cover"
+                  className="w-full max-h-[300px] object-cover lg:object-contain "
                   src={postImg}
                   alt="post-img"
                 />
               )}
               <div
-                className="mt-6"
+                className="mt-6 dark:text-white text-[18px]"
                 dangerouslySetInnerHTML={{ __html: desc }}
               />
             </div>

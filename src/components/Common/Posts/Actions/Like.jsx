@@ -65,9 +65,9 @@ const Like = ({ postId }) => {
   return (
     <button onClick={handleLike} className="flex items-center gap-1 text-sm">
       <PiHandsClappingDuotone
-        className={`text-xl ${isLiked ? "text-black" : "text-gray-500"}`}
+        className={`text-xl ${isLiked ? "text-black dark:text-blue-400" : "text-gray-500 dark:text-blue-200"}`}
       />
-      <span>{formatNum(data?.length)}</span>
+      <span className="dark:text-blue-200">{formatNum(data?.length)}</span>
     </button>
   );
 };
