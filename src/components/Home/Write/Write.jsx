@@ -18,23 +18,31 @@ const Write = () => {
     uploadBytes(storageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         const editor = editorRef.current;
+        
+        // Create a container for the image
+        const imgContainer = document.createElement("div");
+        imgContainer.style.position = "relative"; // Create a positioning context for the image
+
         const img = document.createElement("img");
         img.src = url;  // Use the uploaded image URL
         img.alt = "Inserted Image";
         img.style.maxWidth = "100%";
         img.style.margin = "20px 0";
+        img.style.cursor = "pointer"; // Indicate that the image is interactive
+
+        imgContainer.appendChild(img);
 
         const selection = window.getSelection();
         const range = selection.getRangeAt(0);
         range.deleteContents();
-        range.insertNode(img);
+        range.insertNode(imgContainer);
 
-        range.setStartAfter(img);
-        range.setEndAfter(img);
+        range.setStartAfter(imgContainer);
+        range.setEndAfter(imgContainer);
         selection.removeAllRanges();
         selection.addRange(range);
 
-        setContent(editor.innerHTML);
+        setContent(editor.innerHTML); // Update content after image is inserted
       });
     });
   };
@@ -61,6 +69,29 @@ const Write = () => {
     }
     setIsFocused(false);
   };
+
+  // Add double-click event listener to remove images
+  const handleDoubleClick = (event) => {
+    if (event.target.tagName === "IMG") {
+      const imgContainer = event.target.parentElement;
+      if (imgContainer) {
+        imgContainer.remove(); // Remove the image container
+        setContent(editorRef.current.innerHTML); // Update content after image is removed
+      }
+    }
+  };
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    
+    // Add the double-click event listener for removing images
+    editor.addEventListener("dblclick", handleDoubleClick);
+
+    // Clean up event listener when the component is unmounted
+    return () => {
+      editor.removeEventListener("dblclick", handleDoubleClick);
+    };
+  }, []);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -99,6 +130,7 @@ const Write = () => {
       >
         +
       </button>
+
       <div
         className={`${
           publish ? "visible opacity-100" : "invisible opacity-0"
