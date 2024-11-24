@@ -12,35 +12,46 @@ const Write = () => {
   const editorRef = useRef(null); // Ref to the contentEditable area for descriptions
   const addImageButtonRef = useRef(null); // Ref for the + button
 
-  // Insert image at the current cursor position inside the description div
   const insertImage = (image) => {
     const storageRef = ref(storage, `images/${image.name}`);
     uploadBytes(storageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         const editor = editorRef.current;
-
+  
         // Create a container for the image
         const imgContainer = document.createElement("div");
         imgContainer.style.position = "relative"; // Create a positioning context for the image
-
+  
         const img = document.createElement("img");
         img.src = url;  // Use the uploaded image URL
         img.alt = "Inserted Image";
         img.style.maxWidth = "100%";
         img.style.margin = "20px 0";
         img.style.cursor = "pointer"; // Indicate that the image is interactive
-
+  
         imgContainer.appendChild(img);
-
+  
         // Insert the image only inside the editorRef (description div)
         editor.appendChild(imgContainer);
-
-        // After inserting, update the content state
+  
+        // After inserting the image, create a new empty line for the cursor
+        const newLine = document.createElement("div");
+        newLine.innerHTML = "<br>"; // This creates a line break, which places the cursor on a new line
+        editor.appendChild(newLine);
+  
+        // Move the cursor to the new line
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(newLine); // Select the new line element
+        range.collapse(false); // Move the cursor to the end of the new line
+        selection.removeAllRanges();
+        selection.addRange(range);
+  
+        // Update the content state
         setContent(editor.innerHTML); 
       });
     });
   };
-
   // Handle insert image button click
   const handleInsertImage = () => {
     const input = document.createElement("input");
@@ -68,54 +79,19 @@ const Write = () => {
   };
 
   // Handle click to insert an empty line below an image and move the cursor there (inside the description div)
-  const handleClick = (event) => {
-    const editor = editorRef.current;
-
-    // Get the clicked position
-    const clickY = event.clientY;
-
-    // Find all images inside the editor
-    const images = editor.querySelectorAll("img");
-
-    for (let img of images) {
-      const rect = img.getBoundingClientRect();
-      const imgBottom = rect.bottom;
-
-      // Check if the click is below the image
-      if (clickY > imgBottom) {
-        // If the click is below the image, insert a new line (empty paragraph)
-        const newLine = document.createElement("p");
-        newLine.innerHTML = "&nbsp;"; // Empty space
-
-        // Insert the new line below the image inside the editor
-        img.parentElement.insertAdjacentElement("afterend", newLine);
-
-        // Move the cursor to the new line
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(newLine);
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        // Update content after insertion
-        setContent(editor.innerHTML);
-        break; // Break the loop after inserting one new line
-      }
-    }
-  };
+ 
 
   useEffect(() => {
     const editor = editorRef.current;
 
     // Add the double-click event listener for removing images
     editor.addEventListener("dblclick", handleDoubleClick);
-    editor.addEventListener("click", handleClick); // Add click event listener for adding a new line below the image
+   
 
     // Clean up event listeners when the component is unmounted
     return () => {
       editor.removeEventListener("dblclick", handleDoubleClick);
-      editor.removeEventListener("click", handleClick);
+      
     };
   }, []);
 
