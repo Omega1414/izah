@@ -4,13 +4,13 @@ import ProfileLists from './Activities/ProfileLists';
 import ProfileAbout from './Activities/ProfileAbout';
 import Modal from '../../../utils/Modal';
 import { LiaTimesSolid } from 'react-icons/lia';
-import { IoSettingsSharp } from 'react-icons/io5';
 import EditProfile from './EditProfile';
 import { Blog } from '../../../Context/Context';
 import { useParams } from 'react-router-dom';
 import useSingleFetch from '../../hooks/useSingleFetch';
 import FollowingModal from './FollowingModal';
 import FollowBtn from '../UserToFollow/FollowBtn';
+import Loading from '../../Loading/Loading';
 
 
 const Profile = () => {
@@ -43,6 +43,7 @@ const Profile = () => {
   const { data: followers } = useSingleFetch("users", userId, "followers");
 
   return (
+    
     <section className="size flex gap-[4rem] relative">
       <div className="mt-[9rem] flex-[2]">
         <div className="flex gap-4 items-center">
@@ -92,7 +93,7 @@ const Profile = () => {
           <div className="sticky top-7 flex flex-col justify-between">
             <img
               className="w-[3.5rem] h-[3.5rem] object-cover rounded-full"
-              src={getUserData?.userImg || "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png"}
+              src={getUserData?.userImg || "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc="}
               alt="profile-img"
             />
             <h2 className="py-2 font-bold capitalize">

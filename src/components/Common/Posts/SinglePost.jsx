@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Loading from "../../Loading/Loading";
 import { Blog } from "../../../Context/Context";
 import FollowBtn from "../../Home/UserToFollow/FollowBtn";
-import { readTime } from "../../../utils/helper";
+import "./post.css"
 import moment from "moment/moment";
 import Actions from "../Posts/Actions/Actions";
 import Like from "./Actions/Like";
@@ -144,9 +144,11 @@ const SinglePost = () => {
                 />
               )}
               <div
-                className="mt-6 dark:text-white text-[18px]"
-                dangerouslySetInnerHTML={{ __html: desc }}
-              />
+  className="mt-6 dark:text-white text-[18px]"
+  dangerouslySetInnerHTML={{
+    __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]"')  // Safeguard against undefined
+  }}
+/>
             </div>
           </section>
           {post && <Recommended post={post} />}

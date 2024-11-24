@@ -13,10 +13,10 @@ import { collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where, 
 import { db } from '../../../firebase/firebase'
 import { toast } from 'react-toastify'
 import { FaLightbulb } from 'react-icons/fa';
-import Preview from '../Write/Preview';
+import { LiaEditSolid } from 'react-icons/lia';
 
 const HomeHeader = () => {
-  const { allUsers, userLoading, currentUser, setPublish, publish, title, description } = Blog()
+  const { allUsers, userLoading, currentUser, setPublish, title, description } = Blog()
   const [modal, setModal] = useState(false)
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);  // Track the count of unread notifications
@@ -268,19 +268,29 @@ const HomeHeader = () => {
           <span className='flex sm:hidden text-3xl text-gray-300 cursor-pointer ' onClick={() => setSearchModal(true)}>
             <CiSearch />
           </span>
-          {pathname === "/" ? (
-            <button onClick={() => setPublish(true)} className='btn !bg-green-700 !py-1 !text-white !rounded-full'>Paylaş</button>
+          {pathname === "/write" ? (
+            <button
+              onClick={() => setPublish(true)}
+              className="btn !bg-green-700 !py-1 !text-white !rounded-full">
+              Publish
+            </button>
           ) : editPath === "editPost" ? (
-            <button onClick={handleEdit} className={`btn !bg-green-700 !py-1 !text-white !rounded-full ${loading ? "opacity-40" : ""}`}>
-              {loading ? "Yenilənir..." : "Yadda saxla"}
+            <button
+              onClick={handleEdit}
+              className={`btn !bg-green-700 !py-1 !text-white !rounded-full
+              ${loading ? "opacity-40" : ""}
+              `}>
+              {loading ? "Updating..." : "Save and Update"}
             </button>
           ) : (
-            <button onClick={() => setPublish(true)} className='hidden md:flex items-center gap-1 text-gray-500'>
-              <span className='text-md dark:text-white  dark:hover:text-blue-300 transition-colors duration-200 flex ' >
-             
-            <RxPencil2  className='text-xl mr-1'/> Paylaş
+            <Link
+              to="/write"
+              className="hidden md:flex items-center gap-1 text-gray-500">
+              <span className="text-3xl">
+                <LiaEditSolid />
               </span>
-            </button>
+              <span className="text-sm mt-2">Write</span>
+            </Link>
           )}
 
           <div className="relative">
@@ -369,7 +379,7 @@ const HomeHeader = () => {
       </div>
      
 
-       {publish && <Preview />}
+   
     
     </header>
   )

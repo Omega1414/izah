@@ -8,11 +8,9 @@ import { db, storage } from "../../../firebase/firebase";
 import { Blog } from "../../../Context/Context";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill-new";
+import "./styles.css";
 
-const Preview = () => {
-  const [description, setDescription] = useState("")
-  const [title, setTitle] = useState("")
-  const {publish, setPublish} = Blog()
+const Preview = ({ setPublish, description, title }) => {
   const imageRef = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
   const [tags, setTags] = useState([]);
@@ -49,18 +47,20 @@ const Preview = () => {
       }
 
       if (preview.title.length < 5) {
-        toast.error("Title must be at least 15 letters");
-        return
+        toast.error("Title must be at least 5 letters");
+        return;
       }
+
       if (desc.length < 22) {
-        toast.error("Descripton must be at least 15 letters");
-        return
+        toast.error("Description must be at least 22 letters");
+        return;
       }
+
       const collections = collection(db, "posts");
 
       let url;
       if (imageUrl) {
-        const storageRef = ref(storage, `image/${preview.photo.name}`);
+        const storageRef = ref(storage, `images/${preview.photo.name}`);
         await uploadBytes(storageRef, preview?.photo);
 
         url = await getDownloadURL(storageRef);
@@ -69,12 +69,13 @@ const Preview = () => {
       await addDoc(collections, {
         userId: currentUser?.uid,
         title: preview.title,
-        desc,
+        desc, // Save the description with image URLs
         tags,
-        postImg: url || "",
+        postImg: url || "", // Main image URL
         created: Date.now(),
         pageViews: 0,
       });
+
       toast.success("Post has been added");
       navigate("/");
       setPublish(false);
@@ -88,12 +89,14 @@ const Preview = () => {
       setLoading(false);
     }
   };
+
   return (
     <section className="absolute inset-0 bg-white z-30">
       <div className="size my-[2rem]">
         <span
           onClick={() => setPublish(false)}
-          className="absolute right-[1rem] md:right-[5rem] top-[3rem] text-2xl cursor-pointer">
+          className="absolute right-[1rem] md:right-[5rem] top-[3rem] text-2xl cursor-pointer"
+        >
           <LiaTimesSolid />
         </span>
         {/* preview the text  */}
@@ -103,8 +106,8 @@ const Preview = () => {
             <div
               style={{ backgroundImage: `url(${imageUrl})` }}
               onClick={handleClick}
-              className="w-full h-[200px] object-cover bg-gray-100 my-3 grid 
-                place-items-center cursor-pointer bg-cover bg-no-repeat ">
+              className="w-full h-[200px] object-cover bg-gray-100 my-3 grid place-items-center cursor-pointer bg-cover bg-no-repeat "
+            >
               {!imageUrl && "Add Image"}
             </div>
             <input
@@ -130,7 +133,18 @@ const Preview = () => {
               value={desc}
               onChange={setDesc}
               placeholder="Tell Your Story..."
-              className="py-3 border-b border-gray-300"
+              className="py-3 border-b border-gray-300 react-quill-container"
+              modules={{
+                toolbar: [
+                  [{ header: "1" }, { header: "2" }, { font: [] }],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["bold", "italic", "underline"],
+                  ["link"],
+                  ["image"],
+                  [{ align: [] }],
+                ],
+              }}
+              formats={["bold", "italic", "underline", "link", "image", "align"]}
             />
             <p className="text-gray-500 pt-4 text-sm">
               <span className="font-bold">Note:</span> Changes here will affect
@@ -150,7 +164,8 @@ const Preview = () => {
             <TagsInput value={tags} onChange={setTags} />
             <button
               onClick={handleSubmit}
-              className="btn !bg-green-800 !w-fit !text-white !rounded-full">
+              className="btn !bg-green-800 !w-fit !text-white !rounded-full"
+            >
               {loading ? "Submitting..." : "Publish Now"}
             </button>
           </div>

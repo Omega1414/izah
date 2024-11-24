@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { readTime } from "../../../utils/helper";
 import moment from "moment/moment";
 import SavedPost from "./Actions/SavedPost";
 import { Blog } from "../../../Context/Context";
@@ -15,37 +14,10 @@ const PostsCard = ({ post }) => {
   const [lineClamp, setLineClamp] = useState(4); // Default line clamp
   const [maxDescLength, setMaxDescLength] = useState(450); // Default max description length
 
-  useEffect(() => {
-    const updateResponsiveValues = () => {
-      const screenWidth = window.innerWidth;
-
-      // Adjust the number of lines based on the screen width
-      if (screenWidth < 640) {  // For small screens
-        setLineClamp(3);
-        setMaxDescLength(300);  // Shorten description for small screens
-      } else if (screenWidth < 1024) {  // For medium screens
-        setLineClamp(3);
-        setMaxDescLength(400);  // Slightly longer description
-      } else if (screenWidth < 1524) {  // For medium screens
-        setLineClamp(4);
-        setMaxDescLength(500);  // Slightly longer description
-      }
-       else {  // For larger screens
-        setLineClamp(5);
-        setMaxDescLength(1500);  // Longer description for larger screens
-      }
-    };
-
-    updateResponsiveValues();  // Set initial values
-    window.addEventListener("resize", updateResponsiveValues);  // Update values on resize
-
-    return () => {
-      window.removeEventListener("resize", updateResponsiveValues);  // Clean up event listener
-    };
-  }, []);
+  
 
   return (
-    <section className="bg-white shadow-lg rounded-md p-4 max-w-[850px] dark:bg-gray-400">
+    <section className="bg-white shadow-lg rounded-md p-4 w-full dark:bg-gray-400">
       <div
         onClick={() => navigate(`/post/${postId}`)}
         className="flex flex-col sm:flex-row gap-4 cursor-pointer max-w-[1000px]"
@@ -63,7 +35,7 @@ const PostsCard = ({ post }) => {
             }}
             style={{
               display: "-webkit-box",
-              WebkitLineClamp: lineClamp, // Dynamically set the line clamp
+              WebkitLineClamp: 2, // Dynamically set the line clamp
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
             }}
@@ -76,7 +48,7 @@ const PostsCard = ({ post }) => {
             <img
               src={postImg}
               alt="postImg"
-              className="w-[350px] h-[250px] object-contain rounded-md"
+              className="w-[180px] h-[180px] object-contain rounded-md"
             />
           )}
         </div>

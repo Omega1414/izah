@@ -35,7 +35,7 @@ const SignUp = ({setSignReq, setModal}) => {
               userId: user.uid,
               username: form.username,
               email: form.email,
-              userImg: "https://www.pngitem.com/pimgs/m/4-40070_user-staff-man-profile-user-account-icon-jpg.png",
+              userImg: "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc=",
               bio: "",
               created: Date.now()
           });

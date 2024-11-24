@@ -16,29 +16,33 @@ const Auth = ({modal, setModal}) => {
     const [createUser, setCreateUser] = useState(false)
     const [signReq, setSignReq] = useState("")
     const navigate = useNavigate()
-    const googleAuth = async() => {
-        try {
-            const createUser = await signInWithPopup(auth, provider);
-            const newUser = createUser.user;
-            const ref = doc(db, "users", newUser.uid);
-            const userDoc = await getDoc(ref);
+    const googleAuth = async () => {
+    try {
+        const createUser = await signInWithPopup(auth, provider);
+        const newUser = createUser.user;
+        
+        // Make sure photoURL exists before proceeding
+        const userPhoto = newUser.photoURL || "defaultImageURL";  // fallback to default image if photoURL is empty
+        
+        const ref = doc(db, "users", newUser.uid);
+        const userDoc = await getDoc(ref);
 
-            if(!userDoc.exists()){
-                await setDoc(ref,{
-                    userId: newUser.uid,
-                    username: newUser.displayName,
-                    email: newUser.email,
-                    userImg: newUser.photoURL,
-                    bio: "",
-                });
-                navigate("/");
-                toast.success("User have been signed in");
-                setModal(false)
-            }
-        } catch (error) {
-            toast.error(error.message)
+        if (!userDoc.exists()) {
+            await setDoc(ref, {
+                userId: newUser.uid,
+                username: newUser.displayName,
+                email: newUser.email,
+                userImg: userPhoto,
+                bio: "",
+            });
+            toast.success("User has been signed in");
+            setModal(false);
         }
+        navigate("/");
+    } catch (error) {
+        toast.error(error.message);
     }
+};
  
     const hidden = modal ? "visible opacity-100" : "invisible opacity-0" 
   return (
