@@ -17,24 +17,32 @@ const Actions = ({postId, title, desc}) => {
     const navigate = useNavigate(null)
 
     const handleEdit = () => {
-     navigate(`/editPost/${postId}`)
-     setUpdateData({title, description: desc})
+        navigate(`/editPost/${postId}`)
+        setUpdateData({title, description: desc})
     }
+
+    // Add confirmation before deleting the post
     const handleRemove = async() => {
-     try {
-        const ref = doc(db, "posts", postId)
-        const likeRef = doc(db, "posts", postId, "likes", currentUser?.uid)
-        const commentRef = doc(db, "posts", postId, "comments", currentUser?.uid)
-        const savedPostRef = doc(db, "users", currentUser?.uid, "savedPost", postId)
-        await deleteDoc(ref)
-        await deleteDoc(likeRef)
-        await deleteDoc(commentRef)
-        await deleteDoc(savedPostRef)
-        toast.success("Deleted")
-        navigate("/")
-     } catch (error) {
-        toast.error(error.message)
-     }
+        const userConfirmed = window.confirm("Are you sure you want to delete this post? This action cannot be undone.");
+        
+        if (!userConfirmed) {
+            return; // If the user cancels, do nothing
+        }
+
+        try {
+            const ref = doc(db, "posts", postId)
+            const likeRef = doc(db, "posts", postId, "likes", currentUser?.uid)
+            const commentRef = doc(db, "posts", postId, "comments", currentUser?.uid)
+            const savedPostRef = doc(db, "users", currentUser?.uid, "savedPost", postId)
+            await deleteDoc(ref)
+            await deleteDoc(likeRef)
+            await deleteDoc(commentRef)
+            await deleteDoc(savedPostRef)
+            toast.success("Post Deleted Successfully")
+            navigate("/")
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
   return (

@@ -10,7 +10,7 @@ const Posts = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   // Categories you want to show above the posts
-  const categories = ["Ekologiya", "İT", "Geologiya", "İncəsənət"];
+  const categories = ["Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya"];
 
   // Normalize the category and post tags for case-insensitive and diacritic-insensitive comparison
   const normalizeString = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

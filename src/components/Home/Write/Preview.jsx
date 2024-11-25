@@ -27,13 +27,13 @@ const Preview = ({ setPublish, description, title }) => {
   useEffect(() => {
     if (title || description) {
       setPreview({ ...preview, title: title });
-      setDesc(description);
+      setDesc(description);  // Ensure description is set even if it's empty
     } else {
       setPreview({ ...preview, title: "" });
-      setDesc("");
+      setDesc("");  // Ensure description is empty if not provided
     }
   }, [title, description]);
-
+console.log(description)
   const handleClick = () => {
     imageRef.current.click();
   };
