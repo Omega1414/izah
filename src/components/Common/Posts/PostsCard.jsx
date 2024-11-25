@@ -59,7 +59,8 @@ const PostsCard = ({ post }) => {
       {/* Post Footer (Read time, Date, Page Views, etc.) */}
       <div className="flex items-center justify-between w-full mt-2 md:mt-1">
         <span className="text-xs text-gray-600 flex items-center dark:text-yellow-100 text-[14px]">
-          <GrView /> <p className="ml-[4px]">{pageViews}</p> <p className="ml-2">{moment(created).format("MMM DD")}</p>
+          <GrView /> <p className="ml-[4px]">{pageViews}</p><p className="ml-1">|</p> <p className="ml-1 capitalize">{moment(created).format("MMM DD, YYYY HH:mm")}</p>
+
         </span>
         <div className="flex items-end justify-end gap-3">
           <SavedPost post={post} />

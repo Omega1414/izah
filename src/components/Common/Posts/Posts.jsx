@@ -28,7 +28,7 @@ const Posts = () => {
       <div className="flex gap-4 flex-wrap">
       <button
           onClick={() => setSelectedCategory("")}
-          className={`px-4 py-2 border rounded-full ${!selectedCategory ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 border  ${!selectedCategory ? "bg-blue-500 text-white" : "bg-gray-200"}`}
         >
           Son paylaşımlar
         </button>
@@ -36,7 +36,7 @@ const Posts = () => {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 border rounded-full ${selectedCategory === category ? "bg-blue-600 text-white" : "bg-gray-200"}`}
+            className={`px-4 py-2 border ${selectedCategory === category ? "bg-blue-500 text-white" : "bg-gray-200"}`}
           >
             {category}
           </button>
