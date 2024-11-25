@@ -106,7 +106,12 @@ const SinglePost = () => {
               />
               <div>
                 <div className="capitalize">
-                  <span className="dark:text-blue-300 font-bold">{username}</span>
+                <span
+          onClick={() => navigate(`/profile/${userId}`)} // Add onClick here to navigate to the profile page
+          className="dark:text-blue-300 font-bold cursor-pointer"
+        >
+          {username}
+        </span>
                   <span className="ml-2">
                     {currentUser && currentUser?.uid !== userId && (
                       <FollowBtn userId={userId} />

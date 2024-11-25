@@ -69,7 +69,7 @@ const Profile = () => {
           </div>
         <div className="flex items-center gap-5 mt-[1rem] border-b border-gray-300 mb-[3rem]">
           {activities.map((item, i) => (
-            <div key={i} className={`py-[0.5rem] ${item.title === currentActive.title ? "border-b border-gray-500" : ""}`}>
+            <div key={i} className={`py-[0.5rem] ${item.title === currentActive.title ? "border-b border-gray-500 dark:border-white" : ""}`}>
               <button onClick={() => setCurrentActive(item)}>{item.title}</button>
             </div>
           ))}
@@ -81,7 +81,7 @@ const Profile = () => {
       <Modal modal={modal} setModal={setModal}>
         <div
           className={`flex-[1] border-l border-gray-300 p-[2rem] z-10
-            fixed right-0 bottom-0 top-0 w-[18rem] bg-white md:sticky
+            fixed right-0 bottom-0 top-0 w-[18rem] bg-white dark:bg-gray-500 md:sticky
             ${modal ? "translate-x-0" : "translate-x-[100%] md:translate-x-0"}
             transition-all duration-500`}
         >

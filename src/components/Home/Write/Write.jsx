@@ -17,28 +17,28 @@ const Write = () => {
     uploadBytes(storageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         const editor = editorRef.current;
-  
+
         // Create a container for the image
         const imgContainer = document.createElement("div");
         imgContainer.style.position = "relative"; // Create a positioning context for the image
-  
+
         const img = document.createElement("img");
         img.src = url;  // Use the uploaded image URL
         img.alt = "Inserted Image";
         img.style.maxWidth = "100%";
         img.style.margin = "20px 0";
         img.style.cursor = "pointer"; // Indicate that the image is interactive
-  
+
         imgContainer.appendChild(img);
-  
+
         // Insert the image only inside the editorRef (description div)
         editor.appendChild(imgContainer);
-  
+
         // After inserting the image, create a new empty line for the cursor
         const newLine = document.createElement("div");
         newLine.innerHTML = "<br>"; // This creates a line break, which places the cursor on a new line
         editor.appendChild(newLine);
-  
+
         // Move the cursor to the new line
         const selection = window.getSelection();
         const range = document.createRange();
@@ -46,12 +46,13 @@ const Write = () => {
         range.collapse(false); // Move the cursor to the end of the new line
         selection.removeAllRanges();
         selection.addRange(range);
-  
+
         // Update the content state
         setContent(editor.innerHTML); 
       });
     });
   };
+
   // Handle insert image button click
   const handleInsertImage = () => {
     const input = document.createElement("input");
@@ -64,6 +65,22 @@ const Write = () => {
     };
     input.click();
   };
+
+  const handleEditorChange = (event) => {
+    setContent(event.target.innerHTML); // Update the content state directly on text changes
+  };
+
+  useEffect(() => {
+    const editor = editorRef.current;
+
+    // Add event listener to detect changes in the editor
+    editor.addEventListener("input", handleEditorChange);
+
+    // Clean up event listeners when the component is unmounted
+    return () => {
+      editor.removeEventListener("input", handleEditorChange);
+    };
+  }, []);
 
  
 
@@ -107,41 +124,39 @@ const Write = () => {
 
   return (
     <section className="write-container">
-      <input
-        type="text"
-        placeholder="Başlıq əlavə edin..."
-        className="text-4xl outline-none w-full"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-     
+    <input
+      type="text"
+      placeholder="Başlıq əlavə edin..."
+      className="text-4xl outline-none w-full"
+      value={title}
+      onChange={(e) => setTitle(e.target.value)}
+    />
+    <div
+      ref={editorRef}
+      contentEditable
+      className="content-editable my-5 p-5 border border-gray-300"
+      dangerouslySetInnerHTML={{ __html: content }}
+      placeholder="Start writing here..."
+    />
+    <button
+      ref={addImageButtonRef}
+      onClick={handleInsertImage}
+      className="add-image-btn"
+    >
+      +
+    </button>
+    <span className="ml-2">Şəkillər əlavə etmək klikləyin. Qeyd: Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</span>
+    <div
+      className={`${
+        publish ? "visible opacity-100" : "invisible opacity-0"
+      } transition-all duration-200`}>
+      <Preview
+        setPublish={setPublish}
+        description={content}
+        title={title}
       />
-      <div
-        ref={editorRef}
-        contentEditable
-        className="content-editable my-5 p-5 border border-gray-300"
-        dangerouslySetInnerHTML={{ __html: content }}
-        placeholder="Start writing here..."
-        // Handle blur manually
-      />
-      <button
-        ref={addImageButtonRef}
-        onClick={handleInsertImage}
-        className="add-image-btn"
-      >
-        + 
-      </button>
-      <span className="ml-2">Şəkillər əlavə etmək klikləyin. Qeyd: Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</span>
-      <div
-        className={`${
-          publish ? "visible opacity-100" : "invisible opacity-0"
-        } transition-all duration-200`}>
-        <Preview
-          setPublish={setPublish}
-          description={content}
-          title={title}
-        />
-      </div>
-    </section>
+    </div>
+  </section>
   );
 };
 

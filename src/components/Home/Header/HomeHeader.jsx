@@ -285,11 +285,11 @@ const HomeHeader = () => {
           ) : (
             <Link
               to="/write"
-              className="hidden md:flex items-center gap-1 text-gray-500">
-              <span className="text-3xl">
+              className="hidden md:flex items-center gap-1 text-gray-500 dark:text-white justify-center dark:hover:text-blue-300 transition-colors duration-200">
+              <span className="text-2xl mb-1">
                 <LiaEditSolid />
               </span>
-              <span className="text-sm mt-2">Write</span>
+              <span className="text-md">Paylaş</span>
             </Link>
           )}
 
