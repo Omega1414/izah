@@ -46,7 +46,7 @@ const Actions = ({postId, title, desc}) => {
     }
 
   return (
-    <div className='relative z-60' style={{ position: 'relative', zIndex: 100 }}>
+    <div className='relative z-60' style={{ position: 'relative', zIndex: 1 }}>
         <button onClick={handleClick}>
             <BsThreeDots className='text-2xl' />
         </button>

@@ -9,12 +9,12 @@ import { doc, updateDoc } from "firebase/firestore";
 const EditProfile = ({ editModal, setEditModal, getUserData }) => {
   const imgRef = useRef(null);
   const [imgUrl, setImgUrl] = useState("");
-  // loading must be implemented in the button
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     username: "",
     userImg: "",
     bio: "",
+    allowSavedPosts: false, // Add this field to track saved post visibility
   });
 
   const btn = "border border-green-600 py-2 px-5 rounded-full text-green-600";
@@ -22,16 +22,14 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
     imgRef.current.click();
   };
 
-  // if there is data inside our database
   useEffect(() => {
     if (getUserData) {
       setForm(getUserData);
     } else {
-      setForm({ username: "", bio: "", userImg: "" });
+      setForm({ username: "", bio: "", userImg: "", allowSavedPosts: false });
     }
   }, [getUserData]);
 
-  // save form
   const saveForm = async () => {
     if (form["username"] === "" || form["bio"] === "") {
       toast.error("Boş xana qalmamalıdır");
@@ -52,6 +50,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
         username: form.username,
         userImg: imgUrl ? imageUrl : form.userImg,
         userId: getUserData?.userId,
+        allowSavedPosts: form.allowSavedPosts, // Save the setting to Firestore
       });
       setLoading(false);
       setEditModal(false);
@@ -63,26 +62,22 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
 
   return (
     <Modal modal={editModal} setModal={setEditModal}>
-      <div
-        className="center w-[95%] md:w-[45rem] bg-white mx-auto shadows
-        my-[1rem] z-20 mb-[3rem] p-[2rem]">
-        {/* head  */}
+      <div className="center w-[95%] md:w-[45rem] bg-white mx-auto shadows my-[1rem] z-20 mb-[3rem] p-[2rem]">
+        {/* head */}
         <div className="flex items-center justify-between">
           <h2 className="font-bold text-xl">Profile information</h2>
           <button onClick={() => setEditModal(false)} className="text-xl">
             <LiaTimesSolid />
           </button>
         </div>
-        {/* body  */}
+        {/* body */}
         <section className="mt-6">
           <p className="pb-3 text-sm text-gray-500">Photo</p>
           <div className="flex gap-[2rem]">
             <div className="w-[5rem]">
               <img
                 className="min-h-[5rem] min-w-[5rem] object-cover border border-gray-400 rounded-full"
-                src={
-                  imgUrl ? imgUrl : form.userImg ? form.userImg : "/profile.jpg"
-                }
+                src={imgUrl ? imgUrl : form.userImg ? form.userImg : "/profile.jpg"}
                 alt="profile-img"
               />
               <input
@@ -96,21 +91,9 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
                 hidden
               />
             </div>
-            <div>
-              <div className="flex gap-4 text-sm">
-                <button onClick={openFile} className="text-green-600">
-                  Update
-                </button>
-                <button className="text-red-600">Remove</button>
-              </div>
-              <p className="w-full sm:w-[20rem] text-gray-500 text-sm pt-2">
-                Recommended: Square JPG, PNG, or GIF, at least 1,000 pixels per
-                side.
-              </p>
-            </div>
           </div>
         </section>
-        {/* Profile edit form  */}
+        {/* Profile edit form */}
         <section className="pt-[1rem] text-sm">
           <label className="pb-3 block" htmlFor="">
             Name*
@@ -123,10 +106,6 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
             className="p-1 border-b border-black w-full outline-none"
             maxLength={50}
           />
-          <p className="text-sm text-gray-600 pt-2">
-            Appears on your Profile page, as your byline, and in your responses.
-            {form.username.length}/50
-          </p>
           <section className="pt-[1rem] text-sm">
             <label className="pb-3 block" htmlFor="">
               Bio*
@@ -139,24 +118,24 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
               className="p-1 border-b border-black w-full outline-none"
               maxLength={160}
             />
-            <p className="text-sm text-gray-600 pt-2">
-              Appears on your Profile and next to your stories.{" "}
-              {form.bio.length}/160
-            </p>
+          </section>
+          {/* Allow saved posts visibility checkbox */}
+          <section className="pt-[1rem] flex">
+            <label className="block text-sm text-gray-600">
+              Seçilənlər bölməsi hamıya açıq
+            </label>
+            <input
+              type="checkbox"
+              checked={form.allowSavedPosts}
+              onChange={(e) => setForm({ ...form, allowSavedPosts: e.target.checked })}
+              className="ml-2"
+            />
           </section>
         </section>
-        {/* foot  */}
+        {/* foot */}
         <div className="flex items-center justify-end gap-4 pt-[2rem]">
-          <button onClick={() => setEditModal(false)} className={btn}>
-            Cancel
-          </button>
-          <button
-            onClick={saveForm}
-            className={`${btn} bg-green-800 text-white ${
-              loading ? "opacity-50" : ""
-            }`}>
-            Save
-          </button>
+          <button onClick={() => setEditModal(false)} className={btn}>Cancel</button>
+          <button onClick={saveForm} className={`${btn} bg-green-800 text-white ${loading ? "opacity-50" : ""}`}>Save</button>
         </div>
       </div>
     </Modal>

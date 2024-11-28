@@ -151,7 +151,7 @@ const SinglePost = () => {
               <div
   className="mt-6 dark:text-gray-300 text-[18px]"
   dangerouslySetInnerHTML={{
-    __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]"')  // Safeguard against undefined
+    __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]" style="display: block; margin: 0 auto;"')  // Safeguard against undefined
   }}
 />
             </div>

@@ -11,6 +11,7 @@ import useSingleFetch from '../../hooks/useSingleFetch';
 import FollowingModal from './FollowingModal';
 import FollowersModal from './FollowersModal'; // Import FollowersModal
 import FollowBtn from '../UserToFollow/FollowBtn';
+import { IoSettingsSharp } from 'react-icons/io5';
 
 const Profile = () => {
   const { allUsers, currentUser, postData } = Blog();
@@ -69,9 +70,15 @@ const Profile = () => {
         </div>
         <currentActive.comp getUserData={getUserData} setEditModal={setEditModal} />
       </div>
-
+   {/* button to open the side bar  */}
+   <button
+        onClick={() => setModal(true)}
+        className="fixed top-[8rem] right-0 w-[2rem] h-[2rem] bg-black text-white dark:bg-darkText dark:text-black
+        grid place-items-center md:hidden">
+        <IoSettingsSharp />
+      </button>
       <Modal modal={modal} setModal={setModal}>
-        <div className={`flex-[1] border-l border-gray-300 p-[2rem] z-10 fixed right-0 bottom-0 top-0 w-[18rem]  md:sticky ${modal ? "translate-x-0" : "translate-x-[100%] md:translate-x-0"} transition-all duration-300`}>
+        <div className={`flex-[1] border-l border-gray-300 p-[2rem] z-10 bg-white dark:bg-darkBg fixed right-0 bottom-0 top-0 w-[18rem]  md:sticky ${modal ? "translate-x-0" : "translate-x-[100%] md:translate-x-0"} transition-all duration-300`}>
           <div className="pb-4 text-right">
             <button onClick={() => setModal(false)} className="inline-block md:hidden">
               <LiaTimesSolid />
