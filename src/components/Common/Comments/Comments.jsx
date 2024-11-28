@@ -25,7 +25,7 @@ const Comments = ({ postId }) => {
   const writeComment = async () => {
     try {
       if (comment === "") {
-        toast.error("The input must be filled.");
+        toast.error("Boş qalmamalıdır");
         return;
       }
   
@@ -62,7 +62,7 @@ const Comments = ({ postId }) => {
         });
       }
   
-      toast.success("Comment has been added");
+      toast.success("Rəy əlavə olundu");
       setComment(""); // Clear the comment input field
     } catch (error) {
       toast.error(error.message);

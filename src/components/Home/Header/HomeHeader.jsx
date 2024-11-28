@@ -40,7 +40,7 @@ const HomeHeader = () => {
         desc: description,
       })
       navigate(`/post/${postId}`)
-      toast.success("Updated")
+      toast.success("Paylaşım yeniləndi")
     } catch (error) {
       toast.error(error.message)
     } finally {
@@ -177,9 +177,9 @@ const HomeHeader = () => {
   
           // Update the state (optional)
           setNotifications([]);
-          toast.success("All notifications cleared.");
+          toast.success("Bütün bildirişlər silindi");
         } else {
-          toast.info("No notifications to clear.");
+          toast.info("Bildiriş yoxdur");
         }
       } catch (error) {
         toast.error("Error clearing notifications: " + error.message);
@@ -213,7 +213,7 @@ const HomeHeader = () => {
   }, [isDarkMode]);
   
   return (
-    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-600'>
+    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-700'>
       {userLoading && <Loading />}
       <div className='size h-[60px] flex items-center justify-between'>
         <div className='flex items-center gap-3'>
@@ -230,7 +230,7 @@ const HomeHeader = () => {
                {/* Light/Dark Mode Toggle */}
                <div className="flex items-center gap-4">
           {/* Mode names (Light on the left, Dark on the right) */}
-          <span className="text-sm text-gray-700 dark:text-white">İşıqlı</span>
+          <span className="hidden md:flex text-sm text-gray-700 dark:text-white">İşıqlı</span>
 
           {/* Mode switcher */}
           <div
@@ -252,7 +252,7 @@ const HomeHeader = () => {
             />
             {/* Dark mode icon */}
             <IoMdMoon
-              className={`text-xl text-gray-300 absolute right-1 transition-opacity duration-300 ${
+              className={`text-xl text-gray-700  absolute right-1 transition-opacity duration-300 ${
                 isDarkMode ? 'opacity-100' : 'opacity-0'
               }`}
               style={{ top: '50%', transform: 'translateY(-50%)' }} // Center the icon vertically
@@ -260,7 +260,7 @@ const HomeHeader = () => {
           </div>
 
           {/* Dark Mode Name */}
-          <span className="text-sm text-gray-700 dark:text-white">Qaranlıq</span>
+          <span className="hidden md:flex text-sm text-gray-700 dark:text-white">Qaranlıq</span>
         </div>
 
       
@@ -272,7 +272,7 @@ const HomeHeader = () => {
             <button
               onClick={() => setPublish(true)}
               className="btn !bg-green-700 !py-1 !text-white !rounded-full">
-              Publish
+              Paylaş
             </button>
           ) : editPath === "editPost" ? (
             <button
@@ -365,7 +365,7 @@ const HomeHeader = () => {
               onClick={() => setModal(true)}
               className='w-[2.3rem] h-[2.3rem] object-cover rounded-full cursor-pointer'
               src={getUserData?.userImg ? getUserData?.userImg : "/profile.jpg"} alt="profile-img" />
-            <span onClick={() => setModal(true)} className='text-gray-500 cursor-pointer'>
+            <span onClick={() => setModal(true)} className='text-gray-500 cursor-pointer dark:text-darkText'>
               <MdKeyboardArrowDown />
             </span>
             <Modal modal={modal} setModal={setModal}>

@@ -35,7 +35,7 @@ const Auth = ({modal, setModal}) => {
                 userImg: userPhoto,
                 bio: "",
             });
-            toast.success("User has been signed in");
+            toast.success("Yeni hesab yaradıldı");
             setModal(false);
         }
         navigate("/");

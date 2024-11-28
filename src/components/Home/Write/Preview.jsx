@@ -33,7 +33,7 @@ const Preview = ({ setPublish, description, title }) => {
       setDesc("");  // Ensure description is empty if not provided
     }
   }, [title, description]);
-console.log(description)
+
   const handleClick = () => {
     imageRef.current.click();
   };
@@ -42,17 +42,17 @@ console.log(description)
     setLoading(true);
     try {
       if (preview.title === "" || desc === "" || tags.length === 0) {
-        toast.error("All fields are required!!!");
+        toast.error("Bütün xanaları doldurun (açar söz həmçinin)");
         return;
       }
 
       if (preview.title.length < 5) {
-        toast.error("Title must be at least 5 letters");
+        toast.error("Başlıqda ən azı 5 simvol olmalıdır");
         return;
       }
 
       if (desc.length < 22) {
-        toast.error("Description must be at least 22 letters");
+        toast.error("Açıqlama qismində ən az 22 simvol olmalıdır");
         return;
       }
 
@@ -76,7 +76,7 @@ console.log(description)
         pageViews: 0,
       });
 
-      toast.success("Post has been added");
+      toast.success("Paylaşım əlavə olundu");
       navigate("/");
       setPublish(false);
       setPreview({
@@ -158,8 +158,7 @@ console.log(description)
               <span className="font-bold capitalize">İzah</span>
             </h3>
             <p>
-              Add or change topics up to 5 so readers know what your story is
-              about
+              Paylaşımınızın nə barədə olduğunu izah edən açar sözlər əlavə edin
             </p>
             <TagsInput value={tags} onChange={setTags} />
             <button

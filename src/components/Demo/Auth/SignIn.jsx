@@ -22,7 +22,7 @@ const SignIn = ({setSignReq}) => {
      
       navigate("/");
       setTimeout(() => {
-        toast.success("User has been logged in");
+        toast.success("Hesaba daxil oldunuz");
       }, 500);  
       
       setLoading(false);

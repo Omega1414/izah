@@ -60,7 +60,7 @@ const Search = ({ modal, setModal }) => {
                     ))}
                   </>
                 ) : (
-                  <p className="text-sm text-gray-500 p-3">No Post Found</p>
+                  <p className="text-sm text-gray-500 p-3">Nəticə yoxdur</p>
                 )}
               </div>
             )}

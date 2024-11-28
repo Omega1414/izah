@@ -34,21 +34,23 @@ const Write = () => {
 
         imgContainer.appendChild(img);
 
-        // Insert the image at the current cursor position
-        range.deleteContents(); // Delete any selected content before inserting the image
-        range.insertNode(imgContainer); // Insert the image container where the cursor is
+        // Insert the image at the current cursor position, but only inside the editorRef area
+        if (editor.contains(range.startContainer)) {
+          range.deleteContents(); // Delete any selected content before inserting the image
+          range.insertNode(imgContainer); // Insert the image container where the cursor is
 
-        // Create a new range to place the cursor after the inserted image
-        const newRange = document.createRange();
-        newRange.setStartAfter(imgContainer);
-        newRange.setEndAfter(imgContainer);
+          // Create a new range to place the cursor after the inserted image
+          const newRange = document.createRange();
+          newRange.setStartAfter(imgContainer);
+          newRange.setEndAfter(imgContainer);
 
-        // Update the selection with the new range (keeps the cursor after the image)
-        selection.removeAllRanges();
-        selection.addRange(newRange);
+          // Update the selection with the new range (keeps the cursor after the image)
+          selection.removeAllRanges();
+          selection.addRange(newRange);
 
-        // Update the content state
-        setContent(editor.innerHTML); 
+          // Update the content state
+          setContent(editor.innerHTML); 
+        }
       });
     });
   };
@@ -65,8 +67,6 @@ const Write = () => {
     };
     input.click();
   };
-
- 
 
   // Add double-click event listener to remove images
   const handleDoubleClick = (event) => {
@@ -85,15 +85,13 @@ const Write = () => {
     // Add the double-click event listener for removing images
     editor.addEventListener("dblclick", handleDoubleClick);
 
-
     // Clean up event listeners when the component is unmounted
     return () => {
       editor.removeEventListener("dblclick", handleDoubleClick);
-    
     };
   }, []);
 
-  // Detect click outside of the Write component to update the content state
+  // Prevent inserting images outside of the contentEditable area
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (writeContainerRef.current && !writeContainerRef.current.contains(e.target)) {
@@ -127,14 +125,14 @@ const Write = () => {
       <input
         type="text"
         placeholder="Başlıq əlavə edin..."
-        className="text-4xl outline-none w-full"
+        className="text-3xl outline-none w-full dark:bg-darkBg dark:border-2 dark:p-2 dark:border-gray-400 dark:text-darkText"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       <div
         ref={editorRef}
         contentEditable
-        className="content-editable my-5 p-5 border border-gray-300"
+        className="content-editable my-5 p-5 border border-gray-300 dark:text-darkText"
         dangerouslySetInnerHTML={{ __html: content }}
         placeholder="Start writing here..."
       />
@@ -145,7 +143,11 @@ const Write = () => {
       >
         +
       </button>
-      <span className="ml-2">Şəkillər əlavə etmək klikləyin. <br /><p className="mt-2"> Qeyd: Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</p></span>
+      <span className="ml-2 dark:text-darkText">Şəkillər əlavə etmək üçün klikləyin. <br />
+      <p className="mt-2"> Qeyd: Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</p>
+      <p className="mt-2"> Şəkili əlavə etmək üçün ilk öncə mətnin içində əlavə edəcəyiniz yerə klikləyin.</p>
+      <p className="mt-2"> Davam etmək üçün sağ üstdə "Paylaş" düyməsini basın.</p>
+      </span>
       <div
         className={`${
           publish ? "visible opacity-100" : "invisible opacity-0"

@@ -21,7 +21,7 @@ const SharePost = () => {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(path);
-      toast.success("Link has been copied");
+      toast.success("Link kopyalandı");
       setShowDrop(false);
     } catch (error) {
       toast.error(error.message);
@@ -29,11 +29,11 @@ const SharePost = () => {
     }
   };
   return (
-    <div className="relative">
+    <div className="relative ">
       <button onClick={() => setShowDrop(!showDrop)}>
         <CiShare1 className="text-2xl" />
       </button>
-      <DropDown showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
+      <DropDown  showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
         <Button click={copyLink} title="Copy Link" icon={<BiLink />} />
         <TwitterShareButton url={path}>
           <Button title="Share On Twitter" icon={<BiLogoTwitter />} />
@@ -56,7 +56,7 @@ const Button = ({ click, icon, title }) => {
     <button
       onClick={click}
       className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left
-      flex items-center gap-2 cursor-pointer text-gray-500">
+      flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
       <span className="text-[1.2rem]">{icon}</span>
       {title}
     </button>

@@ -29,12 +29,12 @@ const SavedPost = ({ post }) => {
 
         if (isSaved) {
           await deleteDoc(saveRef);
-          toast.success("Post has been unsaved");
+          toast.success("Paylaşım silindi");
         } else {
           await setDoc(saveRef, {
             ...post,
           });
-          toast.success("Post has been Saved");
+          toast.success("Paylaşım əlavə olundu");
         }
       } else {
         setAuthModel(true);

@@ -34,7 +34,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
   // save form
   const saveForm = async () => {
     if (form["username"] === "" || form["bio"] === "") {
-      toast.error("All inputs are required!!!");
+      toast.error("Boş xana qalmamalıdır");
       return;
     }
 
@@ -55,7 +55,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
       });
       setLoading(false);
       setEditModal(false);
-      toast.success("Profile has been updated");
+      toast.success("Profil yeniləndi");
     } catch (error) {
       toast.error(error.message);
     }

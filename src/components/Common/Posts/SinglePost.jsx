@@ -96,7 +96,7 @@ const SinglePost = () => {
       ) : (
         <>
           <section className="w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]">
-            <h2 className="text-2xl lg:text-2xl font-bold capitalize font-sans text-center dark:text-white">{title}</h2>
+            <h2 className="text-2xl lg:text-2xl font-bold capitalize font-sans text-center dark:text-darkText">{title}</h2>
             <div className="flex items-center gap-2 py-[2rem] ">
               <img
                 onClick={() => navigate(`/profile/${userId}`)}
@@ -124,7 +124,7 @@ const SinglePost = () => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-between border-b border-t border-gray-200 py-[0.5rem]">
+            <div className="flex items-center justify-between border-b border-t border-gray-400 py-[0.5rem]">
               <div className="flex items-center gap-5">
                 <Like postId={postId} />
                 <Comment />
@@ -149,7 +149,7 @@ const SinglePost = () => {
                 />
               )}
               <div
-  className="mt-6 dark:text-white text-[18px]"
+  className="mt-6 dark:text-gray-300 text-[18px]"
   dangerouslySetInnerHTML={{
     __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]"')  // Safeguard against undefined
   }}

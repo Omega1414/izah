@@ -38,7 +38,7 @@ const Actions = ({postId, title, desc}) => {
             await deleteDoc(likeRef)
             await deleteDoc(commentRef)
             await deleteDoc(savedPostRef)
-            toast.success("Post Deleted Successfully")
+            toast.success("Paylaşım silindi")
             navigate("/")
         } catch (error) {
             toast.error(error.message)
@@ -51,8 +51,8 @@ const Actions = ({postId, title, desc}) => {
             <BsThreeDots className='text-2xl' />
         </button>
         <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-[7rem]">
-            <Button click={handleEdit} title="Edit Story" />
-            <Button click={handleRemove} title="Delete Story" />
+            <Button click={handleEdit} title="Düzəliş et" />
+            <Button click={handleRemove} title="Sil" />
         </Dropdown>
     </div>
   )

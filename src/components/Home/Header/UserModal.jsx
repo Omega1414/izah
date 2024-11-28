@@ -17,7 +17,7 @@ const UserModal = (setModal) => {
       try {
         await signOut(auth)
         navigate("/demo")
-        toast.success("Hesabdan cixildi")
+        toast.success("Hesabdan çıxdınız")
       } catch (error) {
         toast.error(message.error)
       }
@@ -45,19 +45,19 @@ const UserModal = (setModal) => {
         },
       ];
   return (
-    <section className='absolute w-[18rem] p-6 bg-white right-0 top-[100%] shadows rounded-md z-50 text-gray-500'>
+    <section className='absolute w-[18rem] p-6 bg-white dark:bg-darkBg dark:text-darkText right-0 top-[100%] shadows rounded-md z-50 text-gray-500'>
        
-          <div className='flex flex-col gap-4 border-b border-gray-300 pb-5'>
+          <div className='flex flex-col gap-4 border-b border-gray-300 pb-5 '>
             {userModal.map((link, i) => (
                 <Link 
                 onClick={() => setModal(false)}
-                className='flex items-center gap-2 text-gray-500 hover:text-black/70' key={i} to={link.path}>
+                className='flex items-center gap-2 text-gray-500 hover:text-black dark:text-darkText  hover:dark:text-gray-300' key={i} to={link.path}>
                     <span className='text-2xl'>{link.icon}</span>
                     <h2 className='text-md'>{link.title}</h2>
                 </Link>
             ))}
           </div>
-          <button onClick={logout} className='flex flex-col pt-5 cursor-pointer hover:text-black/70'>
+          <button onClick={logout} className='flex flex-col pt-5 cursor-pointer hover:text-black hover:dark:text-gray-300'>
             Sign Out
             <span className='text-sm'>{secretEmail(currentUser?.email)}</span>
           </button>

@@ -24,7 +24,7 @@ const Comment = ({ item: comment, postId }) => {
       const ref = doc(db, "posts", postId, "comments", comment?.id);
       await deleteDoc(ref);
       setDrop(false);
-      toast.success("Comment has been removed");
+      toast.success("Rəy silindi");
     } catch (error) {
       toast.error(error.message);
     }
@@ -48,7 +48,7 @@ const Comment = ({ item: comment, postId }) => {
       setEditComment("");
       setIsEdit(false);
       setDrop(false);
-      toast.success("Comment has been updated");
+      toast.success("Rəy yeniləndi");
     } catch (error) {
       toast.success(error.message);
     } finally {

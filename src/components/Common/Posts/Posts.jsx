@@ -26,9 +26,10 @@ const Posts = () => {
     <section className="flex-col gap-[2.5rem] items-center justify-center">
       {/* Category filter section */}
       <div className="flex gap-4 flex-wrap">
-      <button
+        <button
           onClick={() => setSelectedCategory("")}
-          className={`px-4 py-2 border  ${!selectedCategory ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+          className={`px-4 py-2 border-b-2 ${!selectedCategory ? "border-gray-600 dark:border-gray-100  text-black dark:text-gray-100" :
+           "border-gray-200 dark:border-gray-500 dark:text-gray-300"}`}
         >
           Son paylaşımlar
         </button>
@@ -36,12 +37,12 @@ const Posts = () => {
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 border ${selectedCategory === category ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+            className={`px-4 py-2 border-b-2 transition-all duration-300 ${selectedCategory === category ? "border-gray-500 dark:border-gray-100  text-black dark:text-gray-100" :
+             "border-gray-200 dark:border-gray-500 dark:text-gray-300"}`}
           >
             {category}
           </button>
         ))}
-       
       </div>
 
       {/* Post Cards */}

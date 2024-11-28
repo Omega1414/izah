@@ -6,13 +6,13 @@ import { deleteDoc, doc, setDoc, collection, getDocs } from 'firebase/firestore'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
-const FollowingModal = ({ modal, setModal, follows }) => {
-  const [followedUsers, setFollowedUsers] = useState([]);
+const FollowersModal = ({ modal, setModal, followers, userId }) => {
+  const [followerUsers, setFollowerUsers] = useState([]); // To store the followers' data
   const [currentUserFollows, setCurrentUserFollows] = useState([]);
   const { allUsers, currentUser } = Blog();
   const navigate = useNavigate();
 
-  // Fetch the current user's follows from Firestore
+  // Fetch the current user's follows from Firestore (for unfollow functionality)
   useEffect(() => {
     const fetchCurrentUserFollows = async () => {
       try {
@@ -30,21 +30,21 @@ const FollowingModal = ({ modal, setModal, follows }) => {
     }
   }, [currentUser]);
 
-  // Fetch followed users based on the follows list passed to the modal
+  // Fetch followers based on the followers list passed to the modal
   useEffect(() => {
-    if (follows?.length > 0) {
-      const fetchFollowedUsers = follows.map(async (follow) => {
-        const userData = allUsers.find(user => user.id === follow.id);
+    if (followers?.length > 0) {
+      const fetchFollowerUsers = followers.map(async (follower) => {
+        const userData = allUsers.find(user => user.id === follower.id);
         return userData;  // Return the full user object
       });
 
-      Promise.all(fetchFollowedUsers)
+      Promise.all(fetchFollowerUsers)
         .then((users) => {
-          setFollowedUsers(users);
+          setFollowerUsers(users);
         })
-        .catch((error) => console.error("Error fetching followed users:", error));
+        .catch((error) => console.error("Error fetching followers:", error));
     }
-  }, [follows, allUsers]);
+  }, [followers, allUsers]);
 
   // Prevent the modal from closing when clicking inside it
   const handleModalClick = (e) => {
@@ -62,7 +62,7 @@ const FollowingModal = ({ modal, setModal, follows }) => {
       // Immediately update the UI after unfollowing
       setCurrentUserFollows(prevState => prevState.filter(id => id !== userId));
 
-      toast.success("İzləməyi dayandırdınız");
+      toast.success("İzləməkdən çıxarıldı");
     } catch (error) {
       toast.error("Error unfollowing the user");
     }
@@ -79,7 +79,7 @@ const FollowingModal = ({ modal, setModal, follows }) => {
       // Immediately update the UI after following
       setCurrentUserFollows(prevState => [...prevState, userId]);
 
-      toast.success("Əlavə olundu");
+      toast.success("İzlənməyə başlandı");
     } catch (error) {
       toast.error("Error following the user");
     }
@@ -105,52 +105,52 @@ const FollowingModal = ({ modal, setModal, follows }) => {
             <LiaTimesSolid size={24} />
           </button>
         </div>
-        <h3 className="text-2xl font-semibold mb-4">İzləyir</h3>
-        {followedUsers.length === 0 ? (
+        <h3 className="text-2xl font-semibold mb-4">İzləyicilər</h3>
+        {followerUsers.length === 0 ? (
           <p>Nəticə yoxdur</p>
         ) : (
           <ul>
-          {followedUsers.map((user) => (
-  // Check if the current user is the same as the viewed user
-  <li
-    key={`${user?.id}-${user?.username}`}  // Ensure unique key
-    className="flex items-center gap-4 mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-lg"
-    onClick={() => handleNavigateToProfile(user?.id)} // Navigate on click
-  >
-    <img
-      src={user?.userImg || "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc="}
-      alt={user?.username}
-      className="w-10 h-10 object-cover rounded-full"
-    />
-    <span>{user?.username}</span>
+            {followerUsers.map((user) => (
+              <li
+                key={`${user?.id}-${user?.username}`}  // Ensure unique key
+                className="flex items-center gap-4 mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-lg"
+                onClick={() => handleNavigateToProfile(user?.id)} // Navigate on click
+              >
+                <img
+                  src={user?.userImg || "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc="}
+                  alt={user?.username}
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+                <span>{user?.username}</span>
 
-    {/* Check if the current user is following this user */}
-    {currentUser?.uid !== user?.id && (
-      // Only show Follow/Unfollow buttons if it's not the current user's own profile
-      currentUserFollows.includes(user?.id) ? (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleUnfollow(user?.id);
-          }}
-          className="ml-auto text-white rounded-full bg-red-400 p-2 text-sm"
-        >
-          Dayandır
-        </button>
-      ) : (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleFollow(user?.id);
-          }}
-          className="ml-auto text-white rounded-full p-2 px-5  bg-blue-500 hover:bg-blue-600 text-sm"
-        >
-          İzlə
-        </button>
-      )
-    )}
-  </li>
-))}
+                {/* Check if the current user is the owner of the profile */}
+                {currentUser?.uid !== userId && (  // If current user is NOT the profile owner
+                  currentUser?.uid !== user?.id && (  // If the follower is not the current user
+                    currentUserFollows.includes(user?.id) ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUnfollow(user?.id);
+                        }}
+                        className="ml-auto text-white rounded-full bg-red-400 p-2 text-sm"
+                      >
+                        Dayandır
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleFollow(user?.id);
+                        }}
+                        className="ml-auto text-white rounded-full p-2 px-5 bg-blue-500 hover:bg-blue-600 text-sm"
+                      >
+                        İzlə
+                      </button>
+                    )
+                  )
+                )}
+              </li>
+            ))}
           </ul>
         )}
       </div>
@@ -158,4 +158,4 @@ const FollowingModal = ({ modal, setModal, follows }) => {
   );
 };
 
-export default FollowingModal;
+export default FollowersModal;

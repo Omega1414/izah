@@ -20,7 +20,7 @@ const SignUp = ({setSignReq, setModal}) => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     if(form[("username", "email", "password", "rePassword")] === "") {
-      toast.error("All fields are reuqired")
+      toast.error("Boş xana qalmamalıdır")
     } else if(form["password"] !== form["rePassword"]){
       toast.error("Daxil etdiyiniz kodlar eyni deyil")
       return;
