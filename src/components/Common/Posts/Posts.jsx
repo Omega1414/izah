@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Loading from "../../Loading/Loading";
 import PostsCard from "./PostsCard";
 import { Blog } from "../../../Context/Context";
+import "./post.css"
 
 const Posts = () => {
   const { postData, postLoading } = Blog();
@@ -26,24 +27,22 @@ const Posts = () => {
     <section className="flex-col gap-[2.5rem] items-center justify-center">
       {/* Category filter section */}
       <div className="flex gap-4 flex-wrap">
-        <button
-          onClick={() => setSelectedCategory("")}
-          className={`px-4 py-2 border-b-2 ${!selectedCategory ? "border-gray-600 dark:border-gray-100  text-black dark:text-gray-100" :
-           "border-gray-200 dark:border-gray-500 dark:text-gray-300"}`}
-        >
-          Son paylaşımlar
-        </button>
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 border-b-2 transition-all duration-300 ${selectedCategory === category ? "border-gray-500 dark:border-gray-100  text-black dark:text-gray-100" :
-             "border-gray-200 dark:border-gray-500 dark:text-gray-300"}`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+  <button
+    onClick={() => setSelectedCategory("")}
+    className={`category-button ${!selectedCategory ? "active" : ""}`}
+  >
+    Son paylaşımlar
+  </button>
+  {categories.map((category) => (
+    <button
+      key={category}
+      onClick={() => setSelectedCategory(category)}
+      className={`category-button ${selectedCategory === category ? "active" : ""}`}
+    >
+      {category}
+    </button>
+  ))}
+</div>
 
       {/* Post Cards */}
       {postLoading ? (

@@ -69,4 +69,8 @@
   .react-quill-container {
     max-height: 300px;
     overflow-y: auto;
+    
   }
+  .dark .quill > .ql-container > .ql-editor.ql-blank::before{
+    color: gray;
+}

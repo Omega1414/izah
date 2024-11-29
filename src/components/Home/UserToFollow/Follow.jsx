@@ -47,7 +47,7 @@ const Follow = () => {
           onClick={() =>
             setCount((prev) => users.length < allUsers?.length && prev + 3)
           }
-          className="mb-3 text-green-900 text-sm hover:underline dark:text-blue-200">
+          className="mb-3 text-black text-sm hover:underline dark:text-blue-200">
           Daha çox göstər
         </button>
       )}

@@ -3,3 +3,56 @@
     margin: 0 auto; /* Centers the image horizontally */
     max-width: 100%;  /* Ensures the image doesn't overflow */
   }
+
+  .category-button {
+    position: relative;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: none;
+    color: #333;
+    text-align: center;
+    font-weight: 300;
+    overflow: hidden; /* Ensure the line stays within the button */
+  }
+ 
+  .category-button:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Line is always visible with full width */
+    height: 2px;
+    background-color: #ccc; /* Light color by default */
+    transform: scaleX(1); /* Line is always visible, not scaled to 0 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and width */
+    font-weight: 500;
+  }
+  
+  .category-button:hover:before {
+    background-color: #000; /* Darken the line on hover */
+    transform: scaleX(1); /* Ensure the line remains full width */
+  }
+  
+  .category-button.active {
+    color: #000; /* Text color for active category */
+  }
+  
+  .category-button.active:before {
+    background-color: #000; /* Dark line color for active category */
+  }
+  .dark .category-button {
+    color: white;
+  }
+  .dark .category-button.active:before {
+    background-color: #cebaba; /* Dark line color for active category */
+  }
+  /* Dark mode support */
+  .dark .category-button:before {
+    background-color: #666; /* Light color for dark mode */
+  
+  }
+  
+  .dark .category-button:hover:before {
+    background-color: #fff; /* Dark mode hover line color */
+  }
+  

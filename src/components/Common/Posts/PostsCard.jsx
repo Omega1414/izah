@@ -5,6 +5,7 @@ import { Blog } from "../../../Context/Context";
 import Actions from "./Actions/Actions";
 import { useNavigate } from "react-router-dom";
 import { GrView } from "react-icons/gr";
+import { MdOutlineAccessTime } from "react-icons/md";
 
 const PostsCard = ({ post }) => {
   const { title, desc, created, postImg, id: postId, userId, username, pageViews, userImg } = post; // Use userImg here
@@ -19,8 +20,8 @@ const PostsCard = ({ post }) => {
   };
 
   return (
-    <section className="bg-white shadow-lg rounded-md p-4 flex overflow-visible flex-col items-center 
-    justify-center dark:bg-gray-700 max-w-[600px] w-full max-h-[350px] md:max-h-[250px]">
+    <section className="bg-white hover:bg-gray-200 shadow-lg rounded-md p-4 flex overflow-visible flex-col items-center 
+    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[350px] md:max-h-[250px]">
       <div
         onClick={() => navigate(`/post/${postId}`)}
         className="flex flex-col sm:flex-row gap-4 cursor-pointer w-full h-full"
@@ -70,7 +71,8 @@ const PostsCard = ({ post }) => {
       {/* Post Footer (Read time, Date, Page Views, etc.) */}
       <div className="flex items-center justify-between w-full mt-2 md:mt-1">
         <span className="text-xs text-gray-600 flex items-center dark:text-yellow-100 text-[14px]">
-          <GrView /> <p className="ml-[4px]">{pageViews}</p><p className="ml-1">|</p> <p className="ml-1 capitalize">{moment(created).format("MMM DD, YYYY HH:mm")}</p>
+          <GrView /> <p className="ml-[4px]">{pageViews}</p><p className="ml-1">|</p> 
+          <MdOutlineAccessTime className="ml-1" /><p className="ml-1 capitalize">{moment(created).format("MMM DD, YYYY HH:mm")}</p>
         </span>
         <div className="flex items-end justify-end gap-3 dark:text-white">
           <SavedPost post={post} />

@@ -26,7 +26,7 @@ const Search = ({ modal, setModal }) => {
               : "invisible sm:visible sm:opacity-100 opacity-0"
           }
           transition-all duration-100`}>
-          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-gray-400">
+          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-darkBg">
             <span className="text-2xl text-gray-400 dark:text-white">
               <CiSearch />
             </span>
@@ -38,7 +38,7 @@ const Search = ({ modal, setModal }) => {
               placeholder="Axtar"
             />
             {search !== "" && (
-              <div className="absolute right-0 left-0 top-full bg-white shadow rounded-md">
+              <div className="absolute right-0 left-0 top-full bg-white dark:bg-darkBg  shadow rounded-md">
                 {searchData.length > 0 ? (
                   <>
                     {searchData.map((post, i) => (
@@ -48,7 +48,7 @@ const Search = ({ modal, setModal }) => {
                           navigate(`/post/${post?.id}`);
                           setSearch("");
                         }}
-                        className="p-2 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
+                        className="p-2 border-b border-gray-300 dark:border-gray-500  hover:bg-gray-100 hover:dark:bg-gray-800 cursor-pointer">
                         <h2 className="line-clamp-1 capitalize text-sm font-bold">
                           {post.title}
                         </h2>

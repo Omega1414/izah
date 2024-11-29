@@ -11,6 +11,7 @@ body{
   @apply font-texts
   dark:bg-[#202124]
   dark:text-darkText
+
 }
 
 .size{

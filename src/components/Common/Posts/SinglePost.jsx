@@ -16,6 +16,7 @@ import SavedPost from "../Posts/Actions/SavedPost";
 import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
+import { MdOutlineAccessTime } from "react-icons/md";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -118,9 +119,9 @@ const SinglePost = () => {
                     )}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-blue-300">
+                <p className="text-sm text-gray-500 dark:text-blue-300 flex items-center">
                  
-                  <span className="ml-1">{moment(created).fromNow()}</span>
+                <MdOutlineAccessTime className="ml-0.5" /> <span className="ml-1">{moment(created).fromNow()}</span>
                 </p>
               </div>
             </div>
