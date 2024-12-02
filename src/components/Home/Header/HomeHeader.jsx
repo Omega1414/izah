@@ -16,7 +16,7 @@ import { FaLightbulb } from 'react-icons/fa';
 import { LiaEditSolid } from 'react-icons/lia';
 
 const HomeHeader = () => {
-  const { allUsers, userLoading, currentUser, setPublish, title, description } = Blog()
+  const { allUsers, userLoading, currentUser, setPublish, title, description, isDarkMode, setIsDarkMode } = Blog()
   const [modal, setModal] = useState(false)
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);  // Track the count of unread notifications
@@ -186,7 +186,7 @@ const HomeHeader = () => {
       }
     }
   };
-  const [isDarkMode, setIsDarkMode] = useState(false);
+ 
 
   // Toggle light/dark mode and update the HTML class
   const toggleMode = () => {
@@ -196,24 +196,9 @@ const HomeHeader = () => {
     localStorage.setItem('darkMode', newMode ? 'true' : 'false');
   };
   
-  useEffect(() => {
-    // Check if dark mode preference exists in localStorage
-    const storedMode = localStorage.getItem('darkMode');
-    if (storedMode) {
-      setIsDarkMode(storedMode === 'true');
-    }
-  }, []);  // Only run this once when the component mounts
-  
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
   
   return (
-    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-700'>
+    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-700 overflow-hidden'>
       {userLoading && <Loading />}
       <div className='size h-[60px] flex items-center justify-between'>
         <div className='flex items-center gap-3'>
@@ -230,7 +215,7 @@ const HomeHeader = () => {
                {/* Light/Dark Mode Toggle */}
                <div className="flex items-center gap-4">
           {/* Mode names (Light on the left, Dark on the right) */}
-          <span className="hidden md:flex text-sm text-gray-700 dark:text-white">İşıqlı</span>
+          <span className="hidden lg:flex text-sm text-gray-700 dark:text-white">İşıqlı</span>
 
           {/* Mode switcher */}
           <div
@@ -260,12 +245,12 @@ const HomeHeader = () => {
           </div>
 
           {/* Dark Mode Name */}
-          <span className="hidden md:flex text-sm text-gray-700 dark:text-white">Qaranlıq</span>
+          <span className="hidden lg:flex text-sm text-gray-700 dark:text-white">Qaranlıq</span>
         </div>
 
       
         <div className='flex items-center gap-3 sm:gap-7'>
-          <span className='flex sm:hidden text-3xl text-gray-300 cursor-pointer ' onClick={() => setSearchModal(true)}>
+          <span className='flex sm:hidden text-3xl text-gray-600 dark:text-white cursor-pointer ' onClick={() => setSearchModal(true)}>
             <CiSearch />
           </span>
           {pathname === "/write" ? (
@@ -285,7 +270,7 @@ const HomeHeader = () => {
           ) : (
             <Link
               to="/write"
-              className="hidden md:flex items-center gap-1 text-gray-500 dark:text-white justify-center dark:hover:text-blue-300 transition-colors duration-200">
+              className="hidden lg:flex items-center gap-1 text-gray-500 dark:text-white justify-center dark:hover:text-blue-300 transition-colors duration-200">
               <span className="text-2xl mb-1">
                 <LiaEditSolid />
               </span>

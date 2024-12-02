@@ -43,7 +43,7 @@ const PrivateLists = ({ username }) => {
   return (
     <div className='flex flex-col justify-center items-center gap-[3rem] text-center'>
       <p>
-        <span className='capitalize'>{username} saved posts are private</span>
+        <span>Seçilənlər gizlidir</span>
       </p>
       <span className='text-[10rem] text-gray-500'>
         <BiLock />

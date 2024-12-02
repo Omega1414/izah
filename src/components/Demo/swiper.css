@@ -1,0 +1,27 @@
+.swiper-container {
+    width: 100%;
+    height: 100%;
+    
+  }
+  
+  .swiper-slide {
+    background-color: #000; /* Just to make sure the slide is visible */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  /* Style the navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; /* Set the arrow color to white */
+  opacity: 1;   /* Ensure the arrows are visible */
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ffffff; /* White color on hover */
+}

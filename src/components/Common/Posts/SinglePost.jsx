@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, increment, updateDoc, arrayUnion } from "firebase/firestore";
@@ -108,11 +109,11 @@ const SinglePost = () => {
               <div>
                 <div className="capitalize">
                 <span
-          onClick={() => navigate(`/profile/${userId}`)} // Add onClick here to navigate to the profile page
-          className="dark:text-blue-300 font-bold cursor-pointer"
-        >
-          {username}
-        </span>
+                  onClick={() => navigate(`/profile/${userId}`)} // Add onClick here to navigate to the profile page
+                  className="dark:text-blue-300 font-bold cursor-pointer"
+                >
+                  {username}
+                </span>
                   <span className="ml-2">
                     {currentUser && currentUser?.uid !== userId && (
                       <FollowBtn userId={userId} />
@@ -120,8 +121,7 @@ const SinglePost = () => {
                   </span>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-blue-300 flex items-center">
-                 
-                <MdOutlineAccessTime className="ml-0.5" /> <span className="ml-1">{moment(created).fromNow()}</span>
+                  <MdOutlineAccessTime className="ml-0.5" /> <span className="ml-1">{moment(created).fromNow()}</span>
                 </p>
               </div>
             </div>
@@ -150,19 +150,27 @@ const SinglePost = () => {
                 />
               )}
               <div
-  className="mt-6 dark:text-gray-300 text-[18px]"
-  dangerouslySetInnerHTML={{
-    __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]" style="display: block; margin: 0 auto;"')  // Safeguard against undefined
-  }}
-/>
+                className="mt-6 dark:text-gray-300 text-[18px]"
+                dangerouslySetInnerHTML={{
+                  __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]" style="display: block; margin: 0 auto;"')  // Safeguard against undefined
+                }}
+              />
             </div>
           </section>
+          {/* Comments Section */}
+          <div className="flex mt-8 items-center justify-center mx-auto">
+          
+            <Comments postId={postId} />
+          </div>
+          {/* Recommendations Section */}
           {post && <Recommended post={post} />}
-          <Comments postId={postId} />
         </>
       )}
     </>
   );
 };
+
+
+
 
 export default SinglePost;

@@ -27,7 +27,7 @@ const Search = ({ modal, setModal }) => {
           }
           transition-all duration-100`}>
           <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-darkBg">
-            <span className="text-2xl text-gray-400 dark:text-white">
+            <span className="text-2xl text-gray-400 dark:text-white ">
               <CiSearch />
             </span>
             <input

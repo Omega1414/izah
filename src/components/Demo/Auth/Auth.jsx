@@ -47,33 +47,31 @@ const Auth = ({modal, setModal}) => {
     const hidden = modal ? "visible opacity-100" : "invisible opacity-0" 
   return (
     <Modal modal={modal} setModal={setModal} hidden={hidden}>
-        <section className={`z-50 fixed top-0 bottom-0 left-0 md:left-[10rem] overflow-auto right-0 md:right-[10rem]
-         bg-white shadows ${hidden} transition-all duration-500`}>
+      <section className={`z-50 fixed top-0 bottom-0 left-0 md:left-[10rem] overflow-auto right-0 md:right-[10rem] bg-white shadow-lg ${hidden} transition-all duration-500 ease-out dark:bg-darkBg`}>
             <button onClick={() => setModal(false)} className='absolute top-8 right-8 text-2xl hover:opacity-50'>
                 <LiaTimesSolid />
             </button>
             <div className='flex flex-col justify-center items-center gap-[3rem]'>
                {signReq === "" ? (
                 <>
-                    <h2 className='text-2xl pt-[5rem]'>{createUser ? "Join Medium" : "Welcome Back"}</h2>
+                    <h2 className='text-2xl pt-[5rem]'>{createUser ? "Bizə qoşulun" : "Xoş gəldiniz"}</h2>
                     <div className='flex flex-col gap-2 w-fit max-auto'>
                         <Button 
                         click={googleAuth}
                         icon={<FcGoogle className='text-xl' />}
-                         text={`${createUser ? "Sign Up" : "Sign In"} With Google`} />
-                        <Button icon={<MdFacebook className='text-xl text-blue-600' />}
-                          text={`${createUser ? "Sign Up" : "Sign In"} With Facebook`} />
+                         text={`Google ilə ${createUser ? "qeydiyyat" : "daxil ol"}`} />
+                       
                         <Button
                         click={() => setSignReq(createUser ? "sign-up" : "sign-in")}
                          icon={<AiOutlineMail className='text-xl' />} 
-                         text={`${createUser ? "Sign Up" : "Sign In"} With Mail`} />
+                         text={`Mail ilə ${createUser ?  "qeydiyyat" : "daxil ol"}`} />
                     </div>
 
                     <p>
-                    {createUser ? "Already have an account" : "No account"}
+                    {createUser ? "Hesabın mövcuddur?" : "Hesabın yoxdur?"}
                         <button
                          onClick={() => setCreateUser(!createUser)}
-                         className='text-green-600 hover:text-green-700 font-bold ml-1'>{createUser ? "Sign In" : "Create One"}</button>
+                         className='text-green-600 hover:text-green-700 font-bold ml-1'>{createUser ? "Daxil ol" : "Qeydiyyatdan keç"}</button>
                     </p>
                 </>
                ) : signReq === "sign-in" ? (
@@ -81,7 +79,8 @@ const Auth = ({modal, setModal}) => {
                ) : signReq === "sign-up" ? (
                 <SignUp setModal={setModal} setSignReq={setSignReq} />
                ): null}
-                <p className='md:w-[30rem] mx-auto text-center text-sm mb-[3rem]'>Click "Sign In" to agree Terms of Service</p>
+                <p className='md:w-[30rem] mx-auto text-center text-sm mb-[3rem]'>Saytdan qeydiyyatdan keçməklə saytın
+                 <span onClick={() => toast.info("Sayt təqdimat məqsədlidir, hələki qaydalar tərtib olunmayıb")} className='text-blue-500 cursor-pointer ml-1'>qaydalarını</span> qəbul etmiş olursunuz</p>
             </div>
         </section>
     </Modal>
@@ -94,7 +93,7 @@ const Button = ({icon, text, click}) => {
     return(
         <button
         onClick={click}
-         className='flex items-center gap-10 sm:w-[20rem] border border-black px-3 py-2 rounded-full'>
+        className='flex items-center gap-3  border border-black dark:border-darkText px-3 py-2 rounded-full'>
         {icon}{text}
         </button>
     )

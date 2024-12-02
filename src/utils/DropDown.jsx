@@ -18,7 +18,7 @@ const Dropdown = ({ children, size, showDrop, setShowDrop }) => {
       {showDrop && (
         <div
           ref={dropRef}
-          className={`shadows flex flex-col absolute right-0 top-[2rem] bg-white  dark:bg-black ${size} z-[999]`}
+          className={`shadows flex flex-col absolute right-0 top-[2rem] bg-white dark:bg-black ${size} z-[999]`}
         >
           {children}
         </div>

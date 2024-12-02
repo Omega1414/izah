@@ -3,6 +3,11 @@ import useFetch from "../../hooks/useFetch";
 import { readTime } from "../.././../utils/helper";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { GrView } from "react-icons/gr";
+import { MdOutlineAccessTime } from "react-icons/md";
+import { Blog } from "../../../Context/Context";
+import SavedPost from "./Actions/SavedPost";
+import Actions from "./Actions/Actions";
 
 const Recommended = ({ post: singlePost }) => {
   const { data } = useFetch("posts");
@@ -55,41 +60,79 @@ const Recommended = ({ post: singlePost }) => {
 export default Recommended;
 
 const Post = ({ post }) => {
-  const { title, desc, created, postImg, id: postId, userId } = post;
-  const { data } = useFetch("users");
 
+  const { data } = useFetch("users");
+  const { title, desc, created, postImg, id: postId, userId, pageViews, username, userImg } = post; // Use userImg here
+  const { currentUser } = Blog();
+  const [maxDescLength, setMaxDescLength] = useState(450);
+
+
+  // Function to remove <img> tags from the description
+  const removeImagesFromDescription = (text) => {
+    return text.replace(/<img[^>]*>/g, ""); // Remove any <img> tags from the description
+  };
   const navigate = useNavigate(null);
 
-  const { username, userImg } =
-    data && data.find((user) => user?.id === userId);
   return (
-    <div
-      onClick={() => navigate(`/post/${postId}`)}
-      className="w-full cursor-pointer">
-      {postImg && (
-        <img
-          className="w-full h-[200px] object-cover"
-          src={postImg}
-          alt="post-img"
-        />
-      )}
-      <div className="flex items-center gap-1 py-3">
-        <img
-          className="w-[2rem] h-[2rem] object-cover rounded-full"
-          src={userImg}
-          alt="userImg"
-        />
-        <h3 className="text-sm capitalize">{username}</h3>
-      </div>
-      <h2 className="font-extrabold leading-5 line-clamp-2">{title}</h2>
+    <section className="bg-white hover:bg-gray-200 shadow-lg rounded-md p-4 flex overflow-visible flex-col items-center 
+    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[350px] md:max-h-[250px]">
       <div
-        className="line-clamp-2 my-3 text-gray-500 leading-5"
-        dangerouslySetInnerHTML={{ __html: desc }}
-      />
-      <p className="text-sm text-gray-600">
-        {readTime({ __html: desc })} min read
-        <span className="ml-3">{moment(created).format("MMM DD")}</span>
-      </p>
-    </div>
+        onClick={() => navigate(`/post/${postId}`)}
+        className="flex flex-col sm:flex-row gap-4 cursor-pointer w-full h-full"
+      >
+        {/* Content section for title and description */}
+        <div className="flex flex-col gap-2 w-full overflow-hidden">
+          {/* Profile image and username */}
+          <div className="flex items-center gap-2">
+            {userImg && (
+              <img
+                src={userImg}
+                alt="user profile"
+                className="w-6 h-6 rounded-full object-cover"
+              />
+            )}
+            <p className="font-semibold capitalize xl:text-sm  dark:text-blue-200">{username}</p>
+          </div>
+          <h2 className="text-l font-bold font-sans line-clamp-2 leading-6 capitalize xl:text-md dark:text-white overflow-hidden mt-1">{title}</h2>
+
+          {/* Description with line clamp and ellipsis */}
+          <div
+            className="py-1 text-gray-500 leading-5 text-sm lg:text-md xl:text-sm dark:text-darkText"
+            dangerouslySetInnerHTML={{
+              __html: removeImagesFromDescription(desc.length > maxDescLength ? desc.substring(0, maxDescLength) + "..." : desc), // Remove images from description
+            }}
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2, // Dynamically set the line clamp
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          />
+        </div>
+
+        {/* Image container - only render it if there's an image */}
+        {postImg && (
+          <div className="w-full sm:w-[280px] h-[100px] md:h-[160px] flex items-center justify-center overflow-hidden">
+            <img
+              src={postImg}
+              alt="postImg"
+              className="w-full h-full object-contain rounded-md"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Post Footer (Read time, Date, Page Views, etc.) */}
+      <div className="flex items-center justify-between w-full mt-2 md:mt-1">
+        <span className="text-xs text-gray-600 flex items-center dark:text-gray-100 text-[14px]">
+          <GrView /> <p className="ml-[4px]">{pageViews}</p><p className="ml-1">|</p> 
+          <MdOutlineAccessTime className="ml-1" /><p className="ml-1 capitalize">{moment(created).format("MMM DD, YYYY HH:mm")}</p>
+        </span>
+        <div className="flex items-end justify-end gap-3 dark:text-white">
+          <SavedPost post={post} />
+          {currentUser?.uid === userId && <Actions postId={postId} title={title} desc={desc} />}
+        </div>
+      </div>
+    </section>
   );
 };

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { nav } from "../../data";
 import Auth from "./Auth/Auth";
 import { Blog } from "../../Context/Context";
 import { FaLightbulb } from "react-icons/fa";
@@ -8,7 +7,7 @@ import { IoMdMoon } from "react-icons/io";
 
 const DemoHeader = () => {
   const [isActive, setIsActive] = useState(false);
-  const { authModel, setAuthModel } = Blog();
+  const { authModel, setAuthModel, isDarkMode, setIsDarkMode } = Blog();
 
   useEffect(() => {
     const scrollMe = () => {
@@ -17,7 +16,7 @@ const DemoHeader = () => {
     window.addEventListener("scroll", scrollMe);
   }, []);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  
 
   // Toggle light/dark mode and update the HTML class
   const toggleMode = () => {
@@ -27,21 +26,7 @@ const DemoHeader = () => {
     localStorage.setItem('darkMode', newMode ? 'true' : 'false');
   };
 
-  useEffect(() => {
-    // Check if dark mode preference exists in localStorage
-    const storedMode = localStorage.getItem('darkMode');
-    if (storedMode) {
-      setIsDarkMode(storedMode === 'true');
-    }
-  }, []);  // Only run this once when the component mounts
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
 
   return (
     <header
@@ -49,9 +34,13 @@ const DemoHeader = () => {
   ${isActive ? "bg-gray-200 dark:bg-gray-700" : "bg-white dark:bg-[#202124]"}
   transition-all duration-500 relative`}
 >
-  <div className="h-[70px] flex items-center justify-between px-5 relative z-10">
-    {/* Logo */}
-    <Link to={"/"}>
+  
+   
+    <div className='size h-[60px] flex items-center justify-between'>
+
+    {/* Container for the logo */}
+        <div className='flex items-center gap-3'>
+        <Link to={"/"}>
       <span className="text-5xl">
         <img
          
@@ -61,41 +50,13 @@ const DemoHeader = () => {
         />
       </span>
     </Link>
+        </div>
 
-    {/* Right side content */}
-    <div className="flex items-center gap-5">
-      <div className="hidden text-sm sm:flex items-center gap-5 relative z-10">
-        {nav.map((link, i) => (
-          <Link key={i} to={link.path}>
-            {link.title}
-          </Link>
-        ))}
-      </div>
-      <div className="relative z-10">
-        <button
-          onClick={() => setAuthModel(true)}
-          className="hidden text-sm sm:flex items-center gap-5"
-        >
-          Sign In
-        </button>
-        <Auth modal={authModel} setModal={setAuthModel} />
-      </div>
-      <button
-        onClick={() => setAuthModel(true)}
-        className={`text-white rounded-full px-3 p-2 text-sm font-medium 
-        ${isActive ? "bg-green-700" : "bg-black"}`}
-      >
-        Get Started
-      </button>
-    </div>
-  </div>
 
-  {/* Light/Dark Mode Toggle in Center */}
-  <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center z-0">
-    {/* Container for the mode toggle and labels */}
-    <div className="flex items-center gap-4">
+ {/* Container for the mode toggle and labels */}
+ <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4">
       {/* Light Mode Label */}
-      <span className="hidden md:flex text-sm text-gray-700 dark:text-white">İşıqlı</span>
+      <span className="hidden lg:flex text-sm text-gray-700 dark:text-white">İşıqlı</span>
 
       {/* Mode switcher */}
       <div
@@ -121,9 +82,35 @@ const DemoHeader = () => {
       </div>
 
       {/* Dark Mode Label */}
-      <span className="hidden md:flex text-sm text-gray-700 dark:text-white">Qaranlıq</span>
+      <span className="hidden lg:flex text-sm text-gray-700 dark:text-white">Qaranlıq</span>
+    </div>
+
+    {/* Right side content */}
+    <div className="flex items-center gap-5">
+     
+      <div className="relative z-10">
+        <button
+          onClick={() => setAuthModel(true)}
+          className="hidden text-sm sm:flex items-center gap-5"
+        >
+          Daxil ol
+        </button>
+        <Auth modal={authModel} setModal={setAuthModel} />
+      </div>
+      <button
+        onClick={() => setAuthModel(true)}
+        className={`text-white rounded-full px-3 p-2 text-sm font-medium 
+        ${isActive ? "bg-green-700" : "bg-gray-700"}`}
+      >
+        Başla
+      </button>
     </div>
   </div>
+
+  
+ 
+   
+
 </header>
 
   );

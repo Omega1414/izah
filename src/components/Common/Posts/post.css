@@ -56,3 +56,63 @@
     background-color: #fff; /* Dark mode hover line color */
   }
   
+  .relative {
+    position: relative;
+  }
+  
+  .shadows {
+    position: absolute; /* To position dropdown relative to the parent */
+    top: 110%; /* Position it directly below the button */
+    left: 0;
+    width: 130px; /* Ensure the width is appropriate for your layout */
+    
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f1f1f1;
+    
+  }
+  .dark .dropdown-item:hover {
+    background-color: #f1f1f1;
+    color: black
+  }
+  
+  
+  .sort-button {
+    display: flex;
+    align-items: center;
+    padding: 0.1rem 0.4rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+  }
+  .dark .sort-button{
+    background-color: #542626;
+  }
+  
+  .sort-button:hover {
+    background-color: #e0e0e0;
+  }
+  .dark .sort-button:hover {
+    color: #0d0505;
+  }
+  .arrow {
+    margin-left: 7px;
+    transition: transform 0.3s ease;
+  }
+  
+  .rotate {
+    transform: rotate(180deg); /* Rotates the arrow when dropdown is visible */
+  }
+  

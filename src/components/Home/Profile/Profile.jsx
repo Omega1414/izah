@@ -43,14 +43,17 @@ const Profile = () => {
     <section className="size flex gap-[4rem] relative transition-all duration-300">
       <div className="mt-[9rem] flex-[2]">
         <div className="flex gap-4 items-center dark:text-darkText">
-          <h2 className="text-3xl sm:text-4xl font-bold capitalize">
+        <img className="w-[4rem] h-[4rem] object-cover rounded-full" src={getUserData?.userImg || "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc="} alt="profile-img" />
+          <h2 className="text-3xl sm:text-3xl font-bold capitalize">
             {getUserData?.username}
           </h2>
+          <div className='mt-1 ml-1'>
             {currentUser?.uid !== userId && (  
               <FollowBtn userId={userId} />
             )}
+            </div>
         </div>
-        <div className='flex gap-4 mt-3 dark:text-darkText'>
+        <div className='flex gap-4 mt-4 dark:text-darkText'>
           <p className="text-xs sm:text-sm cursor-pointer" onClick={() => setFollowerModal(true)}>
             İzləyici {followers.length}
           </p>
@@ -93,8 +96,8 @@ const Profile = () => {
               {getUserData?.bio}
             </p>
             {currentUser?.uid === getUserData?.userId && (
-              <button onClick={() => setEditModal(true)} className="text-green-700 pt-6 text-sm w-fit">
-                Edit Profile
+              <button onClick={() => setEditModal(true)} className="text-green-700 dark:text-gray-400 cursor-pointer pt-6 text-sm w-fit">
+                Profilə düzəliş et
               </button>
             )}
           </div>

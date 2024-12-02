@@ -11,8 +11,14 @@ export default {
         darkText: "#edf2f7"
       },
       fontFamily: {
-        title: `gt-super, Georgia, Cambria, Times New Roman, Times, serif;`,
-        texts: `sohne, Helvetica Neue, Helvetica, Arial, sans-serif`,
+      'sans': ['ui-sans-serif', 'system-ui'],
+      'serif': ['ui-serif', 'Georgia'],
+      'mono': ['ui-monospace', 'SFMono-Regular'],
+      'display': ['Oswald'],
+      'body': ['Roboto'],
+    },
+    fontWeight: {
+        'bold-700': '700', // This is where you define the Roboto Bold 700 weight
       },
       gridTemplateColumns: {
         card: "repeat(auto-fit, minmax(280px, 1fr))",

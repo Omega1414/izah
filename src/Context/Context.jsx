@@ -1,7 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import React, { useContext, useEffect } from "react";
-import { useState } from "react";
-import { createContext } from "react";
+import React, { useContext, useEffect, useState, createContext } from "react";
 import { auth, db } from "../firebase/firebase";
 import Loading from "../components/Loading/Loading";
 import { collection, onSnapshot, query } from "firebase/firestore";
@@ -23,6 +21,23 @@ const Context = ({ children }) => {
   const [description, setDescription] = useState("");
 
   const [publish, setPublish] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Initialize state from localStorage, if available
+    const storedMode = localStorage.getItem('darkMode');
+    return storedMode ? storedMode === 'true' : true; // Default to 'true' if not found
+  });
+
+  useEffect(() => {
+    // Save the dark mode preference to localStorage whenever it changes
+    localStorage.setItem('darkMode', isDarkMode ? 'true' : 'false');
+
+    // Apply dark mode class to the document element
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -79,6 +94,8 @@ const Context = ({ children }) => {
         postLoading,
         authModel,
         setAuthModel,
+        isDarkMode,
+        setIsDarkMode
       }}>
       {loading ? <Loading /> : children}
     </BlogContext.Provider>

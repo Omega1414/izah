@@ -58,7 +58,7 @@ const UserModal = (setModal) => {
             ))}
           </div>
           <button onClick={logout} className='flex flex-col pt-5 cursor-pointer hover:text-black hover:dark:text-gray-300'>
-            Sign Out
+            Hesabdan çıx
             <span className='text-sm'>{secretEmail(currentUser?.email)}</span>
           </button>
     </section>

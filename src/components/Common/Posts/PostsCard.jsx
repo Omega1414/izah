@@ -21,7 +21,7 @@ const PostsCard = ({ post }) => {
 
   return (
     <section className="bg-white hover:bg-gray-200 shadow-lg rounded-md p-4 flex overflow-visible flex-col items-center 
-    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[350px] md:max-h-[250px]">
+    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[350px] md:h-[250px] ">
       <div
         onClick={() => navigate(`/post/${postId}`)}
         className="flex flex-col sm:flex-row gap-4 cursor-pointer w-full h-full"
@@ -39,7 +39,7 @@ const PostsCard = ({ post }) => {
             )}
             <p className="font-semibold capitalize xl:text-sm  dark:text-blue-200">{username}</p>
           </div>
-          <h2 className="text-l font-bold line-clamp-2 leading-6 capitalize xl:text-md dark:text-white overflow-hidden mt-1">{title}</h2>
+          <h2 className="text-l font-bold font-sans line-clamp-2 leading-6 capitalize xl:text-md dark:text-white overflow-hidden mt-1">{title}</h2>
 
           {/* Description with line clamp and ellipsis */}
           <div
@@ -49,7 +49,7 @@ const PostsCard = ({ post }) => {
             }}
             style={{
               display: "-webkit-box",
-              WebkitLineClamp: 2, // Dynamically set the line clamp
+              WebkitLineClamp: 3, // Dynamically set the line clamp
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
             }}
@@ -70,7 +70,7 @@ const PostsCard = ({ post }) => {
 
       {/* Post Footer (Read time, Date, Page Views, etc.) */}
       <div className="flex items-center justify-between w-full mt-2 md:mt-1">
-        <span className="text-xs text-gray-600 flex items-center dark:text-yellow-100 text-[14px]">
+        <span className="text-xs text-gray-600 flex items-center dark:text-gray-100 text-[14px]">
           <GrView /> <p className="ml-[4px]">{pageViews}</p><p className="ml-1">|</p> 
           <MdOutlineAccessTime className="ml-1" /><p className="ml-1 capitalize">{moment(created).format("MMM DD, YYYY HH:mm")}</p>
         </span>

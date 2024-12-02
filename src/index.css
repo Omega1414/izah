@@ -8,9 +8,10 @@
 }
 
 body{
-  @apply font-texts
+  @apply
   dark:bg-[#202124]
   dark:text-darkText
+  
 
 }
 

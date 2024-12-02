@@ -57,7 +57,7 @@ const Comment = ({ item: comment, postId }) => {
   };
 
   return (
-    <section className="border-b">
+    <section>
       {!isEdit ? (
         <>
           <div className="flex items-center gap-5">
@@ -87,9 +87,9 @@ const Comment = ({ item: comment, postId }) => {
                       size="w-[10rem]">
                       <Button
                         click={editCommentText}
-                        title="Edit this response"
+                        title="Düzəliş et"
                       />
-                      <Button click={removeComment} title="Delete" />
+                      <Button click={removeComment} title="Sil" />
                     </DropDown>
                   </>
                 )}
@@ -134,7 +134,7 @@ const Button = ({ click, title }) => {
   return (
     <button
       onClick={click}
-      className="p-2 hover:bg-gray-200 text-black/80 w-full text-sm text-left">
+      className="p-2 hover:bg-gray-200 text-black/80 dark:text-darkText w-full text-sm text-left">
       {title}
     </button>
   );

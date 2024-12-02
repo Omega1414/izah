@@ -153,9 +153,9 @@ const EditPost = () => {
       >
         +
       </button>
-      <span className="ml-2 dark:text-darkText">Click to add images. <br />
-      <p className="mt-2"> Double-click an image to remove it.</p>
-      <p className="mt-2"> Click "Save" to continue editing.</p>
+      <span className="ml-2 dark:text-darkText">Şəkil əlavə etmək üçün klikləyin <br />
+      <p className="mt-2"> Şəkili silmək üçün şəkilin üzərinə iki dəfə klikləyin</p>
+     
       </span>
     </section>
   );

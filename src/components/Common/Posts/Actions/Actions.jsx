@@ -23,7 +23,7 @@ const Actions = ({postId, title, desc}) => {
 
     // Add confirmation before deleting the post
     const handleRemove = async() => {
-        const userConfirmed = window.confirm("Are you sure you want to delete this post? This action cannot be undone.");
+        const userConfirmed = window.confirm("Paylaşımı silmək istədiyinizdən əminsiniz?");
         
         if (!userConfirmed) {
             return; // If the user cancels, do nothing

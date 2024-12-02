@@ -34,7 +34,7 @@ const ProfileAbout = ({ getUserData, setEditModal }) => {
       {/* Display creation date after the bio */}
       {createdDate && (
         <p className="text-sm text-gray-500 mt-3">
-          <strong>Joined:</strong> {createdDate}
+          <strong>Qoşulub:</strong> {createdDate}
         </p>
       )}
 
