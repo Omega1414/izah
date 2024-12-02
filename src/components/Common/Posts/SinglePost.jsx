@@ -158,7 +158,7 @@ const SinglePost = () => {
             </div>
           </section>
           {/* Comments Section */}
-          <div className="flex mt-8 items-center justify-center mx-auto">
+          <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600">
           
             <Comments postId={postId} />
           </div>

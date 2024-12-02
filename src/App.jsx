@@ -6,15 +6,14 @@ import Context, { Blog } from "./Context/Context";
 import { ToastContainer } from "react-toastify";
 import HomeHeader from "./components/Home/Header/HomeHeader";
 import Profile from "./components/Home/Profile/Profile";
-import moment from "moment";
-import "moment/locale/az";
+
 import SinglePost from "./components/Common/Posts/SinglePost";
 import EditPost from "./components/Common/Posts/EditPost";
 import FilterPost from "./components/Demo/FilterPost";
 import Write from "./components/Home/Write/Write";
 
 function App() {
-  moment.locale("az");
+ 
   
     const {currentUser} = Blog()
   return (

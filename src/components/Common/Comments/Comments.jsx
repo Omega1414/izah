@@ -69,11 +69,12 @@ const Comments = ({ postId }) => {
   }, [data]);
 
   return (
-    <div className="mt-8 w-full p-2 md:w-[60%] lg:w-[40%] items-center justify-center mx-auto">
+    <div className="mt-8 w-full p-2 md:w-[60%] lg:w-[40%] items-center justify-center mx-auto  m-4">
       {/* Comment input form */}
       {currentUser && (
-        <div className="p-3 my-5">
-          <div className="flex items-center gap-2 mb-5">
+        <div className="p-3 my-5 ">
+        <div className="border border-gray-400 dark:border-gray-600 p-5">
+          <div className="flex items-center gap-2 mb-5 ">
             <img
               className="w-[2rem] h-[2rem] object-cover rounded-full"
               src={getUserData?.userImg || "/profile.jpg"}
@@ -84,9 +85,10 @@ const Comments = ({ postId }) => {
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="What are your thoughts on this post?"
-            className="w-full outline-none resize-none text-sm  dark:bg-darkBg px-2 pt-4"
+            placeholder="Bu paylaşım barədə fikirləriniz nədir?"
+            className="w-full outline-none resize-none text-sm  dark:bg-darkBg px-2 pt-4 border border-gray-400 dark:border-gray-600"
           ></textarea>
+        
           <div className="flex items-center justify-end gap-4 mt-[1rem]">
             <button onClick={() => setComment("")} className="text-sm">
               Ləğv et
@@ -98,6 +100,7 @@ const Comments = ({ postId }) => {
               Göndər
             </button>
           </div>
+          </div>
         </div>
       )}
 
@@ -106,9 +109,7 @@ const Comments = ({ postId }) => {
         <Loading />
       ) : (
         <div className="py-4 mt-8 flex flex-col gap-8">
-          {data && data.length === 0 ? (
-            <p>Rəy yoxdur</p>
-          ) : (
+          {data &&  (
             data.map((item, i) => (
               <Comment item={item} postId={postId} key={i} />
             ))

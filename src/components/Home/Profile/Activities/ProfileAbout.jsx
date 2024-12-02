@@ -12,13 +12,13 @@ const ProfileAbout = ({ getUserData, setEditModal }) => {
 
       // If created is a Firestore Timestamp object
       if (getUserData.created.toDate) {
-        formattedDate = moment(getUserData.created.toDate()).format('MMMM Do YYYY, h:mm A');
+        formattedDate = moment(getUserData.created.toDate()).format('MMMM DD YYYY, h:mm A');
       } else if (getUserData.created instanceof Date) {
         // If it's already a Date object
-        formattedDate = moment(getUserData.created).format('MMMM Do YYYY, h:mm A');
+        formattedDate = moment(getUserData.created).format('MMMM DD YYYY, h:mm A');
       } else {
         // If it's a string (assuming it's in a valid date format)
-        formattedDate = moment(getUserData.created).format('MMMM Do YYYY, h:mm A');
+        formattedDate = moment(getUserData.created).format('MMMM DD YYYY, h:mm A');
       }
 
       setCreatedDate(formattedDate);
@@ -28,12 +28,12 @@ const ProfileAbout = ({ getUserData, setEditModal }) => {
   return (
     <div className='w-full'>
       <p className='text-2xl first-letter:uppercase'>
-        {getUserData?.bio || getUserData?.username + " has no bio"}
+        {getUserData?.bio || getUserData?.username + " bio mövcud deyil"}
       </p>
 
       {/* Display creation date after the bio */}
       {createdDate && (
-        <p className="text-sm text-gray-500 mt-3">
+        <p className="text-sm text-gray-500 mt-3 capitalize dark:text-gray-400">
           <strong>Qoşulub:</strong> {createdDate}
         </p>
       )}

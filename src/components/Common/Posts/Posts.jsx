@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Loading from "../../Loading/Loading";
 import PostsCard from "./PostsCard";
 import { Blog } from "../../../Context/Context";
-
 import "./post.css";
 import Dropdown from "../../../utils/DropDown";
+import { IoSearchOutline } from "react-icons/io5";
 
 const Posts = () => {
   const { postData, postLoading } = Blog();
@@ -18,8 +18,14 @@ const Posts = () => {
   // State for controlling the dropdown visibility
   const [showDrop, setShowDrop] = useState(false);
 
-  // Categories you want to show above the posts
-  const categories = ["Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya"];
+  // State for managing the zoom tool (search input visibility)
+  const [showSearch, setShowSearch] = useState(false);
+
+  // State for user input in the search
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Categories to display
+  const categories = ["Son paylaşımlar","Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya", "Ekoloiiigiya", "İiiiT", "Geoliiiogiya", "İncəiiisənət", "Psixoloiiigiya"];
 
   // Normalize the category and post tags for case-insensitive and diacritic-insensitive comparison
   const normalizeString = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -51,106 +57,91 @@ const Posts = () => {
     }
   });
 
+  // Filter categories based on the search term
+  const filteredCategories = categories.filter(category =>
+    normalizeString(category).includes(normalizeString(searchTerm))
+  );
+
   return (
     <section className="flex-col gap-[2.5rem] items-center justify-center">
-      {/* Category filter section */}
-      <div className="flex gap-4 flex-wrap">
-        <button
-          onClick={() => setSelectedCategory("")}
-          className={`category-button ${!selectedCategory ? "active" : ""}`}
-        >
-          Son paylaşımlar
-        </button>
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`category-button ${selectedCategory === category ? "active" : ""}`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      {/* Sorting dropdown section */}
-      <div className="relative mt-3 " >
+  {/* Category filter section */}
+  <div className="flex gap-4 flex-wrap">
+    <div className="buttonSearch">
+    <div className="flex flex-row items-center">
+    <IoSearchOutline />
+        <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input dark:bg-darkBg ml-2 focus:outline-none"
+            placeholder="Search categories..."
+          />
+    </div>
+   
+     
+     
+    <div className="search-container overflow-hidden">
+  <div className="category-button-container flex flex-wrap gap-3 mb-2">
+    {filteredCategories.slice(0, 9).map((category, index) => (
       <button
-  onClick={() => setShowDrop(!showDrop)}   // Toggle dropdown visibility
-  className="sort-button"
->
-  Sort Options
-  <span className={`arrow ${showDrop ? 'rotate' : ''}`}>&#9662;</span>  {/* Down Arrow */}
-</button>
+        key={category}
+        onClick={() => {
+          if (category === "Son paylaşımlar") {
+            setSelectedCategory(""); // Reset category if "Son paylaşımlar" is selected
+          } else {
+            setSelectedCategory(category); // Set category for other cases
+          }
+          setShowSearch(false); // Close the search after selecting
+          setSearchTerm(""); // Clear search input
+        }}
+        className={`category-button ${selectedCategory === category ? "active" : ""}`}
+      >
+        {category}
+      </button>
+    ))}
+  </div>
+</div>
+  
+    </div>
+   
+   
+  </div>
 
-        <Dropdown showDrop={showDrop} setShowDrop={setShowDrop}  size="w-48">
-          <button
-            onClick={() => {
-              setSortOption("most-viewed");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "most-viewed" ? "active" : ""}`}
-          >
-            Most Viewed
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("least-viewed");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "least-viewed" ? "active" : ""}`}
-          >
-            Least Viewed
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("latest-first");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "latest-first" ? "active" : ""}`}
-          >
-            Latest First
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("oldest-first");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "oldest-first" ? "active" : ""}`}
-          >
-            Oldest First
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("title-asc");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "title-asc" ? "active" : ""}`}
-          >
-            Title (A-Z)
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("title-desc");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "title-desc" ? "active" : ""}`}
-          >
-            Title (Z-A)
-          </button>
-        </Dropdown>
-      </div>
+  {/* Sorting dropdown section */}
+  <div className="relative mt-3">
+    <button
+      onClick={() => setShowDrop(!showDrop)} // Toggle dropdown visibility
+      className="sort-button"
+    >
+      Tənzimlə
+      <span className={`arrow ${showDrop ? "rotate" : ""}`}>&#9662;</span>
+    </button>
 
-      {/* Post Cards */}
-      {postLoading ? (
-        <Loading />
-      ) : (
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-          {sortedPosts.map((post, i) => (
-            <PostsCard post={post} key={i} />
-          ))}
-        </section>
-      )}
+    <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-48">
+      <button
+        onClick={() => {
+          setSortOption("most-viewed");
+          setShowDrop(false);
+        }}
+        className={`dropdown-item ${sortOption === "most-viewed" ? "active" : ""}`}
+      >
+        Ən populyar
+      </button>
+      {/* Other sorting options */}
+    </Dropdown>
+  </div>
+
+  {/* Post Cards */}
+  {postLoading ? (
+    <Loading />
+  ) : (
+    <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+      {sortedPosts.map((post, i) => (
+        <PostsCard post={post} key={i} />
+      ))}
     </section>
+  )}
+</section>
   );
 };
 

@@ -1,0 +1,4 @@
+text photos responsive
+posts (min 15, min 10 categories)
+responsive test
+functionality test
