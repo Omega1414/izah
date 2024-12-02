@@ -198,7 +198,7 @@ const HomeHeader = () => {
   
   
   return (
-    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-700 overflow-hidden'>
+    <header className='border-b border-gray-200 dark:border-gray-700 dark:bg-gray-700 '>
       {userLoading && <Loading />}
       <div className='size h-[60px] flex items-center justify-between'>
         <div className='flex items-center gap-3'>

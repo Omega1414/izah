@@ -45,7 +45,7 @@ const UserModal = (setModal) => {
         },
       ];
   return (
-    <section className='absolute w-[18rem] p-6 bg-white dark:bg-darkBg dark:text-darkText right-0 top-[100%] shadows rounded-md z-50 text-gray-500'>
+    <section className='absolute w-[18rem] p-6 bg-white dark:bg-darkBg dark:text-darkText right-0 top-[100%]  rounded-md z-50 text-gray-500'>
        
           <div className='flex flex-col gap-4 border-b border-gray-300 pb-5 '>
             {userModal.map((link, i) => (
