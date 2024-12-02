@@ -12,10 +12,17 @@ import SinglePost from "./components/Common/Posts/SinglePost";
 import EditPost from "./components/Common/Posts/EditPost";
 import FilterPost from "./components/Demo/FilterPost";
 import Write from "./components/Home/Write/Write";
+import Loading from "./components/Loading/Loading";
+import { useState } from "react";
 
 function App() {
   moment.locale("az");
-  const { currentUser } = Blog();
+  const { currentUser } = Blog(); // Assuming Blog provides loading state or context
+  const [loading, setLoading] = useState(false);
+  // If `currentUser` or authentication state is still loading, you can show a loader
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <>
@@ -25,23 +32,23 @@ function App() {
       <ToastContainer />
 
       <Routes>
-        {/* Route to Home or Demo based on currentUser */}
+        {/* Always show the Home page if authenticated, else redirect to /demo */}
         <Route path="/" element={currentUser ? <Home /> : <Navigate to="/demo" />} />
-        
-        {/* Demo route if no user */}
-        <Route path="/demo" element={!currentUser ? <Demo /> : <Navigate to="/" />} />
-        
-        {/* Profile page */}
-        <Route path="/profile/:userId" element={<Profile />} />
-        
-        {/* Other pages */}
-        <Route path="/write" element={<Write />} />
-        <Route path="/post/:postId" element={<SinglePost />} />
-        <Route path="/editPost/:postId" element={<EditPost />} />
-        <Route path="/filter/:tag" element={<FilterPost />} />
 
-        {/* Catch-all route to redirect users to appropriate pages */}
-        <Route path="*" element={<Navigate to={!currentUser ? "/demo" : "/"} />} />
+        {/* Redirect to Home if the user is already logged in and tries to visit /demo */}
+        <Route path="/demo" element={!currentUser ? <Demo /> : <Navigate to="/" />} />
+
+        {/* Profile page */}
+        <Route path="/profile/:userId" element={currentUser ? <Profile /> : <Navigate to="/demo" />} />
+
+        {/* Other pages */}
+        <Route path="/write" element={currentUser ? <Write /> : <Navigate to="/demo" />} />
+        <Route path="/post/:postId" element={currentUser ? <SinglePost /> : <Navigate to="/demo" />} />
+        <Route path="/editPost/:postId" element={currentUser ? <EditPost /> : <Navigate to="/demo" />} />
+        <Route path="/filter/:tag" element={currentUser ? <FilterPost /> : <Navigate to="/demo" />} />
+
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to={currentUser ? "/" : "/demo"} />} />
       </Routes>
     </>
   );
