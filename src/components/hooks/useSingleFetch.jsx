@@ -1,15 +1,19 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 
 const useSingleFetch = (collectionName, id, subCol) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Ensuring data is an array by default
   const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    if (!id || !subCol) return;
+  const [error, setError] = useState(null); // Adding error state to handle fetch issues
 
-    // Construct a query reference for the subcollection
+  useEffect(() => {
+    if (!id || !subCol) {
+      setLoading(false); // If no id or subCol, don't try to fetch anything
+      return;
+    }
+
+    // Construct the query for the subcollection
     const postRef = query(collection(db, collectionName, id, subCol));
 
     const unsubscribe = onSnapshot(postRef, (snapshot) => {
@@ -18,22 +22,25 @@ const useSingleFetch = (collectionName, id, subCol) => {
           ...doc.data(),
           id: doc.id,
         }));
-        setData(fetchedData);
+        setData(fetchedData); // Set fetched data
       } else {
-        setData([]); // Return empty if no data is found
+        setData([]); // If no data, set as empty array
       }
       setLoading(false);
     }, (error) => {
+      setError(error); // Handle fetch error
       console.error("Error fetching data: ", error);
       setLoading(false);
     });
 
-    return () => unsubscribe(); // Clean up listener when component unmounts
+    return () => unsubscribe(); // Clean up listener on unmount
   }, [collectionName, id, subCol]);
 
+  // Return data, loading state, and any potential errors
   return {
     data,
     loading,
+    error,
   };
 };
 
