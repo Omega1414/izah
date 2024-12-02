@@ -12,11 +12,11 @@ import FollowingModal from './FollowingModal';
 import FollowersModal from './FollowersModal'; // Import FollowersModal
 import FollowBtn from '../UserToFollow/FollowBtn';
 import { IoSettingsSharp } from 'react-icons/io5';
-
+import Loading from "../../Loading/Loading";
 const Profile = () => {
   const { allUsers, currentUser, postData } = Blog();
   const { userId } = useParams();
-
+  const [loading, setLoading] = useState(false);
   const activities = [
     { title: "Paylaşımlar", comp: ProfileHome },
     { title: "Seçilənlər", comp: ProfileLists },
@@ -40,6 +40,11 @@ const Profile = () => {
   const postCount = userPosts.length;
 
   return (
+    <>
+    {loading ? (
+      <Loading />
+    ) : (
+      <>
     <section className="size flex gap-[4rem] relative transition-all duration-300">
       <div className="mt-[9rem] flex-[2]">
         <div className="flex gap-4 items-center dark:text-darkText">
@@ -125,6 +130,9 @@ const Profile = () => {
         />
       )}
     </section>
+    </>
+      )}
+    </>
   );
 };
 
