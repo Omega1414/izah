@@ -50,7 +50,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
         username: form.username,
         userImg: imgUrl ? imageUrl : form.userImg,
         userId: getUserData?.userId,
-        allowSavedPosts: form.allowSavedPosts, // Save the setting to Firestore
+        allowSavedPosts: form.allowSavedPosts? form.allowSavedPosts : false, // Save the setting to Firestore
       });
       setLoading(false);
       setEditModal(false);
@@ -62,9 +62,9 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
 
   return (
     <Modal modal={editModal} setModal={setEditModal}>
-      <div className="center w-[95%] md:w-[45rem] bg-white mx-auto shadows my-[1rem] z-20 mb-[3rem] p-[2rem]">
+      <div className="center w-[95%] md:w-[45rem] bg-white dark:bg-darkBg  mx-auto  my-[1rem] z-20 mb-[3rem] p-[2rem]">
         {/* head */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between ">
           <h2 className="font-bold text-xl">Profile information</h2>
           <button onClick={() => setEditModal(false)} className="text-xl">
             <LiaTimesSolid />
@@ -72,7 +72,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
         </div>
         {/* body */}
         <section className="mt-6">
-          <p className="pb-3 text-sm text-gray-500">Photo</p>
+          <p className="pb-3 text-sm text-gray-500 dark:text-darkText">Şəkil</p>
           <div className="flex gap-[2rem]">
             <div className="w-[5rem]">
               <img
@@ -80,16 +80,35 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
                 src={imgUrl ? imgUrl : form.userImg ? form.userImg : "/profile.jpg"}
                 alt="profile-img"
               />
-              <input
-                onChange={(e) => {
-                  setImgUrl(URL.createObjectURL(e.target.files[0]));
-                  setForm({ ...form, userImg: e.target.files[0] });
-                }}
-                accept="image/jpg, image/png, image/jpeg"
-                ref={imgRef}
-                type="file"
-                hidden
-              />
+             <div className="items-center justify-center flex flex-row">
+      <input
+        onChange={(e) => {
+          setImgUrl(URL.createObjectURL(e.target.files[0]));
+          setForm({ ...form, userImg: e.target.files[0] });
+        }}
+        accept="image/jpg, image/png, image/jpeg"
+        ref={imgRef}
+        type="file"
+        style={{ display: 'none' }} // Hide the default button
+      />
+      {/* Custom button that triggers the file input */}
+      <button
+        onClick={() => imgRef.current.click()}
+        style={{
+          width: "90px",
+          height: "40px",
+          marginTop : "5px",
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        Şəkil yüklə
+      </button>
+      
+    </div>
             </div>
           </div>
         </section>
@@ -103,7 +122,7 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
             value={form.username}
             type="text"
             placeholder="username..."
-            className="p-1 border-b border-black w-full outline-none"
+            className="p-1 border-b border-black w-full outline-none dark:bg-darkBg dark:text-darkText dark:border-gray-200"
             maxLength={50}
           />
           <section className="pt-[1rem] text-sm">
@@ -115,13 +134,13 @@ const EditProfile = ({ editModal, setEditModal, getUserData }) => {
               value={form.bio}
               type="text"
               placeholder="bio..."
-              className="p-1 border-b border-black w-full outline-none"
+              className="p-1 border-b border-black w-full outline-none dark:bg-darkBg dark:text-darkText dark:border-gray-200"
               maxLength={160}
             />
           </section>
           {/* Allow saved posts visibility checkbox */}
           <section className="pt-[1rem] flex">
-            <label className="block text-sm text-gray-600">
+            <label className="block text-sm text-gray-600 dark:text-darkText">
               Seçilənlər bölməsi hamıya açıq
             </label>
             <input

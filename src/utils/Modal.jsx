@@ -8,7 +8,7 @@ const Modal = ({children, modal, setModal, hidden}) => {
         className={` fixed inset-0 z-10 
       ${
         modal ? "visible opacity-100" : "invisible opacity-0"
-      }`}
+      }`} 
       />
     {children}</>
   )

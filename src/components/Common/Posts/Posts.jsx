@@ -10,7 +10,7 @@ const Posts = () => {
   const { postData, postLoading } = Blog();
 
   // State for selected category
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Son paylaşımlar");
 
   // State for selected sort option
   const [sortOption, setSortOption] = useState("date-asc");
@@ -25,17 +25,17 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Categories to display
-  const categories = ["Son paylaşımlar","Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya", "Ekoloiiigiya", "İiiiT", "Geoliiiogiya", "İncəiiisənət", "Psixoloiiigiya"];
+  const categories = ["Son paylaşımlar","Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya", "Memarlıq", "Sənaye", "Mühəndislik", "Musiqi"];
 
   // Normalize the category and post tags for case-insensitive and diacritic-insensitive comparison
   const normalizeString = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-  // Filter posts based on selected category
-  const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
-    if (!selectedCategory) return true; // If no category is selected, show all posts
-    const normalizedCategory = normalizeString(selectedCategory);
-    return post.tags.some((tag) => normalizeString(tag) === normalizedCategory);
-  }) : []; // Fallback to an empty array if postData is not an array
+// Filter posts based on selected category
+const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
+  if (!selectedCategory || selectedCategory === "Son paylaşımlar") return true; // If no category or "Son paylaşımlar" is selected, show all posts
+  const normalizedCategory = normalizeString(selectedCategory);
+  return post.tags.some((tag) => normalizeString(tag) === normalizedCategory);
+}) : []; // Fallback to an empty array if postData is not an array
 
   // Sort the filtered posts based on the selected option
   const sortedPosts = filteredPosts.sort((a, b) => {
@@ -86,11 +86,7 @@ const Posts = () => {
       <button
         key={category}
         onClick={() => {
-          if (category === "Son paylaşımlar") {
-            setSelectedCategory(""); // Reset category if "Son paylaşımlar" is selected
-          } else {
             setSelectedCategory(category); // Set category for other cases
-          }
           setShowSearch(false); // Close the search after selecting
           setSearchTerm(""); // Clear search input
         }}
@@ -117,19 +113,63 @@ const Posts = () => {
       <span className={`arrow ${showDrop ? "rotate" : ""}`}>&#9662;</span>
     </button>
 
-    <Dropdown showDrop={showDrop} setShowDrop={setShowDrop} size="w-48">
-      <button
-        onClick={() => {
-          setSortOption("most-viewed");
-          setShowDrop(false);
-        }}
-        className={`dropdown-item ${sortOption === "most-viewed" ? "active" : ""}`}
-      >
-        Ən populyar
-      </button>
-      {/* Other sorting options */}
-    </Dropdown>
-  </div>
+    <Dropdown showDrop={showDrop} setShowDrop={setShowDrop}  size="w-48">
+          <button
+            onClick={() => {
+              setSortOption("most-viewed");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "most-viewed" ? "active" : ""}`}
+          >
+            Most Viewed
+          </button>
+          <button
+            onClick={() => {
+              setSortOption("least-viewed");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "least-viewed" ? "active" : ""}`}
+          >
+            Least Viewed
+          </button>
+          <button
+            onClick={() => {
+              setSortOption("latest-first");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "latest-first" ? "active" : ""}`}
+          >
+            Latest First
+          </button>
+          <button
+            onClick={() => {
+              setSortOption("oldest-first");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "oldest-first" ? "active" : ""}`}
+          >
+            Oldest First
+          </button>
+          <button
+            onClick={() => {
+              setSortOption("title-asc");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "title-asc" ? "active" : ""}`}
+          >
+            Title (A-Z)
+          </button>
+          <button
+            onClick={() => {
+              setSortOption("title-desc");
+              setShowDrop(false);
+            }}
+            className={`dropdown-item ${sortOption === "title-desc" ? "active" : ""}`}
+          >
+            Title (Z-A)
+          </button>
+        </Dropdown>
+      </div>
 
   {/* Post Cards */}
   {postLoading ? (

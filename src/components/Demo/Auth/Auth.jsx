@@ -21,8 +21,7 @@ const Auth = ({modal, setModal}) => {
         const createUser = await signInWithPopup(auth, provider);
         const newUser = createUser.user;
         
-        // Make sure photoURL exists before proceeding
-        const userPhoto = newUser.photoURL || "defaultImageURL";  // fallback to default image if photoURL is empty
+        
         
         const ref = doc(db, "users", newUser.uid);
         const userDoc = await getDoc(ref);
@@ -32,7 +31,7 @@ const Auth = ({modal, setModal}) => {
                 userId: newUser.uid,
                 username: newUser.displayName,
                 email: newUser.email,
-                userImg: userPhoto,
+                userImg: "https://media.istockphoto.com/id/1208175274/vector/avatar-vector-icon-simple-element-illustrationavatar-vector-icon-material-concept-vector.jpg?s=612x612&w=0&k=20&c=t4aK_TKnYaGQcPAC5Zyh46qqAtuoPcb-mjtQax3_9Xc=",
                 bio: "",
             });
             toast.success("Yeni hesab yaradıldı");

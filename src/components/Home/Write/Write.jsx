@@ -143,8 +143,9 @@ const Write = () => {
       >
         +
       </button>
-      <span className="ml-2 dark:text-darkText">Şəkillər əlavə etmək üçün klikləyin. <br />
-      <p className="mt-2"> Qeyd: Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</p>
+      <span className="ml-2 dark:text-darkText">Mətnə şəkil əlavə etmək üçün klikləyin. <br />
+      <p className="mt-2"> Qeyd: Postun əsas başlıq şəkilini bir sonrakı səhifədə əlavə edə biləcəksiniz.</p>
+      <p className="mt-2"> Şəkili silmək üçün üzərinə 2 dəfə klikləyə bilərsiz.</p>
       <p className="mt-2"> Şəkili əlavə etmək üçün ilk öncə mətnin içində əlavə edəcəyiniz yerə klikləyin.</p>
       <p className="mt-2"> Davam etmək üçün sağ üstdə "Paylaş" düyməsini basın.</p>
       </span>

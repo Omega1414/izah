@@ -36,21 +36,19 @@ const SignIn = ({setSignReq}) => {
   }
   return (
     <div className='size mt-[6rem] text-center'>
-    <h2 className='text-3xl'>Sign in with email</h2>
-    <p className='w-full sm:w-[25rem] mx-auto py-[3rem]'>
-    Enter the email address associated with your account
-    </p>
-    <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+    <h2 className='text-3xl'>Email ünvanı ilə daxil ol</h2>
+    
+    <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-full lg:w-[45%] mx-auto mt-10'>
     <Input form={form} setForm={setForm} type="email" title="email" />
-    <Input form={form} setForm={setForm} type="password" title="password" />
+    <Input form={form} setForm={setForm} type="password" title="şifrə" />
     <button className={`px-4 py-1 text-sm rounded-full bg-green-600 hover:bg-green-800 
-    text-white w-fit mx-auto ${loading? "opacity-50 pointer-events-none" : ""}`}>Sign In</button>
+    text-white w-fit mx-auto ${loading? "opacity-50 pointer-events-none" : ""}`}>Daxil ol</button>
     </form>
     <button
      onClick={() => setSignReq("")}
      className='mt-5 text-sm text-green-600 hover:text-green-700 flex items-center mx-auto'>
     <MdKeyboardArrowLeft/>
-    All sign in options</button>
+    Digər seçimləri</button>
     </div>
   )
 }
