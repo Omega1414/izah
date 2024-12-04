@@ -3,8 +3,8 @@ import Loading from "../../Loading/Loading";
 import PostsCard from "./PostsCard";
 import { Blog } from "../../../Context/Context";
 import "./post.css";
-import Dropdown from "../../../utils/DropDown";
 import { IoSearchOutline } from "react-icons/io5";
+import Dropdown2 from "../../../utils/DropDown2";
 
 const Posts = () => {
   const { postData, postLoading } = Blog();
@@ -25,7 +25,7 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Categories to display
-  const categories = ["Son paylaşımlar","Ekologiya", "İT", "Geologiya", "İncəsənət", "Psixologiya", "Memarlıq", "Sənaye", "Mühəndislik", "Musiqi"];
+  const categories = ["Son paylaşımlar","Ekologiya", "Texnologiya", "Geologiya", "İncəsənət", "Psixologiya", "Memarlıq", "Sənaye", "Mühəndislik", "Musiqi"];
 
   // Normalize the category and post tags for case-insensitive and diacritic-insensitive comparison
   const normalizeString = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -74,7 +74,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input dark:bg-darkBg ml-2 focus:outline-none"
-            placeholder="Search categories..."
+            placeholder="Kateqoriya axtar"
           />
     </div>
    
@@ -113,7 +113,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
       <span className={`arrow ${showDrop ? "rotate" : ""}`}>&#9662;</span>
     </button>
 
-    <Dropdown showDrop={showDrop} setShowDrop={setShowDrop}  size="w-48">
+    <Dropdown2 showDrop={showDrop} setShowDrop={setShowDrop}  size="w-48">
           <button
             onClick={() => {
               setSortOption("most-viewed");
@@ -121,7 +121,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "most-viewed" ? "active" : ""}`}
           >
-            Most Viewed
+            Çox izlənmiş
           </button>
           <button
             onClick={() => {
@@ -130,7 +130,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "least-viewed" ? "active" : ""}`}
           >
-            Least Viewed
+            Az izlənmiş
           </button>
           <button
             onClick={() => {
@@ -139,7 +139,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "latest-first" ? "active" : ""}`}
           >
-            Latest First
+            Ən yeni
           </button>
           <button
             onClick={() => {
@@ -148,7 +148,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "oldest-first" ? "active" : ""}`}
           >
-            Oldest First
+            Ən köhnə
           </button>
           <button
             onClick={() => {
@@ -157,7 +157,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "title-asc" ? "active" : ""}`}
           >
-            Title (A-Z)
+              (A-Z) sıralaması
           </button>
           <button
             onClick={() => {
@@ -166,9 +166,9 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
             }}
             className={`dropdown-item ${sortOption === "title-desc" ? "active" : ""}`}
           >
-            Title (Z-A)
+              (Z-A) sıralaması
           </button>
-        </Dropdown>
+        </Dropdown2>
       </div>
 
   {/* Post Cards */}

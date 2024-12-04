@@ -1,4 +1,16 @@
-text photos responsive
 posts (min 15, min 10 categories)
 responsive test
+-demo
+-demo post
+-sign in
+-sign up
+-home page
+-post
+-profile
+-profile edit
+-write
+-preview
+-edit post
+-notifications
+
 functionality test

@@ -41,7 +41,7 @@ const Like = ({ postId }) => {
             userId: currentUser?.uid,  // The user who liked the post
             postOwnerId,  // The actual post owner who will receive the notification
             timestamp,  // Timestamp of the like
-            message: `"${postTitle} paylaşımına like gəldi!"`,
+            message: `"${postTitle} paylaşımı bəyənildi"`,
           });
         }
   

@@ -51,7 +51,7 @@ const Banner = () => {
     },
    
   ];
-console.log(authModel)
+
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white dark:bg-darkBg text-white">
       <Swiper

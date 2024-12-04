@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Blog } from "../../../Context/Context";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../firebase/firebase";
+import Loading from "../../Loading/Loading";
 
 const EditPost = () => {
   const { postId } = useParams(); // Get the postId from URL params
   const { currentUser, setTitle, title, setDescription, description, updateData } = Blog();
   const navigate = useNavigate();
-  
+  const [loading, setLoading] = useState(false)
   const [post, setPost] = useState(null); // To store post data
   const editorRef = useRef(null); // Ref to the contentEditable area for descriptions
   const addImageButtonRef = useRef(null); // Ref for the + button
@@ -88,8 +89,7 @@ const EditPost = () => {
         selection.removeAllRanges();
         selection.addRange(newRange);
 
-        // Update the content state
-        setDescription(editor.innerHTML); // Updating description
+        // Instead of updating description here, we'll do it on save
       });
     });
   };
@@ -113,7 +113,7 @@ const EditPost = () => {
       const imgContainer = event.target.parentElement;
       if (imgContainer) {
         imgContainer.remove(); // Remove the image container
-        setDescription(editorRef.current.innerHTML); // Update content after image is removed
+        // Instead of updating description immediately, we'll update it on save
       }
     }
   };
@@ -130,8 +130,31 @@ const EditPost = () => {
     };
   }, []);
 
+  const handleEdit = async () => {
+    try {
+      setLoading(true)
+      const ref = doc(db, "posts", postId);
+      // Instead of using the editor directly, we get the description from the editorRef
+      const editor = editorRef.current;
+      const updatedDescription = editor.innerHTML;
+
+      await updateDoc(ref, {
+        title,
+        desc: updatedDescription, // Save the updated description here
+      });
+      setDescription(updatedDescription); // Update description in state
+      navigate(`/post/${postId}`);
+      toast.success("Paylaşım yeniləndi");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false)
+    }
+  };
+
   return (
     <section className="write w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]">
+    {loading && <Loading/>}
       <input
         type="text"
         placeholder="Title..."
@@ -143,8 +166,8 @@ const EditPost = () => {
         ref={editorRef}
         contentEditable
         className="content-editable my-5 p-5 border border-gray-300 dark:text-darkText"
-        dangerouslySetInnerHTML={{ __html: description }}
         placeholder="Start writing here..."
+        dangerouslySetInnerHTML={{ __html: description }}
       />
       <button
         ref={addImageButtonRef}
@@ -155,10 +178,18 @@ const EditPost = () => {
       </button>
       <span className="ml-2 dark:text-darkText">Şəkil əlavə etmək üçün klikləyin <br />
       <p className="mt-2"> Şəkili silmək üçün şəkilin üzərinə iki dəfə klikləyin</p>
-     
       </span>
+      <div className="flex mx-auto items-center justify-center mt-8">
+      <button
+        onClick={handleEdit}
+        className=" !bg-green-700 !py-2 px-5 !text-white !rounded-full  "
+      >
+        Yadda saxla
+      </button>
+      </div>
     </section>
   );
 };
 
 export default EditPost;
+

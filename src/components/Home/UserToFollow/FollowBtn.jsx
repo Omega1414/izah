@@ -44,7 +44,7 @@ const FollowBtn = ({ userId }) => {
         const notificationRef = doc(db, "notifications", userId + "_" + currentUser?.uid); // Unique ID for the notification
         await setDoc(notificationRef, {
           type: "new_follower",
-          message: "You have new follower!",
+          message: "Yeni izləyiciniz var!",
           timestamp: new Date(),
           postOwnerId: userId, // The user who is being followed
           followerId: currentUser?.uid, // The user who is following

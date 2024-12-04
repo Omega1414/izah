@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-const Dropdown = ({ children, size, showDrop, setShowDrop }) => {
+const Dropdown2 = ({ children, size, showDrop, setShowDrop }) => {
   const dropRef = useRef(null)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Dropdown = ({ children, size, showDrop, setShowDrop }) => {
       {showDrop && (
         <div
           ref={dropRef}
-          className={` flex flex-col absolute left-[-70px]  top-[2rem] bg-white dark:bg-black ${size} z-[999]`}
+          className={` flex flex-col absolute  top-[2rem] bg-white dark:bg-black ${size} z-[999]`}
         >
           {children}
         </div>
@@ -27,4 +27,4 @@ const Dropdown = ({ children, size, showDrop, setShowDrop }) => {
   )
 }
 
-export default Dropdown
+export default Dropdown2

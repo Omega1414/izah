@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Blog } from "../../../Context/Context";
 import { toast } from "react-toastify";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import useSingleFetch from "../../hooks/useSingleFetch";
 import Loading from "../../Loading/Loading";
@@ -51,7 +51,7 @@ const Comments = ({ postId }) => {
           userId: currentUser?.uid,
           postOwnerId,
           timestamp,
-          message: `"${postTitle}" received a new comment!`,
+          message: `"${postTitle}" paylaşımına yeni rəy yazıldı`,
         });
       }
 

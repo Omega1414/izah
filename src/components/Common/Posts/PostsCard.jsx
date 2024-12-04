@@ -21,7 +21,7 @@ const PostsCard = ({ post }) => {
 
   return (
     <section className="bg-white hover:bg-gray-200 shadow-lg rounded-md p-4 flex overflow-visible flex-col items-center 
-    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[350px] md:h-[250px] ">
+    justify-center dark:bg-gray-700 hover:dark:bg-gray-800  max-w-[600px] w-full max-h-[400px] md:h-[250px] ">
       <div
         onClick={() => navigate(`/post/${postId}`)}
         className="flex flex-col sm:flex-row gap-4 cursor-pointer w-full h-full"
@@ -58,11 +58,11 @@ const PostsCard = ({ post }) => {
 
         {/* Image container - only render it if there's an image */}
         {postImg && (
-          <div className="w-full sm:w-[280px] h-[100px] md:h-[160px] flex items-center justify-center overflow-hidden">
+          <div className="w-full sm:w-[280px] h-[150px] md:h-[160px] mt-2 flex items-center justify-center overflow-hidden">
             <img
               src={postImg}
               alt="postImg"
-              className="w-full h-full object-contain rounded-md"
+              className="w-full h-full object-cover rounded-md"
             />
           </div>
         )}

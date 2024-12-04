@@ -1,8 +1,5 @@
 import React from 'react'
-import { BiSpreadsheet } from 'react-icons/bi';
-import { HiOutlineChartBar } from 'react-icons/hi';
 import { LiaUserSolid } from 'react-icons/lia';
-import { MdOutlineLocalLibrary } from 'react-icons/md';
 import { Blog } from '../../../Context/Context';
 import { Link, useNavigate } from 'react-router-dom';
 import { secretEmail } from '../../../utils/helper';
@@ -24,25 +21,11 @@ const UserModal = (setModal) => {
     }
     const userModal = [
         {
-          title: "Profile",
+          title: "Profil",
           icon: <LiaUserSolid />,
           path: `/profile/${currentUser?.uid}`,
         },
-        {
-          title: "Library",
-          icon: <MdOutlineLocalLibrary />,
-          path: "/library",
-        },
-        {
-          title: "Stories",
-          icon: <BiSpreadsheet />,
-          path: "/stories",
-        },
-        {
-          title: "Stats",
-          icon: <HiOutlineChartBar />,
-          path: "/stats",
-        },
+    
       ];
   return (
     <section className='absolute w-[18rem] p-6 bg-white dark:bg-darkBg dark:text-darkText right-0 top-[100%]  rounded-md z-50 text-gray-500'>

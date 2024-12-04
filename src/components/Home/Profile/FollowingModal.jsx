@@ -133,7 +133,7 @@ const FollowingModal = ({ modal, setModal, follows }) => {
             e.stopPropagation();
             handleUnfollow(user?.id);
           }}
-          className="ml-auto text-white rounded-full bg-red-400 p-2 text-sm"
+          className="ml-auto text-white rounded-full bg-gray-600 p-2 text-sm"
         >
           Dayandır
         </button>
