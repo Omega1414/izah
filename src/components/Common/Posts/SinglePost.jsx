@@ -103,14 +103,14 @@ const SinglePost = () => {
       const metaTwitterImage = document.querySelector('meta[name="twitter:image"]');
   
       // Update Open Graph and Twitter meta tags dynamically
-      if (metaDescription) metaDescription.setAttribute("content", post.desc || "");
-      if (metaTitle) metaTitle.setAttribute("content", post.title || "");
-      if (metaDesc) metaDesc.setAttribute("content", post.desc || "");
-      if (metaImage) metaImage.setAttribute("content", post.postImg || "");
+      if (metaDescription) metaDescription.setAttribute("content", desc || "");
+      if (metaTitle) metaTitle.setAttribute("content", title || "");
+      if (metaDesc) metaDesc.setAttribute("content", desc || "");
+      if (metaImage) metaImage.setAttribute("content", postImg || "");
       if (metaUrl) metaUrl.setAttribute("content", window.location.href); // Current URL of the post
-      if (metaTwitterTitle) metaTwitterTitle.setAttribute("content", post.title || "");
-      if (metaTwitterDesc) metaTwitterDesc.setAttribute("content", post.desc || "");
-      if (metaTwitterImage) metaTwitterImage.setAttribute("content", post.postImg || "");
+      if (metaTwitterTitle) metaTwitterTitle.setAttribute("content", title || "");
+      if (metaTwitterDesc) metaTwitterDesc.setAttribute("content", desc || "");
+      if (metaTwitterImage) metaTwitterImage.setAttribute("content", postImg || "");
     }
   }, [post]);
   return (
