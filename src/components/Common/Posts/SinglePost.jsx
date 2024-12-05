@@ -95,12 +95,12 @@ const SinglePost = () => {
   return (
     <>
      <Helmet>
-        <title>{title || "Default Title"}</title>
+        <title>{title || "izah.com"}</title>
         <meta name="description" content={desc || "Default description."} />
         <meta property="og:title" content={title || "Default OG Title"} />
         <meta property="og:description" content={desc || "Default OG Description"} />
         <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
-        <meta property="og:url" content={`https://yourdomain.com/post/${postId}`} />
+        <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
       </Helmet>
       {loading ? (
         <Loading />
