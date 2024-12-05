@@ -18,7 +18,6 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
-import { Helmet } from "react-helmet";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -93,24 +92,29 @@ const SinglePost = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (post) {
-      // Update the meta tags dynamically when post data is available
-      document.title = `${post.title} - Izah`;
-
-      // Update Open Graph meta tags
-      document.querySelector('meta[property="og:title"]').setAttribute("content", post.title);
-      document.querySelector('meta[property="og:description"]').setAttribute("content", post.desc || "No description available");
-      document.querySelector('meta[property="og:image"]').setAttribute("content", post.postImg || "https://example.com/default-image.jpg");
-      document.querySelector('meta[property="og:url"]').setAttribute("content", window.location.href);
-
-      // Update Twitter Card meta tags
-      document.querySelector('meta[name="twitter:title"]').setAttribute("content", post.title);
-      document.querySelector('meta[name="twitter:description"]').setAttribute("content", post.desc || "No description available");
-      document.querySelector('meta[name="twitter:image"]').setAttribute("content", post.postImg || "https://example.com/default-image.jpg");
+      document.title = post.title; // Set the document title to the post title
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaImage = document.querySelector('meta[property="og:image"]');
+      const metaTitle = document.querySelector('meta[property="og:title"]');
+      const metaDesc = document.querySelector('meta[property="og:description"]');
+      const metaUrl = document.querySelector('meta[property="og:url"]');
+      const metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
+      const metaTwitterDesc = document.querySelector('meta[name="twitter:description"]');
+      const metaTwitterImage = document.querySelector('meta[name="twitter:image"]');
+  
+      // Update Open Graph and Twitter meta tags dynamically
+      if (metaDescription) metaDescription.setAttribute("content", post.desc || "");
+      if (metaTitle) metaTitle.setAttribute("content", post.title || "");
+      if (metaDesc) metaDesc.setAttribute("content", post.desc || "");
+      if (metaImage) metaImage.setAttribute("content", post.postImg || "");
+      if (metaUrl) metaUrl.setAttribute("content", window.location.href); // Current URL of the post
+      if (metaTwitterTitle) metaTwitterTitle.setAttribute("content", post.title || "");
+      if (metaTwitterDesc) metaTwitterDesc.setAttribute("content", post.desc || "");
+      if (metaTwitterImage) metaTwitterImage.setAttribute("content", post.postImg || "");
     }
   }, [post]);
   return (
     <>
-     
       {loading ? (
         <Loading />
       ) : (
