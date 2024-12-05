@@ -18,7 +18,6 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
-import { Helmet } from "react-helmet";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -94,17 +93,6 @@ const SinglePost = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{post.title}</title>
-        <meta name="description" content={post.desc} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.desc} />
-        <meta property="og:image" content={post.postImg} />
-        <meta property="og:url" content={post.url} />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.desc} />
-        <meta name="twitter:image" content={post.postImg} />
-      </Helmet>
       {loading ? (
         <Loading />
       ) : (
