@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Home from "./components/Home/Home"
 import Demo from "./components/Demo/Demo"
 import DemoHeader from "./components/Demo/DemoHeader";
@@ -11,19 +11,9 @@ import SinglePost from "./components/Common/Posts/SinglePost";
 import EditPost from "./components/Common/Posts/EditPost";
 import FilterPost from "./components/Demo/FilterPost";
 import Write from "./components/Home/Write/Write";
-import { useEffect } from "react";
 
 function App() {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/") {
-      // Set title to 'İzah' when on the homepage
-      document.title = "İzah";
-    } else {
-      // Otherwise, leave title to be updated dynamically (in SinglePost)
-    }
-  }, [location.pathname]);
+ 
   
     const {currentUser} = Blog()
   return (

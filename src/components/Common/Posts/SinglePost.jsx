@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import Loading from "../../Loading/Loading";
 import { Blog } from "../../../Context/Context";
 import FollowBtn from "../../Home/UserToFollow/FollowBtn";
-import "./post.css";
-import moment from "moment";
+import "./post.css"
+import moment from "moment/moment";
 import Actions from "../Posts/Actions/Actions";
 import Like from "./Actions/Like";
 import Comment from "./Actions/Comment";
@@ -17,7 +17,6 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
-import { Helmet } from 'react-helmet-async'; // Import Helmet
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -27,32 +26,32 @@ const SinglePost = () => {
   const { currentUser } = Blog();
   const isInitialRender = useRef(true);
 
-  useEffect(() => {
-    if (isInitialRender?.current && currentUser?.uid) {
-      const incrementPageView = async () => {
-        try {
-          const postRef = doc(db, "posts", postId);
-          const postSnapshot = await getDoc(postRef);
+  // Function to increment page views
+  const incrementPageView = async () => {
+    try {
+      const postRef = doc(db, "posts", postId);
+      const postSnapshot = await getDoc(postRef);
 
-          if (postSnapshot.exists()) {
-            const postData = postSnapshot.data();
+      if (postSnapshot.exists()) {
+        const postData = postSnapshot.data();
+        
+        // Check if the post has already been viewed (using localStorage or sessionStorage)
+        if (!localStorage.getItem(`viewedPost_${postId}`)) {
+          // Mark the post as viewed in localStorage
+          localStorage.setItem(`viewedPost_${postId}`, "true");
 
-            if (!postData.viewedBy?.includes(currentUser.uid)) {
-              await updateDoc(postRef, {
-                pageViews: increment(1),
-                viewedBy: arrayUnion(currentUser.uid),
-              });
-            }
-          }
-        } catch (error) {
-          toast.error(error.message);
+          // Increment the page view count
+          await updateDoc(postRef, {
+            pageViews: increment(1),
+          });
         }
-      };
-      incrementPageView();
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-    isInitialRender.current = false;
-  }, [postId, currentUser]);
+  };
 
+  // Fetch post and page views data
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
@@ -81,6 +80,9 @@ const SinglePost = () => {
     };
 
     fetchPost();
+    
+    // Increment page view only once (this happens only once per browser session or once for unique users)
+    incrementPageView();
   }, [postId]);
 
   const { title, desc, postImg, username, created, userImg, userId } = post;
@@ -88,16 +90,6 @@ const SinglePost = () => {
 
   return (
     <>
-      {/* Dynamically update the title and meta tags */}
-      <Helmet>
-        <title>{title || "Post Title"}</title>
-        <meta name="description" content={desc || "Düşün, öyrən, inkişaf et!"} />
-        <meta property="og:title" content={title || "İzah"} />
-        <meta property="og:description" content={desc || "Bütün sahələrə uyğun maraqlı paylaşımlar"} />
-        <meta property="og:image" content={postImg || "https://cdn.pixabay.com/photo/2023/11/14/06/54/ai-generated-8387035_960_720.jpg"} />
-        <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
-      </Helmet>
-
       {loading ? (
         <Loading />
       ) : (
@@ -162,9 +154,11 @@ const SinglePost = () => {
               />
             </div>
           </section>
+          {/* Comments Section */}
           <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600">
             <Comments postId={postId} />
           </div>
+          {/* Recommendations Section */}
           {post && <Recommended post={post} />}
         </>
       )}
