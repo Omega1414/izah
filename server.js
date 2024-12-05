@@ -32,27 +32,13 @@ if (!isProduction) {
   app.use(base, sirv('./dist/client', { extensions: [] }));
 }
 
-// Add Cache-Control headers
-app.use('*', (req, res, next) => {
-  if (isProduction) {
-    // Set caching for static assets (HTML, CSS, JS, etc.)
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-  } else {
-    // For development, no caching for dynamic content
-    res.setHeader('Cache-Control', 'no-cache');
-  }
-  next();
-});
-
-// Serve HTML
+// Serve SSR HTML
 app.use('*', async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '');
-
-    /** @type {string} */
     let template;
-    /** @type {import('./src/entry-server.js').render} */
     let render;
+
     if (!isProduction) {
       // Always read fresh template in development
       template = await fs.readFile('./index.html', 'utf-8');
@@ -63,12 +49,15 @@ app.use('*', async (req, res) => {
       render = (await import('./dist/server/entry-server.js')).render;
     }
 
+    // Render the page with the right data and meta tags
     const rendered = await render(url);
 
+    // Inject the head and HTML content into the template
     const html = template
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '');
 
+    // Send the rendered HTML with the proper headers
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
   } catch (e) {
     vite?.ssrFixStacktrace(e);
@@ -77,7 +66,7 @@ app.use('*', async (req, res) => {
   }
 });
 
-// Start http server
+// Start the server
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
