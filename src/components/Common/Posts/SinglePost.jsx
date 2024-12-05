@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, increment, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
@@ -90,7 +90,20 @@ const SinglePost = () => {
   const { title, desc, postImg, username, created, userImg, userId } = post;
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (post) {
+      const { title, desc, postImg } = post;
 
+      // Inject meta tag content into the document head
+      document.querySelector('meta[property="og:title"]').setAttribute("content", title || "Default Title");
+      document.querySelector('meta[property="og:description"]').setAttribute("content", desc || "Default Description");
+      document.querySelector('meta[property="og:image"]').setAttribute("content", postImg || "default-image.jpg");
+      
+      // Update the document title as well
+      document.title = title || "Default Title";
+    }
+  }, [post]);
+ 
   return (
     <>
       {loading ? (
