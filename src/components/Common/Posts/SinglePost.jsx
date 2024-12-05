@@ -18,6 +18,7 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { Helmet } from "react-helmet";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -90,31 +91,20 @@ const SinglePost = () => {
   const { title, desc, postImg, username, created, userImg, userId } = post;
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (post) {
-      document.title = post.title; // Set the document title to the post title
-      const metaDescription = document.querySelector('meta[name="description"]');
-      const metaImage = document.querySelector('meta[property="og:image"]');
-      const metaTitle = document.querySelector('meta[property="og:title"]');
-      const metaDesc = document.querySelector('meta[property="og:description"]');
-      const metaUrl = document.querySelector('meta[property="og:url"]');
-      const metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
-      const metaTwitterDesc = document.querySelector('meta[name="twitter:description"]');
-      const metaTwitterImage = document.querySelector('meta[name="twitter:image"]');
-  
-      // Update Open Graph and Twitter meta tags dynamically
-      if (metaDescription) metaDescription.setAttribute("content", desc || "");
-      if (metaTitle) metaTitle.setAttribute("content", title || "");
-      if (metaDesc) metaDesc.setAttribute("content", desc || "");
-      if (metaImage) metaImage.setAttribute("content", postImg || "");
-      if (metaUrl) metaUrl.setAttribute("content", window.location.href); // Current URL of the post
-      if (metaTwitterTitle) metaTwitterTitle.setAttribute("content", title || "");
-      if (metaTwitterDesc) metaTwitterDesc.setAttribute("content", desc || "");
-      if (metaTwitterImage) metaTwitterImage.setAttribute("content", postImg || "");
-    }
-  }, [post]);
+
   return (
     <>
+      <Helmet>
+        <title>{post.title}</title>
+        <meta name="description" content={post.desc} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.desc} />
+        <meta property="og:image" content={post.postImg} />
+        <meta property="og:url" content={post.url} />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.desc} />
+        <meta name="twitter:image" content={post.postImg} />
+      </Helmet>
       {loading ? (
         <Loading />
       ) : (
