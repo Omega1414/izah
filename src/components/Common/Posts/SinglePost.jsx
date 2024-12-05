@@ -18,7 +18,6 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
-import { MetaTags } from "react-meta-tags";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -94,20 +93,6 @@ const SinglePost = () => {
 
   return (
     <>
-     <MetaTags>
-        <title>{title || "Default Title"}</title>
-        <meta name="description" content={desc || "Default description."} />
-        {/* Open Graph Meta Tags */}
-        <meta property="og:title" content={title || "Default OG Title"} />
-        <meta property="og:description" content={desc || "Default OG Description"} />
-        <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
-        <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
-        
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:title" content={title || "Default Twitter Title"} />
-        <meta name="twitter:description" content={desc || "Default Twitter Description"} />
-        <meta name="twitter:image" content={postImg || "https://example.com/default-image.jpg"} />
-      </MetaTags>
       {loading ? (
         <Loading />
       ) : (
