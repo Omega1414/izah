@@ -1,14 +1,13 @@
-
 import React, { useEffect, useRef, useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc, increment, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
 import Loading from "../../Loading/Loading";
 import { Blog } from "../../../Context/Context";
 import FollowBtn from "../../Home/UserToFollow/FollowBtn";
-import "./post.css"
-import moment from "moment/moment";
+import "./post.css";
+import moment from "moment";
 import Actions from "../Posts/Actions/Actions";
 import Like from "./Actions/Like";
 import Comment from "./Actions/Comment";
@@ -18,6 +17,7 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { Helmet } from 'react-helmet-async'; // Import Helmet
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -27,7 +27,6 @@ const SinglePost = () => {
   const { currentUser } = Blog();
   const isInitialRender = useRef(true);
 
-  // Increment page views if the user hasn't viewed it before
   useEffect(() => {
     if (isInitialRender?.current && currentUser?.uid) {
       const incrementPageView = async () => {
@@ -38,12 +37,10 @@ const SinglePost = () => {
           if (postSnapshot.exists()) {
             const postData = postSnapshot.data();
 
-            // Check if the user has already viewed the post
             if (!postData.viewedBy?.includes(currentUser.uid)) {
-              // Increment page views and add user to the viewedBy array
               await updateDoc(postRef, {
                 pageViews: increment(1),
-                viewedBy: arrayUnion(currentUser.uid), // Add current user ID to viewedBy array
+                viewedBy: arrayUnion(currentUser.uid),
               });
             }
           }
@@ -56,7 +53,6 @@ const SinglePost = () => {
     isInitialRender.current = false;
   }, [postId, currentUser]);
 
-  // Fetch post and page views data
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
@@ -88,24 +84,20 @@ const SinglePost = () => {
   }, [postId]);
 
   const { title, desc, postImg, username, created, userImg, userId } = post;
-
   const navigate = useNavigate();
-  useEffect(() => {
-    if (post) {
-      const { title, desc, postImg } = post;
 
-      // Inject meta tag content into the document head
-      document.querySelector('meta[property="og:title"]').setAttribute("content", title || "Default Title");
-      document.querySelector('meta[property="og:description"]').setAttribute("content", desc || "Default Description");
-      document.querySelector('meta[property="og:image"]').setAttribute("content", postImg || "default-image.jpg");
-      
-      // Update the document title as well
-      document.title = title || "Default Title";
-    }
-  }, [post]);
- 
   return (
     <>
+      {/* Dynamically update the title and meta tags */}
+      <Helmet>
+        <title>{title || "Post Title"}</title>
+        <meta name="description" content={desc || "Post Description"} />
+        <meta property="og:title" content={title || "Post Title"} />
+        <meta property="og:description" content={desc || "Post Description"} />
+        <meta property="og:image" content={postImg || "/default-image.jpg"} />
+        <meta property="og:url" content={`https://yourwebsite.com/post/${postId}`} />
+      </Helmet>
+
       {loading ? (
         <Loading />
       ) : (
@@ -121,12 +113,12 @@ const SinglePost = () => {
               />
               <div>
                 <div className="capitalize">
-                <span
-                  onClick={() => navigate(`/profile/${userId}`)} // Add onClick here to navigate to the profile page
-                  className="dark:text-blue-300 font-bold cursor-pointer"
-                >
-                  {username}
-                </span>
+                  <span
+                    onClick={() => navigate(`/profile/${userId}`)} 
+                    className="dark:text-blue-300 font-bold cursor-pointer"
+                  >
+                    {username}
+                  </span>
                   <span className="ml-2">
                     {currentUser && currentUser?.uid !== userId && (
                       <FollowBtn userId={userId} />
@@ -143,7 +135,7 @@ const SinglePost = () => {
                 <Like postId={postId} />
                 <Comment />
                 <span className="text-gray-500 dark:text-blue-300 flex items-center">
-                <GrView className="mr-1"/> {pageViews}
+                  <GrView className="mr-1"/> {pageViews}
                 </span>
               </div>
               <div className="flex items-center pt-2 gap-5 dark:text-blue-200">
@@ -165,25 +157,19 @@ const SinglePost = () => {
               <div
                 className="mt-6 dark:text-gray-300 text-[18px]"
                 dangerouslySetInnerHTML={{
-                  __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]" style="display: block; margin: 0 auto;"')  // Safeguard against undefined
+                  __html: (desc || '').replace(/<img/g, '<img class="center-img max-h-[400px]" style="display: block; margin: 0 auto;"')
                 }}
               />
             </div>
           </section>
-          {/* Comments Section */}
           <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600">
-          
             <Comments postId={postId} />
           </div>
-          {/* Recommendations Section */}
           {post && <Recommended post={post} />}
         </>
       )}
     </>
   );
 };
-
-
-
 
 export default SinglePost;
