@@ -18,6 +18,7 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -93,6 +94,14 @@ const SinglePost = () => {
 
   return (
     <>
+     <Helmet>
+        <title>{title || "Default Title"}</title>
+        <meta name="description" content={desc || "Default description."} />
+        <meta property="og:title" content={title || "Default OG Title"} />
+        <meta property="og:description" content={desc || "Default OG Description"} />
+        <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
+        <meta property="og:url" content={`https://yourdomain.com/post/${postId}`} />
+      </Helmet>
       {loading ? (
         <Loading />
       ) : (

@@ -10,14 +10,18 @@ import 'react-tagsinput/react-tagsinput.css'
 import moment from "moment";
 import "moment/locale/az";
 import "moment/dist/locale/az";
+import { HelmetProvider } from 'react-helmet-async'
 
 moment.locale("az");
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+    <HelmetProvider>
     <Context>
       <App/>
     </Context>
+    </HelmetProvider>
     </BrowserRouter>
+    
   </StrictMode>,
 )
