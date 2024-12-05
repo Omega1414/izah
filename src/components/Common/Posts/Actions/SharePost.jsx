@@ -35,32 +35,35 @@ const SharePost = () => {
         <CiShare1 className="text-2xl" />
       </button>
       <Dropdown3 showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
-        <Button click={copyLink} title="Copy Link" icon={<BiLink />} />
+        <div onClick={copyLink} className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
+          <span className="text-[1.2rem]"><BiLink /></span>
+          Copy Link
+        </div>
+
+        {/* Using div instead of button to avoid nested button */}
         <TwitterShareButton url={path}>
-          <Button title="Share On Twitter" icon={<BiLogoTwitter />} />
+          <div className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
+            <span className="text-[1.2rem]"><BiLogoTwitter /></span>
+            Share On Twitter
+          </div>
         </TwitterShareButton>
+
         <FacebookShareButton url={path}>
-          <Button title="Share On Facebook" icon={<BiLogoFacebookCircle />} />
+          <div className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
+            <span className="text-[1.2rem]"><BiLogoFacebookCircle /></span>
+            Share On Facebook
+          </div>
         </FacebookShareButton>
+
         <LinkedinShareButton url={path}>
-          <Button title="Share On LinkedIn" icon={<BiLogoLinkedinSquare />} />
+          <div className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
+            <span className="text-[1.2rem]"><BiLogoLinkedinSquare /></span>
+            Share On LinkedIn
+          </div>
         </LinkedinShareButton>
       </Dropdown3>
     </div>
   );
 };
 
-export default SharePost
-
-const Button = ({ click, icon, title }) => {
-  return (
-    <div
-      onClick={click}
-      className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left
-      flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white"
-    >
-      <span className="text-[1.2rem]">{icon}</span>
-      {title}
-    </div>
-  );
-};
+export default SharePost;
