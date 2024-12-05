@@ -150,24 +150,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
           >
             Ən köhnə
           </button>
-          <button
-            onClick={() => {
-              setSortOption("title-asc");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "title-asc" ? "active" : ""}`}
-          >
-              (A-Z) sıralaması
-          </button>
-          <button
-            onClick={() => {
-              setSortOption("title-desc");
-              setShowDrop(false);
-            }}
-            className={`dropdown-item ${sortOption === "title-desc" ? "active" : ""}`}
-          >
-              (Z-A) sıralaması
-          </button>
+         
         </Dropdown2>
       </div>
 
