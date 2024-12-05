@@ -132,21 +132,6 @@ const SinglePost = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-b border-t border-gray-400 py-[0.5rem]">
-            <div className="flex items-center gap-5">
-              <Like postId={postId} />
-              <Comment />
-              <span className="text-gray-500 dark:text-blue-300 flex items-center">
-                <GrView className="mr-1" /> {pageViews}
-              </span>
-            </div>
-            <div className="flex items-center pt-2 gap-5 dark:text-blue-200">
-              {post && <SavedPost post={post} />}
-              <SharePost />
-              {currentUser && currentUser?.uid === post?.userId && <Actions postId={postId} title={title} desc={desc} />}
-            </div>
-          </div>
-
           <div className="mt-[3rem]">
             {postImg && (
               <img
@@ -175,3 +160,4 @@ const SinglePost = () => {
 };
 
 export default SinglePost;
+
