@@ -92,57 +92,7 @@ const SinglePost = () => {
 
   const navigate = useNavigate();
 
-  // Update meta tags dynamically on post load
-  useEffect(() => {
-    if (title && desc && postImg) {
-      // Set document title
-      document.title = title;
 
-      // Update meta description tag
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', desc);
-      } else {
-        const metaTag = document.createElement('meta');
-        metaTag.name = 'description';
-        metaTag.content = desc;
-        document.head.appendChild(metaTag);
-      }
-
-      // Update Open Graph description
-      const ogDescription = document.querySelector('meta[property="og:description"]');
-      if (ogDescription) {
-        ogDescription.setAttribute('content', desc);
-      } else {
-        const ogMetaTag = document.createElement('meta');
-        ogMetaTag.setAttribute('property', 'og:description');
-        ogMetaTag.content = desc;
-        document.head.appendChild(ogMetaTag);
-      }
-
-      // Update Open Graph title
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) {
-        ogTitle.setAttribute('content', title);
-      } else {
-        const ogTitleTag = document.createElement('meta');
-        ogTitleTag.setAttribute('property', 'og:title');
-        ogTitleTag.content = title;
-        document.head.appendChild(ogTitleTag);
-      }
-
-      // Update Open Graph image
-      const ogImage = document.querySelector('meta[property="og:image"]');
-      if (ogImage) {
-        ogImage.setAttribute('content', postImg);
-      } else {
-        const ogImageTag = document.createElement('meta');
-        ogImageTag.setAttribute('property', 'og:image');
-        ogImageTag.content = postImg;
-        document.head.appendChild(ogImageTag);
-      }
-    }
-  }, [title, desc, postImg]); // Run whenever title, desc, or postImg change
   return (
     <>
      <Helmet>
