@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DropDown from "../../../../utils/DropDown";
 import { CiShare1 } from "react-icons/ci";
 import {
   FacebookShareButton,
@@ -13,6 +12,7 @@ import {
   BiLogoLinkedinSquare,
 } from "react-icons/bi";
 import { toast } from "react-toastify";
+import Dropdown3 from "../../../../utils/DropDown3";
 
 const SharePost = () => {
   const [showDrop, setShowDrop] = useState(false);
@@ -28,12 +28,13 @@ const SharePost = () => {
       setShowDrop(false);
     }
   };
+
   return (
-    <div className="relative ">
+    <div className="relative">
       <button onClick={() => setShowDrop(!showDrop)}>
         <CiShare1 className="text-2xl" />
       </button>
-      <DropDown  showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
+      <Dropdown3 showDrop={showDrop} setShowDrop={setShowDrop} size="w-[12rem]">
         <Button click={copyLink} title="Copy Link" icon={<BiLink />} />
         <TwitterShareButton url={path}>
           <Button title="Share On Twitter" icon={<BiLogoTwitter />} />
@@ -44,21 +45,22 @@ const SharePost = () => {
         <LinkedinShareButton url={path}>
           <Button title="Share On LinkedIn" icon={<BiLogoLinkedinSquare />} />
         </LinkedinShareButton>
-      </DropDown>
+      </Dropdown3>
     </div>
   );
 };
 
-export default SharePost;
+export default SharePost
 
 const Button = ({ click, icon, title }) => {
   return (
-    <button
+    <div
       onClick={click}
       className="p-2 hover:bg-gray-200 hover:text-black/80 w-full text-sm text-left
-      flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white">
+      flex items-center gap-2 cursor-pointer text-gray-500 dark:text-white"
+    >
       <span className="text-[1.2rem]">{icon}</span>
       {title}
-    </button>
+    </div>
   );
 };
