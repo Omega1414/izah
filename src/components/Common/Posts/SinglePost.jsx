@@ -95,17 +95,17 @@ const SinglePost = () => {
   return (
     <>
       <Helmet>
-          <title>{post.title}</title>
-          <meta property="og:title" content={post.title} />
-          <meta property="og:description" content={post.desc || "No description available"} />
-          <meta property="og:image" content={post.postImg || "default-image-url.jpg"} />
-          <meta property="og:url" content={window.location.href} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter:title" content={post.title} />
-          <meta name="twitter:description" content={post.desc || "No description available"} />
-          <meta name="twitter:image" content={post.postImg || "default-image-url.jpg"} />
-          <meta name="twitter:card" content="summary_large_image" />
-        </Helmet>
+        <title>{title} - Izah</title>
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={desc || "No description available"} />
+        <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={desc || "No description available"} />
+        <meta name="twitter:image" content={postImg || "https://example.com/default-image.jpg"} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       {loading ? (
         <Loading />
       ) : (
