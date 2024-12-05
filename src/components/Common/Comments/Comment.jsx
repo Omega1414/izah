@@ -106,20 +106,20 @@ const Comment = ({ item: comment, postId }) => {
           </p>
         </>
       ) : (
-        <div className="bg-white shadows p-4">
+        <div className="bg-white dark:bg-darkBg dark:text-darkText p-4 ">
           <textarea
             value={editComment}
             onChange={(e) => setEditComment(e.target.value)}
             placeholder="Write your update text..."
-            className="w-full resize-none outline-none text-sm"></textarea>
+            className="w-full resize-none outline-none text-sm dark:bg-darkBg dark:text-darkText border border-gray-400 dark:border-gray-600 p-2"></textarea>
           <div className="flex items-center justify-end gap-2">
             <button onClick={() => setIsEdit(false)} className="w-fit text-sm">
-              Cancel
+              Ləğv et
             </button>
             <button
               onClick={handleEdit}
               className="btn !text-white !bg-green-700 !rounded-full !text-xs">
-              {loading ? "Updating..." : "Update"}
+              {loading ? "Yenilənir..." : "Yenilə"}
             </button>
           </div>
         </div>
