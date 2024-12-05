@@ -145,14 +145,22 @@ const SinglePost = () => {
   }, [title, desc, postImg]); // Run whenever title, desc, or postImg change
   return (
     <>
-      <Helmet>
-        <title>{title || "Default Title"}</title>
-        <meta name="description" content={desc || "Default description for the page."} />
-        <meta property="og:title" content={title || "Default OG Title"} />
-        <meta property="og:description" content={desc || "Default OG Description"} />
-        <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
-        {/* Add other meta tags you need */}
-      </Helmet>
+     <Helmet>
+  <title>{title || "Default Title"}</title>
+  <meta name="description" content={desc || "Default description for the page."} />
+  
+  {/* Open Graph Meta Tags */}
+  <meta property="og:title" content={title || "Default OG Title"} />
+  <meta property="og:description" content={desc || "Default OG Description"} />
+  <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
+  <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
+  
+  {/* Twitter Card Meta Tags */}
+  <meta name="twitter:title" content={title || "Default Twitter Title"} />
+  <meta name="twitter:description" content={desc || "Default Twitter Description"} />
+  <meta name="twitter:image" content={postImg || "https://example.com/default-image.jpg"} />
+  <meta name="twitter:card" content="summary_large_image" />
+</Helmet>
 
       {loading ? (
         <Loading />
