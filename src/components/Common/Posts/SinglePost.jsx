@@ -90,11 +90,11 @@ const SinglePost = () => {
     <>
       {/* Dynamically update the title and meta tags */}
       <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={desc} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={desc} />
-        <meta property="og:image" content={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgQksiRDBpK0iShrDIrW84jtBFKUzipImnlg&s"} />
+        <title>{title || "Post Title"}</title>
+        <meta name="description" content={desc || "Düşün, öyrən, inkişaf et!"} />
+        <meta property="og:title" content={title || "İzah"} />
+        <meta property="og:description" content={desc || "Bütün sahələrə uyğun maraqlı paylaşımlar"} />
+        <meta property="og:image" content={postImg || "https://cdn.pixabay.com/photo/2023/11/14/06/54/ai-generated-8387035_960_720.jpg"} />
         <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
       </Helmet>
 
