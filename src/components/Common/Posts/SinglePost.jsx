@@ -91,21 +91,26 @@ const SinglePost = () => {
   const { title, desc, postImg, username, created, userImg, userId } = post;
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (post) {
+      // Update the meta tags dynamically when post data is available
+      document.title = `${post.title} - Izah`;
 
+      // Update Open Graph meta tags
+      document.querySelector('meta[property="og:title"]').setAttribute("content", post.title);
+      document.querySelector('meta[property="og:description"]').setAttribute("content", post.desc || "No description available");
+      document.querySelector('meta[property="og:image"]').setAttribute("content", post.postImg || "https://example.com/default-image.jpg");
+      document.querySelector('meta[property="og:url"]').setAttribute("content", window.location.href);
+
+      // Update Twitter Card meta tags
+      document.querySelector('meta[name="twitter:title"]').setAttribute("content", post.title);
+      document.querySelector('meta[name="twitter:description"]').setAttribute("content", post.desc || "No description available");
+      document.querySelector('meta[name="twitter:image"]').setAttribute("content", post.postImg || "https://example.com/default-image.jpg");
+    }
+  }, [post]);
   return (
     <>
-      <Helmet>
-        <title>{title} - Izah</title>
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={desc || "No description available"} />
-        <meta property="og:image" content={postImg || "https://example.com/default-image.jpg"} />
-        <meta property="og:url" content={window.location.href} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={desc || "No description available"} />
-        <meta name="twitter:image" content={postImg || "https://example.com/default-image.jpg"} />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
+     
       {loading ? (
         <Loading />
       ) : (
