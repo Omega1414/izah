@@ -90,12 +90,12 @@ const SinglePost = () => {
     <>
       {/* Dynamically update the title and meta tags */}
       <Helmet>
-        <title>{title || "Post Title"}</title>
-        <meta name="description" content={desc || "Post Description"} />
-        <meta property="og:title" content={title || "Post Title"} />
-        <meta property="og:description" content={desc || "Post Description"} />
-        <meta property="og:image" content={postImg || "/default-image.jpg"} />
-        <meta property="og:url" content={`https://yourwebsite.com/post/${postId}`} />
+        <title>{title}</title>
+        <meta name="description" content={desc} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={desc} />
+        <meta property="og:image" content={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgQksiRDBpK0iShrDIrW84jtBFKUzipImnlg&s"} />
+        <meta property="og:url" content={`https://izah-sigma.vercel.app/post/${postId}`} />
       </Helmet>
 
       {loading ? (
