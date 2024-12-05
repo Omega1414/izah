@@ -18,6 +18,7 @@ import Recommended from "./Recommended";
 import Comments from "../Comments/Comments";
 import { GrView } from "react-icons/gr";
 import { MdOutlineAccessTime } from "react-icons/md";
+import { Helmet } from "react-helmet";
 
 const SinglePost = () => {
   const { postId } = useParams();
@@ -90,58 +91,21 @@ const SinglePost = () => {
   const { title, desc, postImg, username, created, userImg, userId } = post;
 
   const navigate = useNavigate();
-  // Update meta tags when the post is fetched
-  useEffect(() => {
-    if (post) {
-      document.title = post.title;
 
-      const ogImage = post.postImg || "default-image-url.jpg"; // Fallback if no image is provided
-      const ogDescription = post.desc || "No description available"; // Fallback for description
-
-      // Update Open Graph tags
-      const metaTags = [
-        { property: "og:title", content: post.title },
-        { property: "og:description", content: ogDescription },
-        { property: "og:image", content: ogImage },
-        { property: "og:url", content: window.location.href },
-        { property: "og:type", content: "website" },
-
-        // Update Twitter card tags
-        { name: "twitter:title", content: post.title },
-        { name: "twitter:description", content: ogDescription },
-        { name: "twitter:image", content: ogImage },
-        { name: "twitter:card", content: "summary_large_image" },
-      ];
-
-      // Update the document head with these meta tags
-      metaTags.forEach(({ property, name, content }) => {
-        let metaTag;
-        if (property) {
-          metaTag = document.querySelector(`meta[property='${property}']`);
-        } else if (name) {
-          metaTag = document.querySelector(`meta[name='${name}']`);
-        }
-        if (metaTag) {
-          metaTag.setAttribute("content", content);
-        } else {
-          metaTag = document.createElement("meta");
-          if (property) {
-            metaTag.setAttribute("property", property);
-          } else if (name) {
-            metaTag.setAttribute("name", name);
-          }
-          metaTag.setAttribute("content", content);
-          document.head.appendChild(metaTag);
-        }
-      });
-    }
-  }, [post]);
-
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <>
+      <Helmet>
+          <title>{post.title}</title>
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={post.desc || "No description available"} />
+          <meta property="og:image" content={post.postImg || "default-image-url.jpg"} />
+          <meta property="og:url" content={window.location.href} />
+          <meta property="og:type" content="article" />
+          <meta name="twitter:title" content={post.title} />
+          <meta name="twitter:description" content={post.desc || "No description available"} />
+          <meta name="twitter:image" content={post.postImg || "default-image-url.jpg"} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </Helmet>
       {loading ? (
         <Loading />
       ) : (
