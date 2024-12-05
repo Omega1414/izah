@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, increment, updateDoc } from "firebase/firestore";
+import { doc, getDoc, increment, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { toast } from "react-toastify";
-import { Helmet } from "react-helmet-async";  // Import Helmet
 import Loading from "../../Loading/Loading";
 import { Blog } from "../../../Context/Context";
 import FollowBtn from "../../Home/UserToFollow/FollowBtn";
 import "./post.css"
-import moment from "moment";
+import moment from "moment/moment";
 import Actions from "../Posts/Actions/Actions";
 import Like from "./Actions/Like";
 import Comment from "./Actions/Comment";
@@ -23,10 +22,11 @@ const SinglePost = () => {
   const { postId } = useParams();
   const [post, setPost] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pageViews, setPageViews] = useState(0);
+  const [pageViews, setPageViews] = useState(0); // State to store page views count
   const { currentUser } = Blog();
   const isInitialRender = useRef(true);
 
+  // Function to increment page views
   const incrementPageView = async () => {
     try {
       const postRef = doc(db, "posts", postId);
@@ -35,9 +35,12 @@ const SinglePost = () => {
       if (postSnapshot.exists()) {
         const postData = postSnapshot.data();
         
+        // Check if the post has already been viewed (using localStorage or sessionStorage)
         if (!localStorage.getItem(`viewedPost_${postId}`)) {
+          // Mark the post as viewed in localStorage
           localStorage.setItem(`viewedPost_${postId}`, "true");
 
+          // Increment the page view count
           await updateDoc(postRef, {
             pageViews: increment(1),
           });
@@ -48,6 +51,7 @@ const SinglePost = () => {
     }
   };
 
+  // Fetch post and page views data
   useEffect(() => {
     const fetchPost = async () => {
       setLoading(true);
@@ -64,7 +68,7 @@ const SinglePost = () => {
             if (getUser.exists()) {
               const { created, ...rest } = getUser.data();
               setPost({ ...postData, ...rest, id: postId });
-              setPageViews(postData.pageViews || 0);
+              setPageViews(postData.pageViews || 0); // Set page views from the post data
             }
           }
         }
@@ -76,6 +80,8 @@ const SinglePost = () => {
     };
 
     fetchPost();
+    
+    // Increment page view only once (this happens only once per browser session or once for unique users)
     incrementPageView();
   }, [postId]);
 
@@ -84,18 +90,13 @@ const SinglePost = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>  {/* Set the dynamic title */}
-        <meta name="description" content={desc} />  {/* Set the dynamic description */}
-      </Helmet>
-      
       {loading ? (
         <Loading />
       ) : (
         <>
           <section className="w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]">
             <h2 className="text-2xl lg:text-2xl font-bold capitalize font-sans text-center dark:text-darkText">{title}</h2>
-            <div className="flex items-center gap-2 py-[2rem]">
+            <div className="flex items-center gap-2 py-[2rem] ">
               <img
                 onClick={() => navigate(`/profile/${userId}`)}
                 className="w-[3rem] h-[3rem] object-cover rounded-full cursor-pointer"
@@ -140,7 +141,7 @@ const SinglePost = () => {
             <div className="mt-[3rem]">
               {postImg && (
                 <img
-                  className="w-full max-h-[300px] object-cover lg:object-contain"
+                  className="w-full max-h-[300px] object-cover lg:object-contain "
                   src={postImg}
                   alt="post-img"
                 />
@@ -153,9 +154,11 @@ const SinglePost = () => {
               />
             </div>
           </section>
+          {/* Comments Section */}
           <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600">
             <Comments postId={postId} />
           </div>
+          {/* Recommendations Section */}
           {post && <Recommended post={post} />}
         </>
       )}
