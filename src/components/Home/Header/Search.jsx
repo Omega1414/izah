@@ -33,7 +33,7 @@ const Search = ({ modal, setModal }) => {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-transparent outline-none py-[0.7rem] text-sm w-full dark:placeholder-white "
+              className="bg-transparent outline-none py-[0.7rem] text-sm w-[120px] md:w-full dark:placeholder-white "
               type="text"
               placeholder="Axtar"
             />

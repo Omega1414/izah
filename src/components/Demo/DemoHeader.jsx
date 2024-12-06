@@ -5,6 +5,7 @@ import { Blog } from "../../Context/Context";
 import { FaLightbulb } from "react-icons/fa";
 import { IoMdMoon } from "react-icons/io";
 import Search from "../Home/Header/Search";
+import { CiSearch } from "react-icons/ci";
 
 const DemoHeader = () => {
   const [isActive, setIsActive] = useState(false);
@@ -52,6 +53,7 @@ const DemoHeader = () => {
       </span>
     </Link>
     <Search modal={searchModal} setModal={setSearchModal} />
+   
         </div>
 
 
@@ -88,8 +90,10 @@ const DemoHeader = () => {
     </div>
 
     {/* Right side content */}
-    <div className="flex items-center gap-5">
-     
+    <div className="flex items-center gap-1">
+    <span className='flex sm:hidden text-3xl text-gray-600 dark:text-white cursor-pointer ' onClick={() => setSearchModal(true)}>
+            <CiSearch />
+          </span>
       <div className="relative z-10">
         <button
           onClick={() => setAuthModel(true)}
