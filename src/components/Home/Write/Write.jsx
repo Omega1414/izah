@@ -121,11 +121,12 @@ const Write = () => {
   }, [content]);
 
   return (
-    <section className="write-container" ref={writeContainerRef}>
+    <>
+    <section className={`write-container ${publish ? "hidden" : ""}`} ref={writeContainerRef}>
       <input
         type="text"
         placeholder="Başlıq əlavə edin..."
-        className="text-3xl outline-none w-full dark:bg-darkBg dark:border-2 dark:p-2 dark:border-gray-400 dark:text-darkText"
+        className="text-2xl sm:text-3xl outline-none w-full dark:bg-darkBg dark:border-2 dark:p-2 dark:border-gray-400 dark:text-darkText"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -149,17 +150,17 @@ const Write = () => {
       <p className="mt-2"> Şəkili əlavə etmək üçün ilk öncə mətnin içində əlavə edəcəyiniz yerə klikləyin.</p>
       <p className="mt-2"> Davam etmək üçün sağ üstdə "Paylaş" düyməsini basın.</p>
       </span>
-      <div
-        className={`${
-          publish ? "visible opacity-100" : "invisible opacity-0"
-        } transition-all duration-200`}>
-        <Preview
-          setPublish={setPublish}
-          description={content}
-          title={title}
-        />
-      </div>
+     
     </section>
+    <div className={`preview ${publish ? "visible" : ""}`}>
+
+<Preview
+  setPublish={setPublish}
+  description={content}
+  title={title}
+/>
+</div>
+</>
   );
 };
 

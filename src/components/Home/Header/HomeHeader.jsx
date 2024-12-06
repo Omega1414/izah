@@ -89,18 +89,18 @@ const HomeHeader = () => {
             <button
               onClick={() => setPublish(true)}
               className="btn !bg-green-700 !py-1 !text-white !rounded-full">
-              Davam et
+              İrəli
             </button>
           ) : editPath === "editPost" ? (
             null
           ): (
             <Link
               to="/write"
-              className="hidden lg:flex items-center gap-1 text-gray-500 dark:text-white justify-center dark:hover:text-blue-300 transition-colors duration-200">
+              className="flex items-center gap-1 text-gray-500 dark:text-white justify-center dark:hover:text-blue-300 transition-colors duration-200">
               <span className="text-2xl mb-1">
                 <LiaEditSolid />
               </span>
-              <span className="text-md">Paylaş</span>
+              <span className="hidden sm:flex text-md">Paylaş</span>
             </Link>
           )}
 

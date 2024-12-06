@@ -74,3 +74,16 @@
   .dark .quill > .ql-container > .ql-editor.ql-blank::before{
     color: gray;
 }
+.preview {
+  position: absolute;
+  inset: 0;
+  z-index: 30;  /* Ensure the preview is on top */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.preview.visible {
+  opacity: 1;
+  visibility: visible;
+}
