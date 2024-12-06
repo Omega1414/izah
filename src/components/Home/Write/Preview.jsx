@@ -2,7 +2,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useEffect, useRef, useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
-import TagsInput from "react-tagsinput";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/firebase";
 import { Blog } from "../../../Context/Context";

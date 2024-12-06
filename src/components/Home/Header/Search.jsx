@@ -26,7 +26,7 @@ const Search = ({ modal, setModal }) => {
               : "invisible sm:visible sm:opacity-100 opacity-0"
           }
           transition-all duration-100`}>
-          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-darkBg">
+          <div className="flex items-center gap-1 bg-gray-100 px-2 rounded-full relative z-10 dark:bg-[#1d3357]">
             <span className="text-2xl text-gray-400 dark:text-white ">
               <CiSearch />
             </span>

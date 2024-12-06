@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom'
 import Context from './Context/Context.jsx'
 import "react-toastify/dist/ReactToastify.css"
 import 'react-quill-new/dist/quill.bubble.css'
-import 'react-tagsinput/react-tagsinput.css'
 import moment from "moment";
 import "moment/locale/az";
 import "moment/dist/locale/az";

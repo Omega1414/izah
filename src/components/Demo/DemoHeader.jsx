@@ -4,11 +4,12 @@ import Auth from "./Auth/Auth";
 import { Blog } from "../../Context/Context";
 import { FaLightbulb } from "react-icons/fa";
 import { IoMdMoon } from "react-icons/io";
+import Search from "../Home/Header/Search";
 
 const DemoHeader = () => {
   const [isActive, setIsActive] = useState(false);
   const { authModel, setAuthModel, isDarkMode, setIsDarkMode } = Blog();
-
+  const [searchModal, setSearchModal] = useState(false)
   useEffect(() => {
     const scrollMe = () => {
       window.scrollY > 50 ? setIsActive(true) : setIsActive(false);
@@ -50,6 +51,7 @@ const DemoHeader = () => {
         />
       </span>
     </Link>
+    <Search modal={searchModal} setModal={setSearchModal} />
         </div>
 
 
