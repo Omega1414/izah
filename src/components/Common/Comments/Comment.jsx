@@ -96,7 +96,7 @@ const Comment = ({ item: comment, postId }) => {
               </div>
             </div>
           </div>
-          <p className="py-4 text-sm">
+          <p className="py-4 text-sm pt-6">
             {more ? commentText : commentText.substring(0, 100)}
             {commentText.length > 100 && (
               <button onClick={() => setMore(!more)}>

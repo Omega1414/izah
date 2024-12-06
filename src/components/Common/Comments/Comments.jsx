@@ -70,36 +70,37 @@ const Comments = ({ postId }) => {
 
   return (
     <div className="mt-8 w-full p-2 md:w-[60%] lg:w-[40%] items-center justify-center mx-auto  m-4">
+    
       {/* Comment input form */}
       {currentUser && (
         <div className="p-3 my-5 ">
-        <div className="border border-gray-400 dark:border-gray-600 p-5">
-          <div className="flex items-center gap-2 mb-5 ">
-            <img
-              className="w-[2rem] h-[2rem] object-cover rounded-full"
-              src={getUserData?.userImg || "/profile.jpg"}
-              alt="user-img"
-            />
-            <h3 className="capitalize text-sm">{getUserData?.username}</h3>
-          </div>
-          <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Bu paylaşım barədə fikirləriniz nədir?"
-            className="w-full outline-none resize-none text-sm  dark:bg-darkBg px-2 pt-4 border border-gray-400 dark:border-gray-600"
-          ></textarea>
+          <div className="border border-gray-400 dark:border-gray-600 p-5">
+            <div className="flex items-center gap-2 mb-5 ">
+              <img
+                className="w-[2rem] h-[2rem] object-cover rounded-full"
+                src={getUserData?.userImg || "/profile.jpg"}
+                alt="user-img"
+              />
+              <h3 className="capitalize text-sm">{getUserData?.username}</h3>
+            </div>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Bu paylaşım barədə fikirləriniz nədir?"
+              className="w-full outline-none resize-none text-sm  dark:bg-darkBg px-2 pt-4 border border-gray-400 dark:border-gray-600"
+            ></textarea>
         
-          <div className="flex items-center justify-end gap-4 mt-[1rem]">
-            <button onClick={() => setComment("")} className="text-sm">
-              Ləğv et
-            </button>
-            <button
-              onClick={writeComment}
-              className="btn !text-xs !bg-green-700 !text-white !rounded-full"
-            >
-              Göndər
-            </button>
-          </div>
+            <div className="flex items-center justify-end gap-4 mt-[1rem]">
+              <button onClick={() => setComment("")} className="text-sm">
+                Ləğv et
+              </button>
+              <button
+                onClick={writeComment}
+                className="btn !text-xs !bg-green-700 !text-white !rounded-full"
+              >
+                Göndər
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -108,12 +109,20 @@ const Comments = ({ postId }) => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="py-4 mt-8 flex flex-col gap-8">
-          {data &&  (
-            data.map((item, i) => (
-              <Comment item={item} postId={postId} key={i} />
+          <div>
+          
+          {!currentUser && data?.length === 0 ? (
+            <div className="py-4 flex flex-col  items-center justify-center">
+            <p className="font-semibold">Rəy mövcud deyil</p>
+            </div>
+          ) : (
+            data?.map((item, i) => (
+              <div key={i} className="py-4 mt-8 flex flex-col gap-8 px-1">
+              <Comment item={item} postId={postId} />
+              </div>
             ))
           )}
+          
         </div>
       )}
     </div>

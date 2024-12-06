@@ -25,7 +25,7 @@ const SinglePost = () => {
   const [pageViews, setPageViews] = useState(0); // State to store page views count
   const { currentUser } = Blog();
   const isInitialRender = useRef(true);
-
+  const commentsRef = useRef(null);
   // Function to increment page views
   const incrementPageView = async () => {
     try {
@@ -87,7 +87,11 @@ const SinglePost = () => {
 
   const { title, desc, postImg, username, created, userImg, userId } = post;
   const navigate = useNavigate();
-
+  const scrollToComments = () => {
+    if (commentsRef.current) {
+      commentsRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <>
       {loading ? (
@@ -123,9 +127,9 @@ const SinglePost = () => {
               </div>
             </div>
             <div className="flex items-center justify-between border-b border-t border-gray-400 py-[0.5rem]">
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-5" >
                 <Like postId={postId} />
-                <Comment />
+                <Comment onClick={scrollToComments} />
                 <span className="text-gray-500 dark:text-blue-300 flex items-center">
                   <GrView className="mr-1"/> {pageViews}
                 </span>
@@ -155,7 +159,7 @@ const SinglePost = () => {
             </div>
           </section>
           {/* Comments Section */}
-          <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600">
+          <div className="flex mt-8 items-center justify-center mx-auto border-t-2 border-gray-400 dark:border-gray-600"  ref={commentsRef}>
             <Comments postId={postId} />
           </div>
           {/* Recommendations Section */}
