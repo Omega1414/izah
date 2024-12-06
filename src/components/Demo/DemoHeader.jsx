@@ -90,7 +90,7 @@ const DemoHeader = () => {
     </div>
 
     {/* Right side content */}
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 md:gap-4">
     <span className='flex sm:hidden text-3xl text-gray-600 dark:text-white cursor-pointer ' onClick={() => setSearchModal(true)}>
             <CiSearch />
           </span>
