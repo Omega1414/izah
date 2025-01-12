@@ -107,8 +107,8 @@ const Preview = ({ setPublish, description, title }) => {
   };
 
   return (
-    <section className="absolute inset-0 bg-white dark:bg-darkBg z-30">
-      <div className="size my-[2rem]">
+    <section className="absolute inset-0 bg-white dark:bg-darkBg z-30 ">
+      <div className="size my-[2rem] pb-10">
         <span
           onClick={() => setPublish(false)}
           className="absolute right-[1rem] md:right-[5rem] top-[3rem] text-2xl cursor-pointer"

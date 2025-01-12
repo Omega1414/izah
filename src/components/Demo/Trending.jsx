@@ -56,7 +56,7 @@ const Trend = ({ trend, index }) => {
         <div
           onClick={() => navigate(`/post/${trend?.id}`)}
           className="flex flex-col gap-4 cursor-pointer hover:opacity-75">
-          <p className="text-xl font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">
+          <p className="text-lg min-h-[60px] 2xl:text-xl font-semibold text-gray-900 dark:text-gray-100 line-clamp-2">
             {trend.title}
           </p>
           <span className="text-xs text-gray-600 flex items-center dark:text-gray-300">

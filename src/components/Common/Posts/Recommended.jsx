@@ -93,7 +93,7 @@ const Post = ({ post }) => {
             )}
             <p className="font-semibold capitalize xl:text-sm  dark:text-blue-200">{username}</p>
           </div>
-          <h2 className="text-l font-bold font-sans line-clamp-2 leading-6 capitalize xl:text-md dark:text-white overflow-hidden mt-1">{title}</h2>
+          <h2 className="text-lg font-bold font-sans line-clamp-2 leading-6 capitalize xl:text-md dark:text-white overflow-hidden mt-1">{title}</h2>
 
           {/* Description with line clamp and ellipsis */}
           <div

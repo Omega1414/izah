@@ -158,7 +158,7 @@ const filteredPosts = Array.isArray(postData) ? postData.filter((post) => {
   {postLoading ? (
     <Loading />
   ) : (
-    <section className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+    <section className="grid grid-cols-1 2xl:grid-cols-2 gap-6 mt-8">
       {sortedPosts.map((post, i) => (
         <PostsCard post={post} key={i} />
       ))}
